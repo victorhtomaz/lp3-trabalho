@@ -1,7 +1,7 @@
 package com.mycompany.easytrip;
 
 import com.mycompany.easytrip.telas.TelaPrincipal;
-import com.mycompany.easytrip.telas.TelaFavoritasHospede;
+import com.mycompany.easytrip.telas.grupos.TelaVisualizarGrupos;
 
 public class EasyTrip {
 
@@ -10,11 +10,10 @@ public class EasyTrip {
         var a = new TelaPrincipal();
        
         a.configurarEstadoMenu(true);
-        var b = new TelaFavoritasHospede();
-        
         a.limparTela();
-        a.add(b);
+        var b = new TelaVisualizarGrupos();
         
+        a.add(b);
         a.setVisible(true);
     }
 }

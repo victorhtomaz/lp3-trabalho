@@ -2,9 +2,6 @@ package com.mycompany.easytrip.telas;
 
 public class TelaContaDoUsuario extends javax.swing.JPanel {
 
-    /**
-     * Creates new form TelaContaDoUsuario
-     */
     public TelaContaDoUsuario() {
         initComponents();
     }
@@ -35,7 +32,7 @@ public class TelaContaDoUsuario extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(534, 330));
         setLayout(new java.awt.GridBagLayout());
 
-        minhaContaLabel.setFont(new java.awt.Font("JetBrainsMono NF", 1, 14)); // NOI18N
+        minhaContaLabel.setFont(new java.awt.Font("JetBrainsMono NF", 1, 18)); // NOI18N
         minhaContaLabel.setText("Minha conta");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -116,6 +113,7 @@ public class TelaContaDoUsuario extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(cpfField, gridBagConstraints);
 
+        alterarButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         alterarButton.setText("Alterar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;

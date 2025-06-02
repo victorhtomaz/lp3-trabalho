@@ -28,7 +28,8 @@
             </MenuItem>
             <Menu class="javax.swing.JMenu" name="painelDoAnfitri&#xe3;oMenu">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Painel do Anfiti&#xe3;o"/>
+                <Property name="text" type="java.lang.String" value="Painel do anfitri&#xe3;o"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JMenuItem" name="hospedagensCadastradaMenuItem">
@@ -82,6 +83,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="favoritasMenuItemActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="minhasReservasMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Minhas reservas"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="minhasReservasMenuItemActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="gruposMenu">
@@ -92,17 +101,17 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="verGruposMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ver Grupos"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="criarGrupoMenuItem">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Criar Grupo"/>
+                <Property name="text" type="java.lang.String" value="Ver grupos"/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="favoritasGrupoMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Favoritas"/>
+                <Property name="text" type="java.lang.String" value="Hospedagens favoritas"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ranking das hospedagens"/>
               </Properties>
             </MenuItem>
           </SubComponents>

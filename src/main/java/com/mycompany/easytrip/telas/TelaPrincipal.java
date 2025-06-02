@@ -1,10 +1,23 @@
 package com.mycompany.easytrip.telas;
 
+import com.mycompany.easytrip.telas.reservas.TelaReservasPendentes;
+import com.mycompany.easytrip.telas.reservas.TelaMinhasReservas;
+import com.mycompany.easytrip.telas.reservas.TelaDetalhesReserva;
+import com.mycompany.easytrip.telas.reservas.TelaRealizarReserva;
+import com.mycompany.easytrip.telas.hospedagem.TelaCriarHospedagem;
+import com.mycompany.easytrip.telas.hospedagem.TelaHospedagensCadastradas;
+import com.mycompany.easytrip.telas.hospedagem.TelaFavoritasHospede;
+import com.mycompany.easytrip.telas.hospedagem.TelaDetalhesHospedagem;
+import com.mycompany.easytrip.telas.hospedagem.TelaVisualizarHospedagens;
+import com.mycompany.easytrip.telas.hospedagem.TelaDeGerenciamentoHospedagem;
+import com.mycompany.easytrip.telas.reservas.TelaReservasDaHospedagem;
 import java.awt.Component;
 import javax.swing.JPanel;
 
 public class TelaPrincipal extends javax.swing.JFrame {
 
+    private JPanel telaAnterior;
+    
     public TelaPrincipal() {
         initComponents();
     }
@@ -30,10 +43,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         hospedagemMenu = new javax.swing.JMenu();
         visualizarMenuItem = new javax.swing.JMenuItem();
         favoritasMenuItem = new javax.swing.JMenuItem();
+        minhasReservasMenuItem = new javax.swing.JMenuItem();
         gruposMenu = new javax.swing.JMenu();
         verGruposMenuItem = new javax.swing.JMenuItem();
-        criarGrupoMenuItem = new javax.swing.JMenuItem();
         favoritasGrupoMenuItem = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 2, 1, 1));
@@ -60,7 +74,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         contaMenu.add(minhaContaMenuItem);
 
-        painelDoAnfitriãoMenu.setText("Painel do Anfitião");
+        painelDoAnfitriãoMenu.setText("Painel do anfitrião");
+        painelDoAnfitriãoMenu.setEnabled(false);
 
         hospedagensCadastradaMenuItem.setText("Hospedagens cadastradas");
         hospedagensCadastradaMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -110,19 +125,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         hospedagemMenu.add(favoritasMenuItem);
 
+        minhasReservasMenuItem.setText("Minhas reservas");
+        minhasReservasMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                minhasReservasMenuItemActionPerformed(evt);
+            }
+        });
+        hospedagemMenu.add(minhasReservasMenuItem);
+
         barraMenu.add(hospedagemMenu);
 
         gruposMenu.setText("Grupos");
         gruposMenu.setEnabled(false);
 
-        verGruposMenuItem.setText("Ver Grupos");
+        verGruposMenuItem.setText("Ver grupos");
         gruposMenu.add(verGruposMenuItem);
 
-        criarGrupoMenuItem.setText("Criar Grupo");
-        gruposMenu.add(criarGrupoMenuItem);
-
-        favoritasGrupoMenuItem.setText("Favoritas");
+        favoritasGrupoMenuItem.setText("Hospedagens favoritas");
         gruposMenu.add(favoritasGrupoMenuItem);
+
+        jMenuItem1.setText("Ranking das hospedagens");
+        gruposMenu.add(jMenuItem1);
 
         barraMenu.add(gruposMenu);
 
@@ -154,6 +177,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void reservasPendentesMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservasPendentesMenuItemActionPerformed
         // TODO add your handling code here:
+        mudarParaTelaReservasPendentes();
     }//GEN-LAST:event_reservasPendentesMenuItemActionPerformed
 
     private void hospedagensCadastradaMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hospedagensCadastradaMenuItemActionPerformed
@@ -165,8 +189,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         mudarParaTelaFavoritasHospede();
     }//GEN-LAST:event_favoritasMenuItemActionPerformed
+
+    private void minhasReservasMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minhasReservasMenuItemActionPerformed
+        // TODO add your handling code here:
+        mudarParaTelaMinhasReservas();
+    }//GEN-LAST:event_minhasReservasMenuItemActionPerformed
     
     private void mudarTela(JPanel tela){
+        salvarPaginaAnterior();
         limparTela();
         
         this.add(tela);
@@ -214,6 +244,35 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mudarTela(tela);
     }
     
+    public void mudarParaTelaRealizarReserva(){
+        TelaRealizarReserva tela = new TelaRealizarReserva();
+        mudarTela(tela);
+    }
+    
+    public void mudarParaTelaDetalhesReserva(){
+        TelaDetalhesReserva tela = new TelaDetalhesReserva();
+        mudarTela(tela);
+    }
+    
+    public void mudarParaTelaMinhasReservas(){
+        TelaMinhasReservas tela = new TelaMinhasReservas();
+        mudarTela(tela);
+    }
+    
+    public void mudarParaTelaReservasPendentes(){
+        TelaReservasPendentes tela = new TelaReservasPendentes();
+        mudarTela(tela);
+    }
+    
+    public void mudarParaTelaReservasDaHospedagem(){
+        TelaReservasDaHospedagem tela = new TelaReservasDaHospedagem();
+        mudarTela(tela);
+    }
+    
+    public void voltarPagina(){
+        mudarTela(this.telaAnterior);
+    }
+    
     public void configurarEstadoMenu(boolean habilitado){
         //Libera os itens do menu conta
         minhaContaMenuItem.setEnabled(habilitado);
@@ -234,18 +293,27 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 this.remove(comp);
         }
     }
+    
+    private void salvarPaginaAnterior(){
+        var components = this.getContentPane().getComponents();
+        for(Component comp : components){
+            if (comp instanceof JPanel panel)
+                this.telaAnterior = panel;
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JMenu contaMenu;
-    private javax.swing.JMenuItem criarGrupoMenuItem;
     private javax.swing.JMenuItem favoritasGrupoMenuItem;
     private javax.swing.JMenuItem favoritasMenuItem;
     private javax.swing.JMenu gruposMenu;
     private javax.swing.JMenu hospedagemMenu;
     private javax.swing.JMenuItem hospedagensCadastradaMenuItem;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem loginMenuItem;
     private javax.swing.JMenuItem minhaContaMenuItem;
+    private javax.swing.JMenuItem minhasReservasMenuItem;
     private javax.swing.JMenu painelDoAnfitriãoMenu;
     private javax.swing.JMenuItem reservasPendentesMenuItem;
     private javax.swing.JMenuItem sairMenuItem;

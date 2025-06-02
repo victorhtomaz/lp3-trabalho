@@ -44,9 +44,11 @@ public class HospedagemCadastradasPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     
     private void completarComponentes(){
+        ReservasDaHospedagemButton reservasButton = new ReservasDaHospedagemButton();
         GerenciarHospedagemButton gerenciarButton = new GerenciarHospedagemButton(this.hospedagemId);
         DeletarHospedagemButton deletarButton = new DeletarHospedagemButton(this.hospedagemId);
         
+        this.add(reservasButton);
         this.add(gerenciarButton);
         this.add(deletarButton);
     }

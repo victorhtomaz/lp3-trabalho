@@ -17,7 +17,7 @@ public class GerenciarHospedagemButton extends javax.swing.JButton{
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                abrirPaginaGerenciamento();
+                abrirTelaGerenciamento();
             }
         });
     }
@@ -27,7 +27,7 @@ public class GerenciarHospedagemButton extends javax.swing.JButton{
         this();
     }
     
-    private void abrirPaginaGerenciamento(){
+    private void abrirTelaGerenciamento(){
         TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
         telaPrincipal.mudarParaTelaGerenciamentoHospedagem(hospedagemId);
     }
