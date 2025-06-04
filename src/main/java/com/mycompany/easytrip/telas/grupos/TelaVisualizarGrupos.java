@@ -37,6 +37,9 @@ public class TelaVisualizarGrupos extends javax.swing.JPanel {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         gruposListaPanel1 = new com.mycompany.easytrip.telas.componentes.GruposListaPanel();
+        gruposListaPanel2 = new com.mycompany.easytrip.telas.componentes.GruposListaPanel();
+        gruposListaPanel3 = new com.mycompany.easytrip.telas.componentes.GruposListaPanel();
+        gruposListaPanel4 = new com.mycompany.easytrip.telas.componentes.GruposListaPanel();
 
         jButton1.setText("jButton1");
 
@@ -101,6 +104,27 @@ public class TelaVisualizarGrupos extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(gruposListaPanel1, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        add(gruposListaPanel2, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 41;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        add(gruposListaPanel3, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        add(gruposListaPanel4, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -110,6 +134,9 @@ public class TelaVisualizarGrupos extends javax.swing.JPanel {
     private javax.swing.Box.Filler filler2;
     private javax.swing.JLabel funcaoLabel;
     private com.mycompany.easytrip.telas.componentes.GruposListaPanel gruposListaPanel1;
+    private com.mycompany.easytrip.telas.componentes.GruposListaPanel gruposListaPanel2;
+    private com.mycompany.easytrip.telas.componentes.GruposListaPanel gruposListaPanel3;
+    private com.mycompany.easytrip.telas.componentes.GruposListaPanel gruposListaPanel4;
     private javax.swing.JButton jButton1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JPanel legendaPanel;

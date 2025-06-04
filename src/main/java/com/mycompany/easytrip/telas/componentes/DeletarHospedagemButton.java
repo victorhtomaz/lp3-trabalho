@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 public class DeletarHospedagemButton extends javax.swing.JButton{
     private int hospedagemId;
     
-    private DeletarHospedagemButton(){
+    public DeletarHospedagemButton(){
         super("Deletar");
         
         this.setFont(new Font("JetBrainsMono NF", Font.PLAIN, 12));
@@ -17,10 +17,5 @@ public class DeletarHospedagemButton extends javax.swing.JButton{
             public void actionPerformed(ActionEvent e) {
             }
         });
-    }
-    
-    public DeletarHospedagemButton(int hospedagemId){
-        this.hospedagemId = hospedagemId;
-        this();
     }
 }

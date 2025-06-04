@@ -19,80 +19,83 @@ public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jButton9 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
+        enderecoLabel = new javax.swing.JLabel();
+        avaliacaoButton = new javax.swing.JLabel();
+        verMaisButton = new javax.swing.JButton();
+        precoLabel = new javax.swing.JLabel();
+        favoritarButton = new javax.swing.JButton();
+        imagemPanel = new javax.swing.JPanel();
+        tituloLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(163, 187, 229));
         setMinimumSize(new java.awt.Dimension(220, 220));
         setPreferredSize(new java.awt.Dimension(220, 220));
         setLayout(new java.awt.GridBagLayout());
 
-        jLabel3.setText("Rua recanto das dunas, cabo frio");
-        jLabel3.setMaximumSize(new java.awt.Dimension(200, 16));
-        jLabel3.setMinimumSize(new java.awt.Dimension(200, 16));
-        jLabel3.setPreferredSize(new java.awt.Dimension(200, 20));
+        enderecoLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 10)); // NOI18N
+        enderecoLabel.setText("Rua recanto das dunas, cabo frio");
+        enderecoLabel.setMaximumSize(new java.awt.Dimension(200, 16));
+        enderecoLabel.setMinimumSize(new java.awt.Dimension(200, 16));
+        enderecoLabel.setPreferredSize(new java.awt.Dimension(200, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        add(jLabel3, gridBagConstraints);
+        add(enderecoLabel, gridBagConstraints);
 
-        jLabel4.setText("5.0");
-        jLabel4.setPreferredSize(new java.awt.Dimension(200, 20));
+        avaliacaoButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        avaliacaoButton.setText("5.0");
+        avaliacaoButton.setPreferredSize(new java.awt.Dimension(200, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        add(jLabel4, gridBagConstraints);
+        add(avaliacaoButton, gridBagConstraints);
 
-        jButton1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        jButton1.setText("Ver mais");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        verMaisButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        verMaisButton.setText("Ver mais");
+        verMaisButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                verMaisButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        add(jButton1, gridBagConstraints);
+        add(verMaisButton, gridBagConstraints);
 
-        jLabel5.setText("R$ 200,00");
-        jLabel5.setPreferredSize(new java.awt.Dimension(80, 20));
+        precoLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        precoLabel.setText("R$ 200,00");
+        precoLabel.setPreferredSize(new java.awt.Dimension(80, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        add(jLabel5, gridBagConstraints);
+        add(precoLabel, gridBagConstraints);
 
-        jButton9.setBorderPainted(false);
-        jButton9.setContentAreaFilled(false);
-        jButton9.setLabel("❤");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        favoritarButton.setBorderPainted(false);
+        favoritarButton.setContentAreaFilled(false);
+        favoritarButton.setLabel("❤");
+        favoritarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                favoritarButtonActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
-        add(jButton9, gridBagConstraints);
+        add(favoritarButton, gridBagConstraints);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout imagemPanelLayout = new javax.swing.GroupLayout(imagemPanel);
+        imagemPanel.setLayout(imagemPanelLayout);
+        imagemPanelLayout.setHorizontalGroup(
+            imagemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 200, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        imagemPanelLayout.setVerticalGroup(
+            imagemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 140, Short.MAX_VALUE)
         );
 
@@ -102,23 +105,24 @@ public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 200;
         gridBagConstraints.ipady = 140;
-        add(jPanel1, gridBagConstraints);
+        add(imagemPanel, gridBagConstraints);
 
-        jLabel10.setText("Casa perto da praia");
-        jLabel10.setMaximumSize(new java.awt.Dimension(200, 16));
-        jLabel10.setMinimumSize(new java.awt.Dimension(200, 16));
-        jLabel10.setPreferredSize(new java.awt.Dimension(200, 16));
+        tituloLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 10)); // NOI18N
+        tituloLabel.setText("Casa perto da praia");
+        tituloLabel.setMaximumSize(new java.awt.Dimension(200, 16));
+        tituloLabel.setMinimumSize(new java.awt.Dimension(200, 16));
+        tituloLabel.setPreferredSize(new java.awt.Dimension(200, 16));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        add(jLabel10, gridBagConstraints);
+        add(tituloLabel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void verMaisButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verMaisButtonActionPerformed
         // TODO add your handling code here:
         mudarParaTelaDetalhesHospedagem();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_verMaisButtonActionPerformed
     
     
     private void mudarParaTelaDetalhesHospedagem(){
@@ -126,18 +130,18 @@ public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
         telaPrincipal.mudarParaTelaDetalhesHospedagem();
     }
     
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void favoritarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_favoritarButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+    }//GEN-LAST:event_favoritarButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel avaliacaoButton;
+    private javax.swing.JLabel enderecoLabel;
+    private javax.swing.JButton favoritarButton;
+    private javax.swing.JPanel imagemPanel;
+    private javax.swing.JLabel precoLabel;
+    private javax.swing.JLabel tituloLabel;
+    private javax.swing.JButton verMaisButton;
     // End of variables declaration//GEN-END:variables
 }

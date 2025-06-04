@@ -20,7 +20,7 @@
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-    <Property name="columns" type="int" value="3"/>
+    <Property name="columns" type="int" value="4"/>
     <Property name="horizontalGap" type="int" value="2"/>
     <Property name="rows" type="int" value="1"/>
   </Layout>
@@ -40,6 +40,16 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Status"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.Box$Filler" name="filler1">
+      <Properties>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[32767, 32767]"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="classDetails" type="java.lang.String" value="Box.Filler.Glue"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

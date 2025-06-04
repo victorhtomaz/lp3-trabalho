@@ -1,7 +1,9 @@
 package com.mycompany.easytrip.telas.hospedagem;
 
 import com.mycompany.easytrip.telas.TelaPrincipal;
+import com.mycompany.easytrip.telas.componentes.AnteriorButton;
 import com.mycompany.easytrip.telas.componentes.HospedagemCadastradasPanel;
+import com.mycompany.easytrip.telas.componentes.ProximoButton;
 import java.awt.*;
 import javax.swing.SwingUtilities;
 
@@ -9,7 +11,7 @@ public class TelaHospedagensCadastradas extends javax.swing.JPanel {
 
     public TelaHospedagensCadastradas() {
         initComponents();
-        teste();
+        adicionarComponentes();
     }
 
     /**
@@ -108,25 +110,37 @@ public class TelaHospedagensCadastradas extends javax.swing.JPanel {
     }//GEN-LAST:event_adicionarHospedagemButtonActionPerformed
 
 
-    private void teste(){
+    private void adicionarComponentes(){
         GridBagLayout layout = (GridBagLayout) this.getLayout();
         GridBagConstraints constraints = layout.getConstraints(this);
         constraints.anchor = GridBagConstraints.NORTHWEST;
         constraints.weightx = 0;
-        constraints.weighty = 0;
+        constraints.weighty = 1;
         constraints.gridx = 0;
         constraints.insets.set(15, 20, 0, 10);
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.gridwidth = 2;
         
         
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 4; i++){
             constraints.gridy = i + 3;
             
-            HospedagemCadastradasPanel panel = new HospedagemCadastradasPanel(i);
+            HospedagemCadastradasPanel panel = new HospedagemCadastradasPanel();
             
             this.add(panel, constraints);
         }
+        
+        constraints.anchor = GridBagConstraints.SOUTHWEST;
+        constraints.fill = GridBagConstraints.NONE;
+        constraints.insets.set(15, 20, 5, 10);
+        constraints.gridx = 0;
+        AnteriorButton anteriorButton = new AnteriorButton();
+        this.add(anteriorButton, constraints);
+        
+        constraints.anchor = GridBagConstraints.SOUTHEAST;
+        constraints.gridx = 1;
+        ProximoButton proximoButton = new ProximoButton();
+        this.add(proximoButton, constraints);
         /*constraints.gridy = 2;
         var avaliação = new JLabel("Nao há nenhuma hospedagem registrada");
         this.add(avaliação, constraints);*/

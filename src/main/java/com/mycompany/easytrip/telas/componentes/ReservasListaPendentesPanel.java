@@ -21,7 +21,7 @@ public class ReservasListaPendentesPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(163, 187, 229));
-        setLayout(new java.awt.GridLayout(1, 3, 2, 0));
+        setLayout(new java.awt.GridLayout(1, 5, 2, 0));
 
         jLabel1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         jLabel1.setText("Titulo");
@@ -37,7 +37,10 @@ public class ReservasListaPendentesPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void completarComponentes(){
+        ConfirmarReservaButton reservaButton = new ConfirmarReservaButton();
         DetalhesReservaButton button = new DetalhesReservaButton();
+        
+        this.add(reservaButton);
         this.add(button);
     }
 

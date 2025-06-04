@@ -11,7 +11,8 @@ public class HospedagemCadastradasPanel extends javax.swing.JPanel {
     
     public HospedagemCadastradasPanel(int hospedagemId){
         this.hospedagemId = hospedagemId;
-        this();
+        initComponents();
+        completarComponentes();
     }
 
     /**
@@ -31,7 +32,9 @@ public class HospedagemCadastradasPanel extends javax.swing.JPanel {
         setLayout(new java.awt.GridLayout(1, 6, 2, 0));
 
         jLabel1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        jLabel1.setText("Titulo");
+        jLabel1.setText("Título");
+        jLabel1.setMinimumSize(new java.awt.Dimension(60, 17));
+        jLabel1.setPreferredSize(new java.awt.Dimension(90, 17));
         add(jLabel1);
 
         jLabel2.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
@@ -45,8 +48,8 @@ public class HospedagemCadastradasPanel extends javax.swing.JPanel {
     
     private void completarComponentes(){
         ReservasDaHospedagemButton reservasButton = new ReservasDaHospedagemButton();
-        GerenciarHospedagemButton gerenciarButton = new GerenciarHospedagemButton(this.hospedagemId);
-        DeletarHospedagemButton deletarButton = new DeletarHospedagemButton(this.hospedagemId);
+        GerenciarHospedagemButton gerenciarButton = new GerenciarHospedagemButton();
+        DeletarHospedagemButton deletarButton = new DeletarHospedagemButton();
         
         this.add(reservasButton);
         this.add(gerenciarButton);

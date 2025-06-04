@@ -18,9 +18,10 @@ public class ReservasListaPanel extends javax.swing.JPanel {
 
         tituloLabel = new javax.swing.JLabel();
         statusLabel = new javax.swing.JLabel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
 
         setBackground(new java.awt.Color(163, 187, 229));
-        setLayout(new java.awt.GridLayout(1, 3, 2, 0));
+        setLayout(new java.awt.GridLayout(1, 4, 2, 0));
 
         tituloLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         tituloLabel.setText("Titulo");
@@ -29,6 +30,7 @@ public class ReservasListaPanel extends javax.swing.JPanel {
         statusLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         statusLabel.setText("Status");
         add(statusLabel);
+        add(filler1);
     }// </editor-fold>//GEN-END:initComponents
 
     private void completarComponentes(){
@@ -37,6 +39,7 @@ public class ReservasListaPanel extends javax.swing.JPanel {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JLabel statusLabel;
     private javax.swing.JLabel tituloLabel;
     // End of variables declaration//GEN-END:variables

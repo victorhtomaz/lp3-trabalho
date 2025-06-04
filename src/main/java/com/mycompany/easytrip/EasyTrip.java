@@ -1,19 +1,16 @@
 package com.mycompany.easytrip;
 
 import com.mycompany.easytrip.telas.TelaPrincipal;
-import com.mycompany.easytrip.telas.grupos.TelaVisualizarGrupos;
+import javax.swing.JFrame;
 
 public class EasyTrip {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-        var a = new TelaPrincipal();
+        var tela = new TelaPrincipal();
        
-        a.configurarEstadoMenu(true);
-        a.limparTela();
-        var b = new TelaVisualizarGrupos();
-        
-        a.add(b);
-        a.setVisible(true);
+        tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        tela.setLocationRelativeTo(null);
+
+        tela.setVisible(true);
     }
 }

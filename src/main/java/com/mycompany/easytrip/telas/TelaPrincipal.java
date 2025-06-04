@@ -1,5 +1,7 @@
 package com.mycompany.easytrip.telas;
 
+import com.mycompany.easytrip.telas.grupos.TelaGerenciarGrupo;
+import com.mycompany.easytrip.telas.grupos.TelaVisualizarGrupos;
 import com.mycompany.easytrip.telas.reservas.TelaReservasPendentes;
 import com.mycompany.easytrip.telas.reservas.TelaMinhasReservas;
 import com.mycompany.easytrip.telas.reservas.TelaDetalhesReserva;
@@ -10,12 +12,13 @@ import com.mycompany.easytrip.telas.hospedagem.TelaFavoritasHospede;
 import com.mycompany.easytrip.telas.hospedagem.TelaDetalhesHospedagem;
 import com.mycompany.easytrip.telas.hospedagem.TelaVisualizarHospedagens;
 import com.mycompany.easytrip.telas.hospedagem.TelaDeGerenciamentoHospedagem;
+import com.mycompany.easytrip.telas.grupos.TelaFavoritasGrupo;
+import com.mycompany.easytrip.telas.grupos.TelaRankingGrupo;
 import com.mycompany.easytrip.telas.reservas.TelaReservasDaHospedagem;
 import java.awt.Component;
 import javax.swing.JPanel;
 
-public class TelaPrincipal extends javax.swing.JFrame {
-
+public class TelaPrincipal extends javax.swing.JFrame{
     private JPanel telaAnterior;
     
     public TelaPrincipal() {
@@ -47,7 +50,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         gruposMenu = new javax.swing.JMenu();
         verGruposMenuItem = new javax.swing.JMenuItem();
         favoritasGrupoMenuItem = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        rankingHospedagensMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 2, 1, 1));
@@ -139,13 +142,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
         gruposMenu.setEnabled(false);
 
         verGruposMenuItem.setText("Ver grupos");
+        verGruposMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verGruposMenuItemActionPerformed(evt);
+            }
+        });
         gruposMenu.add(verGruposMenuItem);
 
         favoritasGrupoMenuItem.setText("Hospedagens favoritas");
+        favoritasGrupoMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                favoritasGrupoMenuItemActionPerformed(evt);
+            }
+        });
         gruposMenu.add(favoritasGrupoMenuItem);
 
-        jMenuItem1.setText("Ranking das hospedagens");
-        gruposMenu.add(jMenuItem1);
+        rankingHospedagensMenuItem.setText("Ranking das hospedagens");
+        rankingHospedagensMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rankingHospedagensMenuItemActionPerformed(evt);
+            }
+        });
+        gruposMenu.add(rankingHospedagensMenuItem);
 
         barraMenu.add(gruposMenu);
 
@@ -194,6 +212,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         mudarParaTelaMinhasReservas();
     }//GEN-LAST:event_minhasReservasMenuItemActionPerformed
+
+    private void verGruposMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verGruposMenuItemActionPerformed
+        // TODO add your handling code here:
+        mudarParaTelaVisualizarGrupos();
+    }//GEN-LAST:event_verGruposMenuItemActionPerformed
+
+    private void favoritasGrupoMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_favoritasGrupoMenuItemActionPerformed
+        // TODO add your handling code here:
+        mudarParaTelaFavoritasGrupo();
+    }//GEN-LAST:event_favoritasGrupoMenuItemActionPerformed
+
+    private void rankingHospedagensMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rankingHospedagensMenuItemActionPerformed
+        // TODO add your handling code here:
+        mudarParaTelaRankingGrupo();
+    }//GEN-LAST:event_rankingHospedagensMenuItemActionPerformed
     
     private void mudarTela(JPanel tela){
         salvarPaginaAnterior();
@@ -269,6 +302,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
         mudarTela(tela);
     }
     
+    public void mudarParaTelaVisualizarGrupos(){
+        TelaVisualizarGrupos tela = new TelaVisualizarGrupos();
+        mudarTela(tela);
+    }
+    
+    public void mudarParaTelaGerenciarGrupo(){
+        TelaGerenciarGrupo tela = new TelaGerenciarGrupo();
+        mudarTela(tela);
+    }
+    
+    public void mudarParaTelaFavoritasGrupo(){
+        TelaFavoritasGrupo tela = new TelaFavoritasGrupo();
+        mudarTela(tela);
+    }
+    
+    public void mudarParaTelaRankingGrupo(){
+        TelaRankingGrupo tela = new TelaRankingGrupo();
+        mudarTela(tela);
+    }
+    
     public void voltarPagina(){
         mudarTela(this.telaAnterior);
     }
@@ -310,11 +363,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu gruposMenu;
     private javax.swing.JMenu hospedagemMenu;
     private javax.swing.JMenuItem hospedagensCadastradaMenuItem;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem loginMenuItem;
     private javax.swing.JMenuItem minhaContaMenuItem;
     private javax.swing.JMenuItem minhasReservasMenuItem;
     private javax.swing.JMenu painelDoAnfitriãoMenu;
+    private javax.swing.JMenuItem rankingHospedagensMenuItem;
     private javax.swing.JMenuItem reservasPendentesMenuItem;
     private javax.swing.JMenuItem sairMenuItem;
     private com.mycompany.easytrip.telas.TelaDeLogin telaDeLogin1;

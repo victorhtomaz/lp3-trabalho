@@ -41,6 +41,7 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane2 = new javax.swing.JScrollPane();
         descricaoTextArea = new javax.swing.JTextArea();
+        voltarButton1 = new com.mycompany.easytrip.telas.componentes.VoltarButton();
 
         setBackground(new java.awt.Color(163, 187, 229));
         setLayout(new java.awt.GridLayout(1, 0));
@@ -227,6 +228,12 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(5, 20, 5, 10);
         detalhesPanel.add(jScrollPane2, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 10);
+        detalhesPanel.add(voltarButton1, gridBagConstraints);
 
         jScrollPane1.setViewportView(detalhesPanel);
 
@@ -270,5 +277,6 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
     private javax.swing.JButton reservarButton;
     private javax.swing.JLabel tipoLabel;
     private javax.swing.JLabel tituloLabel;
+    private com.mycompany.easytrip.telas.componentes.VoltarButton voltarButton1;
     // End of variables declaration//GEN-END:variables
 }

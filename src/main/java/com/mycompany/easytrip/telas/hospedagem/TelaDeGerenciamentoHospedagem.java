@@ -47,7 +47,7 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         checkInField = new javax.swing.JTextField();
         checkOutField = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        voltarButton1 = new javax.swing.JButton();
+        voltarButton5 = new com.mycompany.easytrip.telas.componentes.VoltarButton();
         enderecoPanel = new javax.swing.JPanel();
         cepLabel = new javax.swing.JLabel();
         numeroLabel = new javax.swing.JLabel();
@@ -90,6 +90,7 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         atualizarButton4 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
         voltarButton4 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(163, 187, 229));
         setLayout(new java.awt.CardLayout());
@@ -286,20 +287,12 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
         informacoesPanel.add(jSeparator1, gridBagConstraints);
-
-        voltarButton1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        voltarButton1.setText("Voltar");
-        voltarButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                voltarButton1ActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        informacoesPanel.add(voltarButton1, gridBagConstraints);
+        informacoesPanel.add(voltarButton5, gridBagConstraints);
 
         add(informacoesPanel, "card2");
 
@@ -528,6 +521,8 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         imagemPanel.add(imagemTituloLabel, gridBagConstraints);
 
+        imagensPanel.setPreferredSize(new java.awt.Dimension(200, 200));
+
         javax.swing.GroupLayout imagensPanelLayout = new javax.swing.GroupLayout(imagensPanel);
         imagensPanel.setLayout(imagensPanelLayout);
         imagensPanelLayout.setHorizontalGroup(
@@ -551,20 +546,20 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         imagemPanel.add(imagensPanel, gridBagConstraints);
 
         removerImagemButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        removerImagemButton.setText("remover");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        imagemPanel.add(removerImagemButton, gridBagConstraints);
-
-        adicionarImagemButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        adicionarImagemButton.setText("adicionar nova");
+        removerImagemButton.setText("Remover");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        imagemPanel.add(removerImagemButton, gridBagConstraints);
+
+        adicionarImagemButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        adicionarImagemButton.setText("Adicionar");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         imagemPanel.add(adicionarImagemButton, gridBagConstraints);
 
@@ -674,6 +669,7 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
             }
         ));
         datasTable.setMinimumSize(new java.awt.Dimension(50, 120));
+        datasTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(datasTable);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -699,7 +695,7 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         disponibilidadePanel.add(disponibilidadeDateChooser, gridBagConstraints);
 
         jButton3.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        jButton3.setText("adicionar data");
+        jButton3.setText("Adicionar");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -756,6 +752,14 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         disponibilidadePanel.add(voltarButton4, gridBagConstraints);
 
+        jButton1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        jButton1.setText("Remover");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        disponibilidadePanel.add(jButton1, gridBagConstraints);
+
         add(disponibilidadePanel, "card5");
     }// </editor-fold>//GEN-END:initComponents
 
@@ -796,11 +800,6 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         // TODO add your handling code here:
         anteriorCardLayout();
     }//GEN-LAST:event_anteriorButton3ActionPerformed
-
-    private void voltarButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarButton1ActionPerformed
-        // TODO add your handling code here:
-        voltarPagina();
-    }//GEN-LAST:event_voltarButton1ActionPerformed
 
     private void voltarButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarButton2ActionPerformed
         // TODO add your handling code here:
@@ -871,6 +870,7 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
     private javax.swing.JPanel imagensPanel;
     private javax.swing.JPanel informacoesPanel;
     private javax.swing.JLabel informacoesTituloLabel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
@@ -892,9 +892,9 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
     private javax.swing.JLabel tipoLabel;
     private javax.swing.JTextField tituloField;
     private javax.swing.JLabel tituloLabel;
-    private javax.swing.JButton voltarButton1;
     private javax.swing.JButton voltarButton2;
     private javax.swing.JButton voltarButton3;
     private javax.swing.JButton voltarButton4;
+    private com.mycompany.easytrip.telas.componentes.VoltarButton voltarButton5;
     // End of variables declaration//GEN-END:variables
 }

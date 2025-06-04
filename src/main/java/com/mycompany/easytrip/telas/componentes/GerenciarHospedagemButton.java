@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 public class GerenciarHospedagemButton extends javax.swing.JButton{
     private int hospedagemId;
     
-    private GerenciarHospedagemButton(){
+    public GerenciarHospedagemButton(){
         super("Gerenciar");
         
         this.setFont(new Font("JetBrainsMono NF", Font.PLAIN, 12));
@@ -20,11 +20,6 @@ public class GerenciarHospedagemButton extends javax.swing.JButton{
                 abrirTelaGerenciamento();
             }
         });
-    }
-    
-    public GerenciarHospedagemButton(int hospedagemId){
-        this.hospedagemId = hospedagemId;
-        this();
     }
     
     private void abrirTelaGerenciamento(){

@@ -41,7 +41,7 @@ public class TelaDetalhesReserva extends javax.swing.JPanel {
         cancelarReservaButton = new javax.swing.JButton();
         quantidadeHospedeLabel = new javax.swing.JLabel();
         quantidadeHospedeField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        voltarButton1 = new com.mycompany.easytrip.telas.componentes.VoltarButton();
 
         setBackground(new java.awt.Color(163, 187, 229));
         setLayout(new java.awt.GridBagLayout());
@@ -268,26 +268,12 @@ public class TelaDetalhesReserva extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(quantidadeHospedeField, gridBagConstraints);
-
-        jButton1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        jButton1.setText("Voltar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 11;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        add(jButton1, gridBagConstraints);
+        add(voltarButton1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        mudarParaTelaAnterior();
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void mudarParaTelaAnterior(){
         TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
@@ -305,7 +291,6 @@ public class TelaDetalhesReserva extends javax.swing.JPanel {
     private javax.swing.JLabel dataSaidaLabel;
     private javax.swing.JTextField enderecoField;
     private javax.swing.JLabel enderecoLabel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel minhasFavoritasTituloLabel;
     private javax.swing.JTextField precoDiariaField;
@@ -318,5 +303,6 @@ public class TelaDetalhesReserva extends javax.swing.JPanel {
     private javax.swing.JLabel statusLabel;
     private javax.swing.JTextField tituloField;
     private javax.swing.JLabel tituloHospedagemLabel;
+    private com.mycompany.easytrip.telas.componentes.VoltarButton voltarButton1;
     // End of variables declaration//GEN-END:variables
 }

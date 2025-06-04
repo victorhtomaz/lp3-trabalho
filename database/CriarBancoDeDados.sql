@@ -1,0 +1,99 @@
+CREATE DATABASE IF NOT EXISTS easytrip;
+
+USE easytrip;
+
+CREATE TABLE IF NOT EXISTS Usuario(
+Id INT AUTO_INCREMENT PRIMARY KEY,
+Nome VARCHAR(255) NOT NULL,
+Email VARCHAR(254) NOT NULL,
+Senha VARCHAR(50) NOT NULL,
+DataNascimento DATE NOT NULL,
+CPF CHAR(11) NOT NULL,
+UNIQUE INDEX email_index (Email),
+UNIQUE INDEX cpf_index (CPF));
+
+CREATE TABLE IF NOT EXISTS Endereco(
+Id INT AUTO_INCREMENT PRIMARY KEY,
+Cep CHAR(8) NOT NULL,
+Numero VARCHAR(10) NOT NULL,
+Rua VARCHAR(255) NOT NULL,
+Bairro VARCHAR(100) NOT NULL,
+Complemento VARCHAR(100) NULL,
+Cidade VARCHAR(100) NOT NULL,
+Estado CHAR(2) NOT NULL);
+
+CREATE TABLE IF NOT EXISTS Hospedagem(
+Id INT AUTO_INCREMENT PRIMARY KEY,
+Usuario_Id INT NOT NULL,
+Endereco_Id INT NOT NULL,
+Titulo VARCHAR(200) NOT NULL,
+Descricao VARCHAR(1024),
+Tipo ENUM('Casa', 'Apartamento', 'Cabana', 'Chale', 'Sitio', 'Chacara') NOT NULL,
+CapacidadeMaxima SMALLINT NOT NULL,
+PrecoDiaria DECIMAL(8,2) NOT NULL,
+CheckIn TIME NOT NULL,
+CheckOut TIME NOT NULL,
+AvaliacaoMedia DECIMAL(3,1) NOT NULL,
+FOREIGN KEY (Usuario_Id) REFERENCES Usuario(Id),
+FOREIGN KEY (Endereco_Id) REFERENCES Endereco(Id));
+
+CREATE TABLE IF NOT EXISTS Disponibilidade(
+Id INT AUTO_INCREMENT PRIMARY KEY,
+Hospedagem_Id INT NOT NULL,
+Data DATE NOT NULL,
+Status ENUM('Disponivel', 'Reservado'),
+FOREIGN KEY (Hospedagem_Id) REFERENCES Hospedagem(Id));
+
+CREATE TABLE IF NOT EXISTS Imagem(
+Id INT NOT NULL PRIMARY KEY,
+Hospedagem_Id INT NOT NULL,
+Url VARCHAR(1024),
+FOREIGN KEY (Hospedagem_Id) REFERENCES Hospedagem(Id));
+
+CREATE TABLE IF NOT EXISTS FavoritaHospede(
+Usuario_Id INT NOT NULL,
+Hospedagem_Id INT NOT NULL,
+PRIMARY KEY (Usuario_Id, Hospedagem_Id),
+FOREIGN KEY (Usuario_Id) REFERENCES Usuario(Id),
+FOREIGN KEY (Hospedagem_Id) REFERENCES Hospedagem(Id));
+
+CREATE TABLE IF NOT EXISTS Reserva(
+Id INT AUTO_INCREMENT PRIMARY KEY,
+Usuario_Id INT NOT NULL,
+Hospedagem_Id INT NOT NULL,
+QuantidadeDeHospedes INT NOT NULL,
+DataEntrada DATE NOT NULL,
+DataSaida DATE NOT NULL,
+QuantidadeDeDias INT NOT NULL,
+PrecoDiaria DECIMAL(8,2) NOT NULL,
+Status ENUM('Pendente', 'Confirmada', 'Cancelada', 'Finalizada'),
+Avaliacao DECIMAL(3,1) NULL,
+FOREIGN KEY (Usuario_Id) REFERENCES Usuario(Id),
+FOREIGN KEY (Hospedagem_Id) REFERENCES Hospedagem(Id));
+
+CREATE TABLE IF NOT EXISTS Grupo(
+Id INT AUTO_INCREMENT PRIMARY KEY,
+Nome VARCHAR(100) NOT NULL);
+
+CREATE TABLE IF NOT EXISTS HospedeGrupo(
+Id INT NOT NULL PRIMARY KEY,
+Usuario_Id INT NOT NULL,
+Grupo_Id INT NOT NULL,
+Funcao ENUM('Responsavel', 'Administrador', 'Membro'),
+QuantidadeAcompanhantes INT NOT NULL,
+FOREIGN KEY (Usuario_Id) REFERENCES Usuario(Id),
+FOREIGN KEY (Grupo_Id) REFERENCES Grupo(Id));
+
+CREATE TABLE IF NOT EXISTS FavoritaGrupo(
+Id INT NOT NULL PRIMARY KEY,
+Grupo_Id INT NOT NULL,
+Hospedagem_Id INT NOT NULL,
+FOREIGN KEY (Grupo_Id) REFERENCES Grupo(Id),
+FOREIGN KEY (Hospedagem_Id) REFERENCES Hospedagem(Id));
+
+CREATE TABLE IF NOT EXISTS VotacaoFavoritas(
+HospedeGrupo_Id INT NOT NULL,
+FavoritaGrupo_Id INT NOT NULL,
+PRIMARY KEY (HospedeGrupo_Id, FavoritaGrupo_Id),
+FOREIGN KEY (HospedeGrupo_Id) REFERENCES HospedeGrupo(Id),
+FOREIGN KEY (FavoritaGrupo_Id) REFERENCES FavoritaGrupo(Id));

@@ -2,6 +2,7 @@ package com.mycompany.easytrip.telas;
 
 import com.mycompany.easytrip.dominio.entidades.Usuario;
 import com.mycompany.easytrip.dominio.excecoes.DominioException;
+import com.mycompany.easytrip.dominio.objetosDeValor.Cpf;
 import com.mycompany.easytrip.dominio.objetosDeValor.Email;
 import com.mycompany.easytrip.dominio.objetosDeValor.Senha;
 import com.mycompany.easytrip.repositorio.UsuarioRepositorio;
@@ -14,16 +15,10 @@ import javax.swing.SwingUtilities;
 
 public class TelaDeLogin extends javax.swing.JPanel {
 
-    /**
-     * Creates new form TelaDeLogin
-     */
     public TelaDeLogin() {
         initComponents();
     }
     
-    public TelaDeLogin(TelaPrincipal telaPrincipal){
-        initComponents();
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,7 +59,7 @@ public class TelaDeLogin extends javax.swing.JPanel {
         logoLabel.setBackground(new java.awt.Color(213, 181, 156));
         logoLabel.setFont(new java.awt.Font("Arial", 1, 54)); // NOI18N
         logoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logoLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\victo\\OneDrive\\Documentos\\Alguma coisa ae\\EasyTrip\\src\\main\\java\\com\\mycompany\\easytrip\\Telas\\Imagens\\capivaraicon.png")); // NOI18N
+        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/capivaraicon.png"))); // NOI18N
         logoLabel.setText("EasyTrip");
         logoLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         logoLabel.setPreferredSize(new java.awt.Dimension(120, 80));
@@ -328,37 +323,65 @@ public class TelaDeLogin extends javax.swing.JPanel {
            
            int usuarioId = UsuarioRepositorio.verificarLogin(email, senha);
            
+           if (usuarioId == 0){
+               JOptionPane.showMessageDialog(null, "Usuário e/ou senha incorretas", "Aviso", JOptionPane.WARNING_MESSAGE);
+               return;
+           }
+           
            TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
            telaPrincipal.configurarEstadoMenu(true);
            telaPrincipal.mudarParaTelaVisualizacaoHospedagens();
         }
         catch(DominioException e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
         catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Erro ao persistir dados");
+            JOptionPane.showMessageDialog(null, "Erro ao persistir dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Erro desconhecido");
+            JOptionPane.showMessageDialog(null, "Erro desconhecido", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     
     private void registrarUsuario(){
         String nome = nomeField.getText();
-        String cpf = cpfField.getText();
+        String cpfValor = cpfField.getText();
         String enderecoEmail = emailField2.getText();
-        String senha = new String(senhaField2.getPassword());
+        String senhaValor = new String(senhaField2.getPassword());
         LocalDate dataNascimento = dataNascimentoDateChosser.getDate().toInstant()
                 .atZone(ZoneId.systemDefault()).toLocalDate();
         
         try{
-            Usuario usuario = new Usuario(nome, enderecoEmail, senha, cpf, dataNascimento);
+            Email email = new Email(enderecoEmail);
+            Senha senha = new Senha(senhaValor);
+            Cpf cpf = new Cpf(cpfValor);
+            
+            boolean existeEmail = UsuarioRepositorio.existeUmUsuarioComEmail(email);
+            
+            if (existeEmail){
+                JOptionPane.showMessageDialog(null, "O email inserido já está cadastrado", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            boolean existeCpf = UsuarioRepositorio.existeUmUsuarioComCpf(cpf);
+            if (existeCpf){
+                JOptionPane.showMessageDialog(null, "O cpf inserido já está cadastrado", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            if (dataNascimento.isAfter(LocalDate.now()))
+            {
+                JOptionPane.showMessageDialog(null, "Data de nascimento inválida", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            Usuario usuario = new Usuario(nome, email, senha, cpf, dataNascimento);
 
             UsuarioRepositorio.criarUsuario(usuario);
             
             CardLayout cardLayout = (CardLayout) lateralPanel.getLayout();
             
-            JOptionPane.showMessageDialog(null, "Registrado com sucesso");
+            JOptionPane.showMessageDialog(null, "Registrado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             
             cardLayout.previous(lateralPanel);
         
@@ -369,13 +392,13 @@ public class TelaDeLogin extends javax.swing.JPanel {
             dataNascimentoDateChosser.setDate(null);          
         }
         catch(DominioException e){
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
         catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Erro ao persistir dados");
+            JOptionPane.showMessageDialog(null, "Erro ao persistir dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Erro desconhecido");
+            JOptionPane.showMessageDialog(null, "Erro desconhecido", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 

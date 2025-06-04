@@ -21,11 +21,15 @@ public class TelaReservasPendentes extends javax.swing.JPanel {
         reservasListaPendentesPanel2 = new com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel();
         reservasListaPendentesPanel3 = new com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel();
         reservasListaPendentesPanel4 = new com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel();
+        reservasListaPendentesPanel6 = new com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        tituloLabel = new javax.swing.JLabel();
+        qHospedesLabel = new javax.swing.JLabel();
+        totalAReceberLabel = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        anteriorButton1 = new com.mycompany.easytrip.telas.componentes.AnteriorButton();
+        proximoButton1 = new com.mycompany.easytrip.telas.componentes.ProximoButton();
 
         setBackground(new java.awt.Color(163, 187, 229));
         setLayout(new java.awt.GridBagLayout());
@@ -38,7 +42,6 @@ public class TelaReservasPendentes extends javax.swing.JPanel {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(hospedagensTituloLabel, gridBagConstraints);
 
@@ -51,12 +54,14 @@ public class TelaReservasPendentes extends javax.swing.JPanel {
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.weightx = 1.0;
         add(jSeparator1, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(reservasListaPendentesPanel2, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -64,6 +69,7 @@ public class TelaReservasPendentes extends javax.swing.JPanel {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(reservasListaPendentesPanel3, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -71,45 +77,78 @@ public class TelaReservasPendentes extends javax.swing.JPanel {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(reservasListaPendentesPanel4, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        add(reservasListaPendentesPanel6, gridBagConstraints);
 
         jPanel1.setBackground(new java.awt.Color(163, 187, 229));
-        jPanel1.setLayout(new java.awt.GridLayout(1, 4));
+        jPanel1.setLayout(new java.awt.GridLayout(1, 5));
 
-        jLabel1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 14)); // NOI18N
-        jLabel1.setText("Titulo");
-        jPanel1.add(jLabel1);
+        tituloLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 14)); // NOI18N
+        tituloLabel.setText("Titulo");
+        jPanel1.add(tituloLabel);
 
-        jLabel2.setFont(new java.awt.Font("JetBrainsMono NF", 0, 14)); // NOI18N
-        jLabel2.setText("Q. hóspedes");
-        jPanel1.add(jLabel2);
+        qHospedesLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 14)); // NOI18N
+        qHospedesLabel.setText("Q. hóspedes");
+        jPanel1.add(qHospedesLabel);
 
-        jLabel3.setFont(new java.awt.Font("JetBrainsMono NF", 0, 14)); // NOI18N
-        jLabel3.setText("Total a receber");
-        jPanel1.add(jLabel3);
+        totalAReceberLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 14)); // NOI18N
+        totalAReceberLabel.setText("Total a receber");
+        jPanel1.add(totalAReceberLabel);
         jPanel1.add(filler1);
+        jPanel1.add(filler2);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(jPanel1, gridBagConstraints);
+
+        anteriorButton1.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 5, 10);
+        add(anteriorButton1, gridBagConstraints);
+
+        proximoButton1.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 5, 10);
+        add(proximoButton1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.mycompany.easytrip.telas.componentes.AnteriorButton anteriorButton1;
     private javax.swing.Box.Filler filler1;
+    private javax.swing.Box.Filler filler2;
     private javax.swing.JLabel hospedagensTituloLabel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
+    private com.mycompany.easytrip.telas.componentes.ProximoButton proximoButton1;
+    private javax.swing.JLabel qHospedesLabel;
     private com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel reservasListaPendentesPanel2;
     private com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel reservasListaPendentesPanel3;
     private com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel reservasListaPendentesPanel4;
+    private com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel reservasListaPendentesPanel6;
+    private javax.swing.JLabel tituloLabel;
+    private javax.swing.JLabel totalAReceberLabel;
     // End of variables declaration//GEN-END:variables
 }
