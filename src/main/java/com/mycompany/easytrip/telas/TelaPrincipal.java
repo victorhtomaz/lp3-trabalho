@@ -1,25 +1,16 @@
 package com.mycompany.easytrip.telas;
 
-import com.mycompany.easytrip.telas.grupos.TelaGerenciarGrupo;
-import com.mycompany.easytrip.telas.grupos.TelaVisualizarGrupos;
-import com.mycompany.easytrip.telas.reservas.TelaReservasPendentes;
-import com.mycompany.easytrip.telas.reservas.TelaMinhasReservas;
-import com.mycompany.easytrip.telas.reservas.TelaDetalhesReserva;
-import com.mycompany.easytrip.telas.reservas.TelaRealizarReserva;
-import com.mycompany.easytrip.telas.hospedagem.TelaCriarHospedagem;
-import com.mycompany.easytrip.telas.hospedagem.TelaHospedagensCadastradas;
-import com.mycompany.easytrip.telas.hospedagem.TelaFavoritasHospede;
-import com.mycompany.easytrip.telas.hospedagem.TelaDetalhesHospedagem;
-import com.mycompany.easytrip.telas.hospedagem.TelaVisualizarHospedagens;
-import com.mycompany.easytrip.telas.hospedagem.TelaDeGerenciamentoHospedagem;
-import com.mycompany.easytrip.telas.grupos.TelaFavoritasGrupo;
-import com.mycompany.easytrip.telas.grupos.TelaRankingGrupo;
-import com.mycompany.easytrip.telas.reservas.TelaReservasDaHospedagem;
+import com.mycompany.easytrip.dominio.entidades.Usuario;
+import com.mycompany.easytrip.telas.grupos.*;
+import com.mycompany.easytrip.telas.reservas.*;
+import com.mycompany.easytrip.telas.hospedagem.*;
+
 import java.awt.Component;
 import javax.swing.JPanel;
 
 public class TelaPrincipal extends javax.swing.JFrame{
     private JPanel telaAnterior;
+    private Usuario usuario;
     
     public TelaPrincipal() {
         initComponents();
@@ -180,6 +171,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
     private void sairMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairMenuItemActionPerformed
         // TODO add your handling code here:
         configurarEstadoMenu(false);
+        setUsuarioLogado(null);
         mudarParaTelaDeLogin();
     }//GEN-LAST:event_sairMenuItemActionPerformed
 
@@ -228,6 +220,14 @@ public class TelaPrincipal extends javax.swing.JFrame{
         mudarParaTelaRankingGrupo();
     }//GEN-LAST:event_rankingHospedagensMenuItemActionPerformed
     
+    public void setUsuarioLogado(Usuario usuario){
+        this.usuario = usuario;
+    }
+    
+    public Usuario getUsuarioLogado(Usuario usuario){
+        return this.usuario;
+    }
+    
     private void mudarTela(JPanel tela){
         salvarPaginaAnterior();
         limparTela();
@@ -248,7 +248,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
     }
     
     public void mudarParaTelaContaDoUsuario(){
-        TelaContaDoUsuario tela = new TelaContaDoUsuario();
+        TelaContaDoUsuario tela = new TelaContaDoUsuario(usuario);
         mudarTela(tela);
     }
     

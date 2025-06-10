@@ -2,11 +2,16 @@ package com.mycompany.easytrip.dominio.objetosDeValor;
 
 import com.mycompany.easytrip.dominio.excecoes.CpfException;
 import com.mycompany.easytrip.dominio.interfaces.Validacao;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 
+@Embeddable
 public class Cpf implements Validacao {
-
+    @Column(name = "Cpf")
     private String valor;
     public static final int TAMANHO = 11;
+
+    protected Cpf(){  }
 
     public Cpf(String valor) throws CpfException{
         StringBuilder aux = new StringBuilder();
@@ -17,17 +22,16 @@ public class Cpf implements Validacao {
 
         this.valor = aux.toString();
 
-        if (!eValido())
-            throw new CpfException("Um CPF deve conter: " + TAMANHO + " digítos");
+        validar();
     }
 
     @Override
-    public boolean eValido() {
+    public void validar() throws CpfException{
         if (valor.isBlank() || valor.length() != TAMANHO)
-            return false;
+            throw new CpfException("Um CPF deve conter: " + TAMANHO + " digítos");
 
         if (valor.chars().distinct().count() == 1)
-            return false;
+            throw new CpfException("Um cpf nao pode conter todos digítos iguais");
 
         int digitoValidador;
         int multiplicador = 10;
@@ -42,7 +46,7 @@ public class Cpf implements Validacao {
         digitoValidador = (resto < 2) ? 0 : TAMANHO - resto;
 
         if (digitoValidador != Character.getNumericValue(valor.charAt(TAMANHO - 2)))
-            return false;
+            throw new CpfException("O cpf é inválido");
 
         multiplicador = 11;
         soma = 0;
@@ -56,9 +60,7 @@ public class Cpf implements Validacao {
         digitoValidador = (resto < 2) ? 0 : TAMANHO - resto;
 
         if (digitoValidador != Character.getNumericValue(valor.charAt(TAMANHO - 1)))
-            return false;
-
-        return true;
+            throw new CpfException("O cpf é inválido");
     }
     
     public String getValor(){

@@ -5,9 +5,12 @@ import com.mycompany.easytrip.dominio.excecoes.DominioException;
 import com.mycompany.easytrip.dominio.objetosDeValor.Cpf;
 import com.mycompany.easytrip.dominio.objetosDeValor.Email;
 import com.mycompany.easytrip.dominio.objetosDeValor.Senha;
+import com.mycompany.easytrip.repositorio.MinhaConexao;
+import com.mycompany.easytrip.repositorio.Transacao;
 import com.mycompany.easytrip.repositorio.UsuarioRepositorio;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
 import java.awt.*;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import javax.swing.JOptionPane;
@@ -318,28 +321,31 @@ public class TelaDeLogin extends javax.swing.JPanel {
         String valorSenha = new String(senhaField1.getPassword());
         
         try{
-           Email email = new Email(enderecoEmail);
-           Senha senha = new Senha(valorSenha);
+            UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorio(MinhaConexao.getEntityManager());
+            
+            Email email = new Email(enderecoEmail);
+            Senha senha = new Senha(valorSenha);
            
-           int usuarioId = UsuarioRepositorio.verificarLogin(email, senha);
+            Usuario usuario = usuarioRepositorio.verificarLogin(email, senha);
            
-           if (usuarioId == 0){
+            if (usuario == null){
                JOptionPane.showMessageDialog(null, "Usuário e/ou senha incorretas", "Aviso", JOptionPane.WARNING_MESSAGE);
                return;
-           }
+            }
            
-           TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
-           telaPrincipal.configurarEstadoMenu(true);
-           telaPrincipal.mudarParaTelaVisualizacaoHospedagens();
+            TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
+            telaPrincipal.setUsuarioLogado(usuario);
+            telaPrincipal.configurarEstadoMenu(true);
+            telaPrincipal.mudarParaTelaVisualizacaoHospedagens();
         }
         catch(DominioException e){
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        catch(SQLException e){
+        catch(PersistenceException e){
             JOptionPane.showMessageDialog(null, "Erro ao persistir dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Erro desconhecido", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -352,18 +358,22 @@ public class TelaDeLogin extends javax.swing.JPanel {
                 .atZone(ZoneId.systemDefault()).toLocalDate();
         
         try{
+            EntityManager entityManager = MinhaConexao.getEntityManager();
+            Transacao transacao = new Transacao(entityManager);
+            UsuarioRepositorio usuarioRepositorio = new UsuarioRepositorio(entityManager);
+            
             Email email = new Email(enderecoEmail);
             Senha senha = new Senha(senhaValor);
             Cpf cpf = new Cpf(cpfValor);
             
-            boolean existeEmail = UsuarioRepositorio.existeUmUsuarioComEmail(email);
+            boolean existeEmail = usuarioRepositorio.existeUmUsuarioComEmail(email);
             
             if (existeEmail){
                 JOptionPane.showMessageDialog(null, "O email inserido já está cadastrado", "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             
-            boolean existeCpf = UsuarioRepositorio.existeUmUsuarioComCpf(cpf);
+            boolean existeCpf = usuarioRepositorio.existeUmUsuarioComCpf(cpf);
             if (existeCpf){
                 JOptionPane.showMessageDialog(null, "O cpf inserido já está cadastrado", "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -377,7 +387,11 @@ public class TelaDeLogin extends javax.swing.JPanel {
             
             Usuario usuario = new Usuario(nome, email, senha, cpf, dataNascimento);
 
-            UsuarioRepositorio.criarUsuario(usuario);
+            transacao.iniciar();
+            usuarioRepositorio.criarUsuario(usuario);
+            transacao.confirmar();
+            
+            MinhaConexao.finalizar(entityManager);
             
             CardLayout cardLayout = (CardLayout) lateralPanel.getLayout();
             
@@ -394,7 +408,7 @@ public class TelaDeLogin extends javax.swing.JPanel {
         catch(DominioException e){
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        catch(SQLException e){
+        catch(PersistenceException e){
             JOptionPane.showMessageDialog(null, "Erro ao persistir dados", "Erro", JOptionPane.ERROR_MESSAGE);
         }
         catch(Exception e){

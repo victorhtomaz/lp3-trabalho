@@ -1,5 +1,7 @@
 package com.mycompany.easytrip.dominio.interfaces;
 
+import com.mycompany.easytrip.dominio.excecoes.DominioException;
+
 public interface Validacao {
-    public boolean eValido();
+    public void validar() throws DominioException;
 }
