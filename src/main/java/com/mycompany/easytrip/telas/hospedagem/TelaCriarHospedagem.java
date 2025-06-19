@@ -1,27 +1,29 @@
 package com.mycompany.easytrip.telas.hospedagem;
 
-import com.mycompany.easytrip.dominio.entidades.Endereco;
-import com.mycompany.easytrip.dominio.entidades.Hospedagem;
+import com.mycompany.easytrip.controllers.CriarHospedagemController;
 import com.mycompany.easytrip.dominio.enums.EstadoBrasil;
 import com.mycompany.easytrip.dominio.enums.TipoDeHospedagem;
-import com.mycompany.easytrip.dominio.excecoes.DominioException;
-import com.mycompany.easytrip.repositorio.HospedagemRepositorio;
-import com.mycompany.easytrip.repositorio.MinhaConexao;
-import com.mycompany.easytrip.repositorio.Transacao;
 import com.mycompany.easytrip.telas.TelaPrincipal;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceException;
 import java.awt.CardLayout;
-import java.math.BigDecimal;
-import java.time.LocalTime;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 public class TelaCriarHospedagem extends javax.swing.JPanel {
+    private int usuarioId;
+    private CriarHospedagemController controller;
     
     public TelaCriarHospedagem() {
         initComponents();
+    }
+    
+    public TelaCriarHospedagem(int usuarioId){
+        initComponents();
+        this.usuarioId = usuarioId;
+        this.controller = new CriarHospedagemController(this);
+    }
+    
+    public int getUsuarioId(){
+        return usuarioId;
     }
     
     /**
@@ -231,7 +233,7 @@ public class TelaCriarHospedagem extends javax.swing.JPanel {
         informacoesPanel.add(checkInField, gridBagConstraints);
 
         checkOutField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
-        checkOutField.setText("9:00");
+        checkOutField.setText("09:00");
         checkOutField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -461,59 +463,9 @@ public class TelaCriarHospedagem extends javax.swing.JPanel {
 
     private void criarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_criarButtonActionPerformed
         // TODO add your handling code here:
-        criarHospedagem();
+        controller.criarHospedagem();
     }//GEN-LAST:event_criarButtonActionPerformed
 
-    private void criarHospedagem(){
-        String titulo = tituloField.getText();
-        String descricao = descricaoTextArea.getText();
-        TipoDeHospedagem tipo = (TipoDeHospedagem) tipoHospedagemComboBox.getSelectedItem();
-        int capacidadeMaxima = Integer.parseInt(capacidadeMaximaField.getText());
-        
-        Number auxPreco = (Number)precoDiariaField.getValue();
-        BigDecimal precoDiaria = new BigDecimal(auxPreco.doubleValue());
-        
-        LocalTime checkIn = LocalTime.parse(checkInField.getText());
-        LocalTime checkOut = LocalTime.parse(checkOutField.getText());
-        
-        String cep = cepField.getText();
-        String numero = numeroField.getText();
-        String rua = ruaField.getText();
-        String bairro = bairroField.getText();
-        String complemento = complementoField.getText();
-        String cidade = cidadeField.getText();
-        EstadoBrasil estado = (EstadoBrasil) estadoComboBox.getSelectedItem();
-        
-        try{
-            EntityManager entityManager = MinhaConexao.getEntityManager();
-            Transacao transacao = new Transacao(entityManager);
-            HospedagemRepositorio hospedagemRepositorio = new HospedagemRepositorio(entityManager);
-            
-            Endereco endereco = new Endereco(cep, numero, rua, bairro, complemento, cidade, estado);
-            Hospedagem hospedagem = new Hospedagem(1, titulo, descricao, tipo, capacidadeMaxima, precoDiaria, checkIn, checkOut, endereco);
-            
-            transacao.iniciar();
-            hospedagemRepositorio.criarHospedagem(hospedagem);
-            transacao.confirmar();
-            
-            MinhaConexao.finalizar(entityManager);
-            
-            JOptionPane.showMessageDialog(null, "Hospedagem cadastrada com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            
-            TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
-            telaPrincipal.mudarParaTelaHospedagensCadastradas();
-        }
-        catch(DominioException e){
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-        catch(PersistenceException e){
-            JOptionPane.showMessageDialog(null, "Erro ao persistir dados", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-   }
-    
     private void proximoCardLayout(){
         CardLayout layout = (CardLayout) this.getLayout();
         layout.next(this);
@@ -523,45 +475,50 @@ public class TelaCriarHospedagem extends javax.swing.JPanel {
         CardLayout layout = (CardLayout) this.getLayout();
         layout.previous(this);
     }
-
+    
+    public void mudarParaTelaHospedagensCadastradas(){
+        TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
+        telaPrincipal.mudarParaTelaHospedagensCadastradas();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anteriorButton;
-    private javax.swing.JTextField bairroField;
+    public javax.swing.JTextField bairroField;
     private javax.swing.JLabel bairroLabel;
-    private javax.swing.JFormattedTextField capacidadeMaximaField;
+    public javax.swing.JFormattedTextField capacidadeMaximaField;
     private javax.swing.JLabel capacidadeMaximaLabel;
-    private javax.swing.JTextField cepField;
+    public javax.swing.JTextField cepField;
     private javax.swing.JLabel cepLabel;
-    private javax.swing.JFormattedTextField checkInField;
+    public javax.swing.JFormattedTextField checkInField;
     private javax.swing.JLabel checkInLabel;
-    private javax.swing.JFormattedTextField checkOutField;
+    public javax.swing.JFormattedTextField checkOutField;
     private javax.swing.JLabel checkOutLabel;
-    private javax.swing.JTextField cidadeField;
+    public javax.swing.JTextField cidadeField;
     private javax.swing.JLabel cidadeLabel;
-    private javax.swing.JTextField complementoField;
+    public javax.swing.JTextField complementoField;
     private javax.swing.JLabel complementoLabel;
     private javax.swing.JButton criarButton;
     private javax.swing.JLabel descricaoLabel;
-    private javax.swing.JTextArea descricaoTextArea;
+    public javax.swing.JTextArea descricaoTextArea;
     private javax.swing.JPanel enderecoPanel;
     private javax.swing.JLabel enderecoTituloLabel;
-    private javax.swing.JComboBox<EstadoBrasil> estadoComboBox;
+    public javax.swing.JComboBox<EstadoBrasil> estadoComboBox;
     private javax.swing.JLabel estadoLabel;
     private javax.swing.JPanel informacoesPanel;
     private javax.swing.JLabel informacoesTituloLabel;
     private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField numeroField;
+    public javax.swing.JTextField numeroField;
     private javax.swing.JLabel numeroLabel;
-    private javax.swing.JFormattedTextField precoDiariaField;
+    public javax.swing.JFormattedTextField precoDiariaField;
     private javax.swing.JLabel precoDiariaLabel;
     private javax.swing.JButton proximoButton;
-    private javax.swing.JTextField ruaField;
+    public javax.swing.JTextField ruaField;
     private javax.swing.JLabel ruaLabel;
-    private javax.swing.JComboBox<TipoDeHospedagem> tipoHospedagemComboBox;
+    public javax.swing.JComboBox<TipoDeHospedagem> tipoHospedagemComboBox;
     private javax.swing.JLabel tipoLabel;
-    private javax.swing.JTextField tituloField;
+    public javax.swing.JTextField tituloField;
     private javax.swing.JLabel tituloLabel;
     // End of variables declaration//GEN-END:variables
 }

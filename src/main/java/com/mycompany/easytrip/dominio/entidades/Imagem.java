@@ -13,16 +13,12 @@ public class Imagem implements Validacao{
     @Column(name = "Id")
     private int id;
     
-    @Column(name = "Hospedagem_Id")
-    private int hospedagemId;
-    
     @Column(name = "Url")
     private String url;
     
     protected Imagem(){}
     
-    public Imagem(int hospedagemId, String url) throws ImagemException{
-        this.hospedagemId = hospedagemId;
+    public Imagem(String url) throws ImagemException{
         this.url = url;
         
         validar();
@@ -30,11 +26,12 @@ public class Imagem implements Validacao{
 
     @Override
     public void validar() throws ImagemException {
-        if (hospedagemId < 0)
-            throw new ImagemException("O id da hospedagem é inválido");
-        
         if (url.isBlank())
             throw new ImagemException("A url não pode ser vazia");
+    }
+    
+    public int getId(){
+        return id;
     }
     
     public String getUrl(){
@@ -54,7 +51,7 @@ public class Imagem implements Validacao{
         Imagem that = (Imagem) obj;
         
         return this.id == that.id;
-    }
+}
 
     @Override
     public int hashCode() {

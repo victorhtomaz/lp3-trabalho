@@ -1,32 +1,24 @@
 package com.mycompany.easytrip.telas;
 
-import com.mycompany.easytrip.dominio.entidades.Usuario;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+import com.mycompany.easytrip.repositorio.MinhaConexao;
+import com.mycompany.easytrip.controllers.LoginController;
 
 public class TelaContaDoUsuario extends javax.swing.JPanel {
 
-    private Usuario usuario;
+    private int usuarioId;
     
     public TelaContaDoUsuario() {
         initComponents();
     }
     
-    public TelaContaDoUsuario(Usuario usuario){
+    public TelaContaDoUsuario(int usuarioId){
         initComponents();
-        
-        this.usuario = usuario;
-        preencherCampos();
+        this.usuarioId = usuarioId;
+        LoginController.obterDadosUsuario(this, MinhaConexao.getEntityManager());
     }
     
-    private void preencherCampos(){
-        nomeField.setText(usuario.getNome());
-        emailField.setText(usuario.getEnderecoEmail());
-        
-        LocalDate dataNascimento = usuario.getDataNascimento();
-        dataNascimentoChooser.setDate(Date.from(dataNascimento.atStartOfDay(ZoneId.systemDefault()).toInstant()));
-        cpfField.setText(usuario.getValorCpf());
+    public int getUsuarioId(){
+        return usuarioId;
     }
 
     /**
@@ -167,15 +159,15 @@ public class TelaContaDoUsuario extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField cpfField;
+    public javax.swing.JTextField cpfField;
     private javax.swing.JLabel cpfLabel;
     private javax.swing.JLabel dataDeNascimentoLabel;
-    private com.toedter.calendar.JDateChooser dataNascimentoChooser;
-    private javax.swing.JTextField emailField;
+    public com.toedter.calendar.JDateChooser dataNascimentoChooser;
+    public javax.swing.JTextField emailField;
     private javax.swing.JLabel emailLabel;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel minhaContaLabel;
-    private javax.swing.JTextField nomeField;
+    public javax.swing.JTextField nomeField;
     private javax.swing.JLabel nomeLabel;
     // End of variables declaration//GEN-END:variables
 }

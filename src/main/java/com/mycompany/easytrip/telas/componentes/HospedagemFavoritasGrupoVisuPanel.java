@@ -147,7 +147,7 @@ public class HospedagemFavoritasGrupoVisuPanel extends javax.swing.JPanel {
 
     private void mudarParaTelaDetalhesHospedagem(){
         TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
-        telaPrincipal.mudarParaTelaDetalhesHospedagem();
+        telaPrincipal.mudarParaTelaDetalhesHospedagem(0, true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

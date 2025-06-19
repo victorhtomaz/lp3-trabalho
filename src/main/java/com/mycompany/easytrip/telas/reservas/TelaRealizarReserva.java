@@ -140,7 +140,7 @@ public class TelaRealizarReserva extends javax.swing.JPanel {
 
     private void voltarParaDetalhesHospedagem(){
         TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
-        telaPrincipal.mudarParaTelaDetalhesHospedagem();
+        telaPrincipal.mudarParaTelaDetalhesHospedagem(1, false);
     }
     
     private void proximoCardLayout(){

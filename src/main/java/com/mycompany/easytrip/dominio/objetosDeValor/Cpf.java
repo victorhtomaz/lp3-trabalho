@@ -69,6 +69,6 @@ public class Cpf implements Validacao {
 
     @Override
     public String toString() {
-        return valor;
+        return valor.substring(0, 3) + "." + valor.substring(3, 6) + "." + valor.substring(6, 9) + "-" +valor.substring(9, 11);
     }
 }

@@ -27,16 +27,17 @@ public class Hospedagem implements Validacao{
     @Column(name = "Usuario_Id")
     private int usuarioId;
     
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "Endereco_Id")
     private Endereco endereco;
     
-    @OneToMany
-    @JoinColumn(name = "Hospedagem_Id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "Hospedagem_Id", nullable = false)
+    @OrderBy("data ASC")
     private final List<Disponibilidade> disponibilidades = new ArrayList<>();
     
-    @OneToMany
-    @JoinColumn(name = "Hospedagem_Id")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "Hospedagem_Id", nullable = false)
     private final List<Imagem> imagens = new ArrayList<>();
     
     @Column(name = "Titulo")
@@ -105,12 +106,24 @@ public class Hospedagem implements Validacao{
             throw new HospedagemException("É necessário de uma diferença de: " + DIFERENCA_HORAS_MINIMA + "no checkin e checkout");
     }
     
+    public int getId(){
+        return id;
+    }
+    
     public String getTitulo(){
         return titulo;
     }
     
+    public void setTitulo(String titulo){
+        this.titulo = titulo;
+    }
+    
     public String getDescricao(){
         return descricao;
+    }
+    
+    public void setDescricao(String descricao){
+        this.descricao = descricao;
     }
     
     public TipoDeHospedagem getTipo(){
@@ -121,20 +134,87 @@ public class Hospedagem implements Validacao{
         return capacidadeMaxima;
     }
     
+    public void setCapacidadeMaxima(int capacidadeMaxima){
+        this.capacidadeMaxima = capacidadeMaxima;
+    }
+    
     public PrecoDiaria getPrecoDiaria(){
         return precoDiaria;
+    }
+    
+    public void setPrecoDiaria(BigDecimal precoDiaria) throws DominioException{
+        this.precoDiaria = new PrecoDiaria(precoDiaria);
     }
     
     public LocalTime getCheckIn(){
         return checkIn;
     }
     
+    public void setCheckIn(LocalTime checkIn){
+        this.checkIn = checkIn;
+    }
+    
     public LocalTime getCheckOut(){
         return checkOut;
     }
     
+    public void setCheckOut(LocalTime checkOut){
+        this.checkOut = checkOut;
+    }
+    
     public Endereco getEndereco(){
         return endereco;
+    }
+    
+    public float getNotaAvaliacao(){
+        return avaliacaoMedia.getNota();
+    }
+    
+    public List<Imagem> getImagens(){
+        return imagens;
+    }
+    
+    public Imagem getPrimeiraImagem(){
+        return imagens.getFirst();
+    }
+    
+    public Imagem getImagem(int imagemId) throws HospedagemException{
+        Imagem imagem = null;
+        for (Imagem img : imagens) {
+            if (img.getId() == imagemId)
+                imagem = img;
+        }
+        
+        if (imagem == null)
+            throw new HospedagemException("A imagem não foi encontrada");
+        
+        return imagem;
+    }
+    
+    public void adicionarImagem(Imagem imagem) throws HospedagemException{
+        if (imagens.contains(imagem))
+            throw new HospedagemException("A imagem já foi adicionada");
+        
+        imagens.add(imagem);
+    }
+    
+    public void removerImagem(Imagem imagem){
+        imagens.remove(imagem);
+    }
+    
+    public List<Disponibilidade> getDisponibilidades(){
+        return disponibilidades;
+    }
+    
+    public void adicionarDisponibilidade(Disponibilidade disponibilidade) throws HospedagemException{
+        if (disponibilidades.contains(disponibilidade))
+            throw new HospedagemException("A Disponibilidade já foi adicionada");
+        
+        disponibilidades.add(disponibilidade);
+    }
+    
+    public void removerDisponibilidade(Disponibilidade disponibilidade){
+        disponibilidades.remove(disponibilidade);
     }
     
     @Override

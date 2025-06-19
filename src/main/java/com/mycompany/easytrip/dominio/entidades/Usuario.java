@@ -39,7 +39,7 @@ public class Usuario implements Validacao{
     @Column(name = "DataNascimento")
     private LocalDate dataNascimento;
     
-    @OneToMany
+    @OneToMany(orphanRemoval = true)
     @JoinColumn(name = "Usuario_Id")
     private final List<Hospedagem> hospedagens = new ArrayList<>();
     
@@ -72,10 +72,14 @@ public class Usuario implements Validacao{
         if (nome.isBlank() || nome.length() < NOME_TAMANHO_MINIMO)
             throw new UsuarioException("O nome precisa conter no minimo: " + NOME_TAMANHO_MINIMO + " caracteres");
         
-        if(dataNascimento.isAfter(LocalDate.now()))
+        if(dataNascimento.isAfter(LocalDate.now()) || dataNascimento.isEqual(LocalDate.now()))
             throw new UsuarioException("A data de nascimento é inválida");
     }
 
+    public int getId(){
+        return id;
+    }
+    
     public String getNome(){
         return nome;
     }
@@ -94,6 +98,14 @@ public class Usuario implements Validacao{
     
     public String getValorCpf(){
         return cpf.getValor();
+    }
+    
+    public List<Hospedagem> getHospedagens(){
+        return hospedagens;
+    }
+    
+    public void adicionarHospedagem(Hospedagem hospedagem){
+        hospedagens.add(hospedagem);
     }
     
     @Override

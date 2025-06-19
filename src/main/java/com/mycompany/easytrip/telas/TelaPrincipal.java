@@ -1,6 +1,5 @@
 package com.mycompany.easytrip.telas;
 
-import com.mycompany.easytrip.dominio.entidades.Usuario;
 import com.mycompany.easytrip.telas.grupos.*;
 import com.mycompany.easytrip.telas.reservas.*;
 import com.mycompany.easytrip.telas.hospedagem.*;
@@ -10,11 +9,12 @@ import javax.swing.JPanel;
 
 public class TelaPrincipal extends javax.swing.JFrame{
     private JPanel telaAnterior;
-    private Usuario usuario;
+    private int usuario;
     
     public TelaPrincipal() {
         initComponents();
     }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -171,7 +171,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
     private void sairMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairMenuItemActionPerformed
         // TODO add your handling code here:
         configurarEstadoMenu(false);
-        setUsuarioLogado(null);
+        setUsuarioLogado(0);
         mudarParaTelaDeLogin();
     }//GEN-LAST:event_sairMenuItemActionPerformed
 
@@ -220,16 +220,18 @@ public class TelaPrincipal extends javax.swing.JFrame{
         mudarParaTelaRankingGrupo();
     }//GEN-LAST:event_rankingHospedagensMenuItemActionPerformed
     
-    public void setUsuarioLogado(Usuario usuario){
+    public void setUsuarioLogado(int usuario){
         this.usuario = usuario;
     }
     
-    public Usuario getUsuarioLogado(Usuario usuario){
+    public int getUsuarioLogado(int usuario){
         return this.usuario;
     }
     
-    private void mudarTela(JPanel tela){
-        salvarPaginaAnterior();
+    private void mudarTela(JPanel tela, boolean salvarAnterior){
+        if (salvarAnterior == true)
+            salvarPaginaAnterior();
+        
         limparTela();
         
         this.add(tela);
@@ -238,92 +240,92 @@ public class TelaPrincipal extends javax.swing.JFrame{
     }
     
     public void mudarParaTelaHospedagensCadastradas(){
-        TelaHospedagensCadastradas tela = new TelaHospedagensCadastradas();
-        mudarTela(tela);
+        TelaHospedagensCadastradas tela = new TelaHospedagensCadastradas(usuario);
+        mudarTela(tela, true);
     }
     
     public void mudarParaTelaGerenciamentoHospedagem(int hospedagemId){
         TelaDeGerenciamentoHospedagem tela = new TelaDeGerenciamentoHospedagem(hospedagemId);
-        mudarTela(tela);
+        mudarTela(tela, true);
     }
     
     public void mudarParaTelaContaDoUsuario(){
         TelaContaDoUsuario tela = new TelaContaDoUsuario(usuario);
-        mudarTela(tela);
+        mudarTela(tela, true);
     }
     
-    public void mudarParaTelaCriarHospedagem(){
-        TelaCriarHospedagem tela = new TelaCriarHospedagem();
-        mudarTela(tela);
+    public void mudarParaTelaCriarHospedagem(int usuarioId){
+        TelaCriarHospedagem tela = new TelaCriarHospedagem(usuarioId);
+        mudarTela(tela, true);
     }
     
     public void mudarParaTelaDeLogin(){
         TelaDeLogin tela = new TelaDeLogin();
-        mudarTela(tela);
+        mudarTela(tela, true);
     }
     
     public void mudarParaTelaVisualizacaoHospedagens(){
         TelaVisualizarHospedagens tela = new TelaVisualizarHospedagens();
-        mudarTela(tela);
+        mudarTela(tela, true);
     }
     
-    public void mudarParaTelaDetalhesHospedagem(){
-        TelaDetalhesHospedagem tela = new TelaDetalhesHospedagem();
-        mudarTela(tela);
+    public void mudarParaTelaDetalhesHospedagem(int hospedagemId, boolean salvaTelaAnterior){
+        TelaDetalhesHospedagem tela = new TelaDetalhesHospedagem(hospedagemId);
+        mudarTela(tela, salvaTelaAnterior);
     }
     
     public void mudarParaTelaFavoritasHospede(){
         TelaFavoritasHospede tela = new TelaFavoritasHospede();
-        mudarTela(tela);
+        mudarTela(tela, true);
     }
     
     public void mudarParaTelaRealizarReserva(){
         TelaRealizarReserva tela = new TelaRealizarReserva();
-        mudarTela(tela);
+        mudarTela(tela, false);
     }
     
     public void mudarParaTelaDetalhesReserva(){
         TelaDetalhesReserva tela = new TelaDetalhesReserva();
-        mudarTela(tela);
+        mudarTela(tela, true);
     }
     
     public void mudarParaTelaMinhasReservas(){
         TelaMinhasReservas tela = new TelaMinhasReservas();
-        mudarTela(tela);
+        mudarTela(tela, true);
     }
     
     public void mudarParaTelaReservasPendentes(){
         TelaReservasPendentes tela = new TelaReservasPendentes();
-        mudarTela(tela);
+        mudarTela(tela, true);
     }
     
     public void mudarParaTelaReservasDaHospedagem(){
         TelaReservasDaHospedagem tela = new TelaReservasDaHospedagem();
-        mudarTela(tela);
+        mudarTela(tela, true);
     }
     
     public void mudarParaTelaVisualizarGrupos(){
         TelaVisualizarGrupos tela = new TelaVisualizarGrupos();
-        mudarTela(tela);
+        mudarTela(tela, true);
     }
     
     public void mudarParaTelaGerenciarGrupo(){
         TelaGerenciarGrupo tela = new TelaGerenciarGrupo();
-        mudarTela(tela);
+        mudarTela(tela, true);
     }
     
     public void mudarParaTelaFavoritasGrupo(){
         TelaFavoritasGrupo tela = new TelaFavoritasGrupo();
-        mudarTela(tela);
+        mudarTela(tela, true);
     }
     
     public void mudarParaTelaRankingGrupo(){
         TelaRankingGrupo tela = new TelaRankingGrupo();
-        mudarTela(tela);
+        mudarTela(tela, true);
     }
     
     public void voltarPagina(){
-        mudarTela(this.telaAnterior);
+        mudarTela(this.telaAnterior, false);
     }
     
     public void configurarEstadoMenu(boolean habilitado){

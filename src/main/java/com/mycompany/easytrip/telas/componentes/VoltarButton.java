@@ -15,13 +15,8 @@ public class VoltarButton extends javax.swing.JButton{
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                voltarPagina();
             }
         });
     }
     
-    private void voltarPagina(){
-        TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
-        telaPrincipal.voltarPagina();
-    }
 }

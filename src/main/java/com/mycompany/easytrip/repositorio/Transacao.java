@@ -16,4 +16,12 @@ public class Transacao {
     public void confirmar(){
         entityManager.getTransaction().commit();
     }
+    
+    public boolean estaAtivo(){
+        return entityManager.getTransaction().isActive();
+    }
+    
+    public void reverter(){
+        entityManager.getTransaction().rollback();
+    }
 }

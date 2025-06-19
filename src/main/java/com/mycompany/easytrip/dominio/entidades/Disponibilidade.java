@@ -17,9 +17,6 @@ public class Disponibilidade implements Validacao{
     @Column(name = "Id")
     private int id;
     
-    @Column(name = "Hospedagem_Id")
-    private int hospedagemId;
-    
     @Column(name = "Data")
     private LocalDate data;
     
@@ -31,25 +28,29 @@ public class Disponibilidade implements Validacao{
     
     protected Disponibilidade(){}
     
-    public Disponibilidade(int hospedagemId, LocalDate data, StatusDisponibilidade status) throws DisponibilidadeException{
-        this.hospedagemId = hospedagemId;
+    public Disponibilidade(LocalDate data) throws DisponibilidadeException{
         this.data = data;
-        this.status = status;
+        this.status = StatusDisponibilidade.DISPONIVEL;
         
         validar();
     }
     
     @Override
     public void validar() throws DisponibilidadeException{
-        if (hospedagemId < 0)
-            throw new DisponibilidadeException("O id da hospedagem é inválido");
-        
         if(data.isBefore(LocalDate.now()))
             throw new DisponibilidadeException("A data de disponibilidade precisa ser futura");
     }
     
+    public int getId(){
+        return id;
+    }
+    
     public LocalDate getData(){
         return data;
+    }
+    
+    public String getDataFormatada(){
+        return data.format(DATA_FORMATADOR);
     }
     
     public StatusDisponibilidade getStatus(){
@@ -58,7 +59,7 @@ public class Disponibilidade implements Validacao{
     
     @Override
     public String toString() {
-        return "Data: " + data.format(DATA_FORMATADOR) + ", Status: " + status.name();
+        return data.format(DATA_FORMATADOR);
     }
     
     @Override
@@ -68,7 +69,7 @@ public class Disponibilidade implements Validacao{
         
         Disponibilidade that = (Disponibilidade) obj;
         
-        return this.id == that.id;
+        return this.id == that.id || this.data.equals(that.data);
     }
 
     @Override

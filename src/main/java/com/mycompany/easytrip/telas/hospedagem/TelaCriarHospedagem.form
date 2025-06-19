@@ -72,6 +72,9 @@
               <Font name="JetBrainsMono NF" size="12" style="0"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="1" gridY="1" gridWidth="2" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="15" insetsLeft="20" insetsBottom="0" insetsRight="10" anchor="17" weightX="0.0" weightY="0.0"/>
@@ -165,6 +168,9 @@
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -239,6 +245,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;TipoDeHospedagem&gt;"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -256,6 +263,9 @@
               <Font name="JetBrainsMono NF" size="12" style="0"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="1" gridY="6" gridWidth="2" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="15" insetsLeft="20" insetsBottom="0" insetsRight="10" anchor="17" weightX="0.0" weightY="0.0"/>
@@ -267,11 +277,14 @@
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
               <Format subtype="1" type="2"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="9:00"/>
+            <Property name="text" type="java.lang.String" value="09:00"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="JetBrainsMono NF" size="12" style="0"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="1" gridY="7" gridWidth="2" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="15" insetsLeft="20" insetsBottom="0" insetsRight="10" anchor="17" weightX="0.0" weightY="0.0"/>
@@ -287,6 +300,9 @@
               <Font name="JetBrainsMono NF" size="12" style="0"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="1" gridY="5" gridWidth="2" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="15" insetsLeft="20" insetsBottom="0" insetsRight="10" anchor="10" weightX="0.0" weightY="0.0"/>
@@ -302,6 +318,9 @@
               <Font name="JetBrainsMono NF" size="12" style="0"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="1" gridY="4" gridWidth="2" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="15" insetsLeft="20" insetsBottom="0" insetsRight="10" anchor="17" weightX="0.0" weightY="0.0"/>
@@ -456,6 +475,9 @@
               <Font name="JetBrainsMono NF" size="12" style="0"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="1" gridY="1" gridWidth="3" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="15" insetsLeft="20" insetsBottom="0" insetsRight="10" anchor="17" weightX="0.0" weightY="0.0"/>
@@ -468,6 +490,9 @@
               <Font name="JetBrainsMono NF" size="12" style="0"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="1" gridY="2" gridWidth="3" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="15" insetsLeft="20" insetsBottom="0" insetsRight="10" anchor="17" weightX="0.0" weightY="0.0"/>
@@ -480,6 +505,9 @@
               <Font name="JetBrainsMono NF" size="12" style="0"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="1" gridY="3" gridWidth="3" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="15" insetsLeft="20" insetsBottom="0" insetsRight="10" anchor="17" weightX="0.0" weightY="0.0"/>
@@ -492,6 +520,9 @@
               <Font name="JetBrainsMono NF" size="12" style="0"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="1" gridY="4" gridWidth="3" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="15" insetsLeft="20" insetsBottom="0" insetsRight="10" anchor="17" weightX="0.0" weightY="0.0"/>
@@ -504,6 +535,9 @@
               <Font name="JetBrainsMono NF" size="12" style="0"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="1" gridY="5" gridWidth="3" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="15" insetsLeft="20" insetsBottom="0" insetsRight="10" anchor="17" weightX="0.0" weightY="0.0"/>
@@ -516,6 +550,9 @@
               <Font name="JetBrainsMono NF" size="12" style="0"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
               <GridBagConstraints gridX="1" gridY="6" gridWidth="3" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="15" insetsLeft="20" insetsBottom="0" insetsRight="10" anchor="17" weightX="0.0" weightY="0.0"/>
@@ -577,6 +614,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;EstadoBrasil&gt;"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">

@@ -1,12 +1,30 @@
 package com.mycompany.easytrip.telas.componentes;
 
+import com.mycompany.easytrip.dominio.entidades.Hospedagem;
 import com.mycompany.easytrip.telas.TelaPrincipal;
 import javax.swing.SwingUtilities;
 
 public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
 
+    private int hospedagemId;
+    
     public HospedagemVisualizacaoPanel() {
         initComponents();
+    }
+    
+    public HospedagemVisualizacaoPanel(Hospedagem hospedagem){
+        initComponents();
+        
+        this.hospedagemId = hospedagem.getId();
+        carregarHospedagemCampos(hospedagem);
+    }
+    
+    private void carregarHospedagemCampos(Hospedagem hospedagem){
+        tituloLabel.setText(hospedagem.getTitulo());
+        enderecoLabel.setText(hospedagem.getEndereco().toString());
+        avaliacaoLabel.setText(String.valueOf(hospedagem.getNotaAvaliacao()));
+        precoLabel.setText(hospedagem.getPrecoDiaria().toString());
+        imagemPanel1.setImagem(hospedagem.getPrimeiraImagem().getUrl());
     }
 
     /**
@@ -20,12 +38,12 @@ public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         enderecoLabel = new javax.swing.JLabel();
-        avaliacaoButton = new javax.swing.JLabel();
+        avaliacaoLabel = new javax.swing.JLabel();
         verMaisButton = new javax.swing.JButton();
         precoLabel = new javax.swing.JLabel();
         favoritarButton = new javax.swing.JButton();
-        imagemPanel = new javax.swing.JPanel();
         tituloLabel = new javax.swing.JLabel();
+        imagemPanel1 = new com.mycompany.easytrip.telas.componentes.ImagemPanel();
 
         setBackground(new java.awt.Color(163, 187, 229));
         setMinimumSize(new java.awt.Dimension(220, 220));
@@ -43,14 +61,14 @@ public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(enderecoLabel, gridBagConstraints);
 
-        avaliacaoButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        avaliacaoButton.setText("5.0");
-        avaliacaoButton.setPreferredSize(new java.awt.Dimension(200, 20));
+        avaliacaoLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        avaliacaoLabel.setText("5.0");
+        avaliacaoLabel.setPreferredSize(new java.awt.Dimension(200, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        add(avaliacaoButton, gridBagConstraints);
+        add(avaliacaoLabel, gridBagConstraints);
 
         verMaisButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         verMaisButton.setText("Ver mais");
@@ -74,9 +92,15 @@ public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(precoLabel, gridBagConstraints);
 
+        favoritarButton.setBackground(new java.awt.Color(242, 242, 242));
+        favoritarButton.setFont(new java.awt.Font("Segoe UI Symbol", 0, 18)); // NOI18N
+        favoritarButton.setForeground(new java.awt.Color(239, 0, 23));
+        favoritarButton.setBorder(null);
         favoritarButton.setBorderPainted(false);
         favoritarButton.setContentAreaFilled(false);
-        favoritarButton.setLabel("❤");
+        favoritarButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        favoritarButton.setLabel("❤"); // NOI18N
+        favoritarButton.setMargin(new java.awt.Insets(0, 0, 0, 0));
         favoritarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 favoritarButtonActionPerformed(evt);
@@ -86,26 +110,8 @@ public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(favoritarButton, gridBagConstraints);
-
-        javax.swing.GroupLayout imagemPanelLayout = new javax.swing.GroupLayout(imagemPanel);
-        imagemPanel.setLayout(imagemPanelLayout);
-        imagemPanelLayout.setHorizontalGroup(
-            imagemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
-        imagemPanelLayout.setVerticalGroup(
-            imagemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipadx = 200;
-        gridBagConstraints.ipady = 140;
-        add(imagemPanel, gridBagConstraints);
 
         tituloLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 10)); // NOI18N
         tituloLabel.setText("Casa perto da praia");
@@ -117,6 +123,27 @@ public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         add(tituloLabel, gridBagConstraints);
+
+        imagemPanel1.setPreferredSize(new java.awt.Dimension(163, 140));
+
+        javax.swing.GroupLayout imagemPanel1Layout = new javax.swing.GroupLayout(imagemPanel1);
+        imagemPanel1.setLayout(imagemPanel1Layout);
+        imagemPanel1Layout.setHorizontalGroup(
+            imagemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        imagemPanel1Layout.setVerticalGroup(
+            imagemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.ipady = 140;
+        add(imagemPanel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void verMaisButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verMaisButtonActionPerformed
@@ -127,7 +154,7 @@ public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
     
     private void mudarParaTelaDetalhesHospedagem(){
         TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
-        telaPrincipal.mudarParaTelaDetalhesHospedagem();
+        telaPrincipal.mudarParaTelaDetalhesHospedagem(this.hospedagemId, true);
     }
     
     private void favoritarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_favoritarButtonActionPerformed
@@ -136,10 +163,10 @@ public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel avaliacaoButton;
+    private javax.swing.JLabel avaliacaoLabel;
     private javax.swing.JLabel enderecoLabel;
     private javax.swing.JButton favoritarButton;
-    private javax.swing.JPanel imagemPanel;
+    private com.mycompany.easytrip.telas.componentes.ImagemPanel imagemPanel1;
     private javax.swing.JLabel precoLabel;
     private javax.swing.JLabel tituloLabel;
     private javax.swing.JButton verMaisButton;

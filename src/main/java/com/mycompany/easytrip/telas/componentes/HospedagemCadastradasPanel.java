@@ -1,20 +1,21 @@
 package com.mycompany.easytrip.telas.componentes;
 
+import com.mycompany.easytrip.dominio.entidades.Hospedagem;
+
 public class HospedagemCadastradasPanel extends javax.swing.JPanel {
 
-    private int hospedagemId;
+    private Hospedagem hospedagem;
     
     public HospedagemCadastradasPanel() {
         initComponents();
-        completarComponentes();
     }
     
-    public HospedagemCadastradasPanel(int hospedagemId){
-        this.hospedagemId = hospedagemId;
+    public HospedagemCadastradasPanel(Hospedagem hospedagem){
+        this.hospedagem = hospedagem;
         initComponents();
-        completarComponentes();
+        completarComponentesHospedagem();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -24,29 +25,33 @@ public class HospedagemCadastradasPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        tituloLabel = new javax.swing.JLabel();
+        tipoLabel = new javax.swing.JLabel();
+        avaliacaoLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(163, 187, 229));
         setLayout(new java.awt.GridLayout(1, 6, 2, 0));
 
-        jLabel1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        jLabel1.setText("Título");
-        jLabel1.setMinimumSize(new java.awt.Dimension(60, 17));
-        jLabel1.setPreferredSize(new java.awt.Dimension(90, 17));
-        add(jLabel1);
+        tituloLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        tituloLabel.setText("Título");
+        tituloLabel.setMinimumSize(new java.awt.Dimension(60, 17));
+        tituloLabel.setPreferredSize(new java.awt.Dimension(90, 17));
+        add(tituloLabel);
 
-        jLabel2.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        jLabel2.setText("Tipo");
-        add(jLabel2);
+        tipoLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        tipoLabel.setText("Tipo");
+        add(tipoLabel);
 
-        jLabel3.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        jLabel3.setText("Avaliação");
-        add(jLabel3);
+        avaliacaoLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        avaliacaoLabel.setText("Avaliação");
+        add(avaliacaoLabel);
     }// </editor-fold>//GEN-END:initComponents
     
-    private void completarComponentes(){
+    private void completarComponentesHospedagem(){
+        tituloLabel.setText(hospedagem.getTitulo());
+        tipoLabel.setText(hospedagem.getTipo().name());
+        avaliacaoLabel.setText(String.valueOf(hospedagem.getNotaAvaliacao()));
+        
         ReservasDaHospedagemButton reservasButton = new ReservasDaHospedagemButton();
         GerenciarHospedagemButton gerenciarButton = new GerenciarHospedagemButton();
         DeletarHospedagemButton deletarButton = new DeletarHospedagemButton();
@@ -57,8 +62,8 @@ public class HospedagemCadastradasPanel extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel avaliacaoLabel;
+    private javax.swing.JLabel tipoLabel;
+    private javax.swing.JLabel tituloLabel;
     // End of variables declaration//GEN-END:variables
 }
