@@ -44,7 +44,7 @@ public class GerenciarHospedagemController {
             JOptionPane.showMessageDialog(tela, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(tela, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(tela, "Erro desconhecido", "Erro", JOptionPane.ERROR_MESSAGE);
         } 
     }
     
@@ -157,6 +157,9 @@ public class GerenciarHospedagemController {
             servico.removerDisponibilidade(hospedagem, disponibilidade);
             
             carregarHospedagem(hospedagem.getId());
+        }
+        catch(HospedagemServicoException e){
+            JOptionPane.showMessageDialog(tela, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(tela, "Erro desconhecido", "Erro", JOptionPane.ERROR_MESSAGE);

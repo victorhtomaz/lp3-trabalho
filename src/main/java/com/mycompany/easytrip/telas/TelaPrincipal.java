@@ -44,6 +44,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
         rankingHospedagensMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(new java.awt.GridLayout(1, 2, 1, 1));
 
         telaDeLogin1.setPreferredSize(new java.awt.Dimension(640, 480));
@@ -224,7 +225,7 @@ public class TelaPrincipal extends javax.swing.JFrame{
         this.usuario = usuario;
     }
     
-    public int getUsuarioLogado(int usuario){
+    public int getUsuarioLogado(){
         return this.usuario;
     }
     
@@ -275,32 +276,32 @@ public class TelaPrincipal extends javax.swing.JFrame{
     }
     
     public void mudarParaTelaFavoritasHospede(){
-        TelaFavoritasHospede tela = new TelaFavoritasHospede();
+        TelaFavoritasHospede tela = new TelaFavoritasHospede(usuario);
         mudarTela(tela, true);
     }
     
-    public void mudarParaTelaRealizarReserva(){
-        TelaRealizarReserva tela = new TelaRealizarReserva();
+    public void mudarParaTelaRealizarReserva(int hospedagemId){
+        TelaRealizarReserva tela = new TelaRealizarReserva(hospedagemId);
         mudarTela(tela, false);
     }
     
-    public void mudarParaTelaDetalhesReserva(){
-        TelaDetalhesReserva tela = new TelaDetalhesReserva();
+    public void mudarParaTelaDetalhesReserva(int reservaId){
+        TelaDetalhesReserva tela = new TelaDetalhesReserva(usuario, reservaId);
         mudarTela(tela, true);
     }
     
     public void mudarParaTelaMinhasReservas(){
-        TelaMinhasReservas tela = new TelaMinhasReservas();
+        TelaMinhasReservas tela = new TelaMinhasReservas(usuario);
         mudarTela(tela, true);
     }
     
     public void mudarParaTelaReservasPendentes(){
-        TelaReservasPendentes tela = new TelaReservasPendentes();
+        TelaReservasPendentes tela = new TelaReservasPendentes(usuario);
         mudarTela(tela, true);
     }
     
-    public void mudarParaTelaReservasDaHospedagem(){
-        TelaReservasDaHospedagem tela = new TelaReservasDaHospedagem();
+    public void mudarParaTelaReservasDaHospedagem(int hospedagemId){
+        TelaReservasDaHospedagem tela = new TelaReservasDaHospedagem(hospedagemId);
         mudarTela(tela, true);
     }
     

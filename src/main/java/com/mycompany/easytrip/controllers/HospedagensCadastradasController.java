@@ -65,7 +65,7 @@ public class HospedagensCadastradasController {
             return;
         }
         
-        tela.mudarParaTelaReservasHospedagem(hospedagemSelecionadaId);
+        tela.reservasDaHospedagemButton1.mudarParaTelaReservas(hospedagemSelecionadaId);
     }
     
     public void mudarParaTelaGerenciamento(){
@@ -76,7 +76,7 @@ public class HospedagensCadastradasController {
             return;
         }
         
-        tela.mudarParaTelaGerenciamentoHospedagem(hospedagemSelecionadaId);
+        tela.gerenciarHospedagemButton1.mudarParaTelaGerenciamentoDeHospedagem(hospedagemSelecionadaId);
     }
     
     private void preencherTabela(List<Hospedagem> hospedagens){

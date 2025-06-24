@@ -50,7 +50,7 @@ public class VisualizarHospedagensController {
             }
         }
         catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(tela, "Erro desconhecido", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
     

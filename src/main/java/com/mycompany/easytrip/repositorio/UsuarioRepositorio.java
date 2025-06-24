@@ -51,4 +51,8 @@ public class UsuarioRepositorio {
         
         return resultado;
     }
+    
+    public void atualizarUsuario(Usuario usuario) throws IllegalArgumentException{
+        em.merge(usuario);
+    }
 }

@@ -1,6 +1,7 @@
 package com.mycompany.easytrip.telas.hospedagem;
 
 import com.mycompany.easytrip.controllers.DetalhesHospedagemController;
+import com.mycompany.easytrip.controllers.FavoritarHospedagemController;
 import com.mycompany.easytrip.telas.TelaPrincipal;
 import javax.swing.SwingUtilities;
 
@@ -8,6 +9,7 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
 
     private int hospedagemId;
     private DetalhesHospedagemController controller;
+    private FavoritarHospedagemController favoritarController;
 
     
     public TelaDetalhesHospedagem() {
@@ -18,6 +20,7 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
         initComponents();
         this.hospedagemId = hospedagemId;
         this.controller = new DetalhesHospedagemController(this);
+        this.favoritarController = new FavoritarHospedagemController();
         
         controller.carregarHospedagem(hospedagemId);
     }
@@ -205,6 +208,11 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
 
         favoritarButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         favoritarButton.setText("Favoritar");
+        favoritarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                favoritarButtonActionPerformed(evt);
+            }
+        });
         infosLateralPanel.add(favoritarButton);
 
         reservarButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
@@ -291,6 +299,16 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
         voltarParaTelaVisualizacao();
     }//GEN-LAST:event_voltarButton1ActionPerformed
 
+    private void favoritarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_favoritarButtonActionPerformed
+        // TODO add your handling code here:
+        favoritarController.favoritarHospedagem(getUsuarioLogadoId(), hospedagemId);
+    }//GEN-LAST:event_favoritarButtonActionPerformed
+
+    private int getUsuarioLogadoId(){
+        TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
+        return telaPrincipal.getUsuarioLogado();
+    }
+    
     private void voltarParaTelaVisualizacao(){
         TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
         telaPrincipal.voltarPagina();
@@ -298,7 +316,7 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
     
     private void abrirTelaDeRealizarHospedagem(){
         TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
-        telaPrincipal.mudarParaTelaRealizarReserva();
+        telaPrincipal.mudarParaTelaRealizarReserva(this.hospedagemId);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

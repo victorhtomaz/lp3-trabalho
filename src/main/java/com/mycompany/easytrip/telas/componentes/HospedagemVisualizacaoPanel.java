@@ -1,11 +1,12 @@
 package com.mycompany.easytrip.telas.componentes;
 
+import com.mycompany.easytrip.controllers.FavoritarHospedagemController;
 import com.mycompany.easytrip.dominio.entidades.Hospedagem;
 import com.mycompany.easytrip.telas.TelaPrincipal;
 import javax.swing.SwingUtilities;
 
 public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
-
+    private FavoritarHospedagemController controller;
     private int hospedagemId;
     
     public HospedagemVisualizacaoPanel() {
@@ -15,6 +16,7 @@ public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
     public HospedagemVisualizacaoPanel(Hospedagem hospedagem){
         initComponents();
         
+        this.controller = new FavoritarHospedagemController();
         this.hospedagemId = hospedagem.getId();
         carregarHospedagemCampos(hospedagem);
     }
@@ -25,6 +27,11 @@ public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
         avaliacaoLabel.setText(String.valueOf(hospedagem.getNotaAvaliacao()));
         precoLabel.setText(hospedagem.getPrecoDiaria().toString());
         imagemPanel1.setImagem(hospedagem.getPrimeiraImagem().getUrl());
+    }
+    
+    private int getUsuarioLogado(){
+        TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
+        return telaPrincipal.getUsuarioLogado();
     }
 
     /**
@@ -159,6 +166,7 @@ public class HospedagemVisualizacaoPanel extends javax.swing.JPanel {
     
     private void favoritarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_favoritarButtonActionPerformed
         // TODO add your handling code here:
+        controller.favoritarHospedagem(getUsuarioLogado(), hospedagemId);
     }//GEN-LAST:event_favoritarButtonActionPerformed
 
 

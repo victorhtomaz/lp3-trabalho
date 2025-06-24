@@ -5,6 +5,7 @@ import com.mycompany.easytrip.dominio.entidades.Disponibilidade;
 import com.mycompany.easytrip.dominio.entidades.Hospedagem;
 import com.mycompany.easytrip.dominio.entidades.Imagem;
 import com.mycompany.easytrip.dominio.enums.EstadoBrasil;
+import com.mycompany.easytrip.dominio.enums.StatusDisponibilidade;
 import com.mycompany.easytrip.dominio.excecoes.DominioException;
 import com.mycompany.easytrip.repositorio.HospedagemRepositorio;
 import com.mycompany.easytrip.repositorio.Transacao;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 import javax.imageio.ImageIO;
@@ -53,7 +55,7 @@ public class HospedagemServico {
             return hospedagemRepositorio.getHospedagem(hospedagemId);
         }
         catch(EntityNotFoundException e){
-            throw new HospedagemServicoException("A entidade não foi encontrada");
+            throw new HospedagemServicoException("A hospedagem não foi encontrada");
         }
     }
     
@@ -61,10 +63,17 @@ public class HospedagemServico {
         return hospedagemRepositorio.getHospedagens(pagina, quantidadePorPagina, cidade, estado);
     }
     
+    public List<Hospedagem> listarHospedagensFavoritasDoUsuario(int usuarioId, int pagina, int quantidadePorPagina){
+        return null;
+    }
+    
     public void deletar(int hospedagemId) throws HospedagemServicoException{
        try{
             transacao.iniciar();
             Hospedagem hospedagem = hospedagemRepositorio.getHospedagem(hospedagemId);
+            if (hospedagem.existeReservaConfirmada())
+                throw new HospedagemServicoException("Não é possivel deletar hospedagem, cancele reservas confirmadas");
+            
             hospedagemRepositorio.deletarHospedagem(hospedagem);
             transacao.confirmar();
         }
@@ -167,10 +176,41 @@ public class HospedagemServico {
         }
     }
     
-    public void removerDisponibilidade(Hospedagem hospedagem, Disponibilidade disponibilidade){
+    public void removerDisponibilidade(Hospedagem hospedagem, Disponibilidade disponibilidade) throws HospedagemServicoException{
+        if (disponibilidade.getStatus() == StatusDisponibilidade.RESERVADO)
+            throw new HospedagemServicoException("Não é possivel remover a disponibilidade, a data possui uma reserva");
+        
         transacao.iniciar();
         hospedagem.removerDisponibilidade(disponibilidade);
         hospedagemRepositorio.atualizarHospedagem(hospedagem);
         transacao.confirmar();
+    }
+    
+    public void verificarDisponibilidades(int hospedagemId, LocalDate dataEntrada, LocalDate dataSaida) throws HospedagemServicoException{
+        Hospedagem hospedagem = hospedagemRepositorio.getHospedagem(hospedagemId);
+        
+        List<Disponibilidade> disponibilidades = hospedagem.getDisponibilidades();
+        LocalDate dataChecar = dataEntrada;
+        
+        DateTimeFormatter formato = Disponibilidade.DATA_FORMATADOR;
+                
+        while(dataChecar.isBefore(dataSaida)){
+            boolean encontrouData = false;
+            for (Disponibilidade dsp : disponibilidades){
+                if(dsp.equals(dataChecar)){
+                    encontrouData = true;
+                        
+                    if (dsp.getStatus() != StatusDisponibilidade.DISPONIVEL)
+                        throw new HospedagemServicoException("A data: " + dataChecar.format(formato) +  " não está disponivel");
+                                    
+                    break;
+                }
+            }
+                
+            if (!encontrouData)
+                throw new HospedagemServicoException("A data: " + dataChecar.format(formato) +  " não está disponivel");
+                
+            dataChecar = dataChecar.plusDays(1);
+        }
     }
 }

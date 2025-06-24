@@ -1,12 +1,24 @@
 package com.mycompany.easytrip.telas.reservas;
 
+import com.mycompany.easytrip.controllers.DetalhesReservaController;
 import com.mycompany.easytrip.telas.TelaPrincipal;
 import javax.swing.SwingUtilities;
 
 public class TelaDetalhesReserva extends javax.swing.JPanel {
-
+    private int reservaId;
+    private int usuarioId;
+    private DetalhesReservaController controller;
+    
     public TelaDetalhesReserva() {
         initComponents();
+    }
+    
+    public TelaDetalhesReserva(int usuarioId,int reservaId){
+        initComponents();
+        this.reservaId = reservaId;
+        this.usuarioId = usuarioId;
+        this.controller = new DetalhesReservaController(this);
+        controller.carregarReserva(this.reservaId);
     }
     
     /**
@@ -34,7 +46,7 @@ public class TelaDetalhesReserva extends javax.swing.JPanel {
         dataEntradaField = new javax.swing.JTextField();
         dataSaidaField = new javax.swing.JTextField();
         quantidadeDiasField = new javax.swing.JTextField();
-        precoDiariaField = new javax.swing.JTextField();
+        precoDiariaField = new javax.swing.JFormattedTextField();
         statusField = new javax.swing.JTextField();
         avaliacaoField = new javax.swing.JTextField();
         avaliarButton = new javax.swing.JButton();
@@ -149,17 +161,18 @@ public class TelaDetalhesReserva extends javax.swing.JPanel {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 270;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(tituloField, gridBagConstraints);
 
         enderecoField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        enderecoField.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 270;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(enderecoField, gridBagConstraints);
@@ -171,6 +184,7 @@ public class TelaDetalhesReserva extends javax.swing.JPanel {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 270;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(dataEntradaField, gridBagConstraints);
@@ -182,6 +196,7 @@ public class TelaDetalhesReserva extends javax.swing.JPanel {
         gridBagConstraints.gridy = 4;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 270;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(dataSaidaField, gridBagConstraints);
@@ -193,18 +208,20 @@ public class TelaDetalhesReserva extends javax.swing.JPanel {
         gridBagConstraints.gridy = 6;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 270;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(quantidadeDiasField, gridBagConstraints);
 
-        precoDiariaField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        precoDiariaField.setToolTipText("");
+        precoDiariaField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         precoDiariaField.setEnabled(false);
+        precoDiariaField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 270;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(precoDiariaField, gridBagConstraints);
@@ -216,6 +233,7 @@ public class TelaDetalhesReserva extends javax.swing.JPanel {
         gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 270;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(statusField, gridBagConstraints);
@@ -228,6 +246,7 @@ public class TelaDetalhesReserva extends javax.swing.JPanel {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 9;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 30;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(avaliacaoField, gridBagConstraints);
@@ -235,6 +254,11 @@ public class TelaDetalhesReserva extends javax.swing.JPanel {
         avaliarButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         avaliarButton.setText("Avaliar");
         avaliarButton.setEnabled(false);
+        avaliarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                avaliarButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 9;
@@ -244,9 +268,16 @@ public class TelaDetalhesReserva extends javax.swing.JPanel {
 
         cancelarReservaButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         cancelarReservaButton.setText("Cancelar reserva");
+        cancelarReservaButton.setEnabled(false);
+        cancelarReservaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelarReservaButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 10;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(cancelarReservaButton, gridBagConstraints);
 
@@ -265,43 +296,70 @@ public class TelaDetalhesReserva extends javax.swing.JPanel {
         gridBagConstraints.gridy = 5;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 270;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(quantidadeHospedeField, gridBagConstraints);
+
+        voltarButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                voltarButton1ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 11;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 5, 10);
         add(voltarButton1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mudarParaTelaAnterior(){
+    private void voltarButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarButton1ActionPerformed
+        // TODO add your handling code here:
+        voltarPagina();
+    }//GEN-LAST:event_voltarButton1ActionPerformed
+
+    private void cancelarReservaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarReservaButtonActionPerformed
+        // TODO add your handling code here:
+        controller.cancelarReserva(reservaId);
+    }//GEN-LAST:event_cancelarReservaButtonActionPerformed
+
+    private void avaliarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_avaliarButtonActionPerformed
+        // TODO add your handling code here:
+        controller.avaliarReserva(reservaId);
+    }//GEN-LAST:event_avaliarButtonActionPerformed
+
+    private void voltarPagina(){
         TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
+        
         telaPrincipal.voltarPagina();
+    }
+    
+    public int getUsuarioLogado(){
+        return usuarioId;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField avaliacaoField;
+    public javax.swing.JTextField avaliacaoField;
     private javax.swing.JLabel avaliacaoLabel;
-    private javax.swing.JButton avaliarButton;
-    private javax.swing.JButton cancelarReservaButton;
-    private javax.swing.JTextField dataEntradaField;
+    public javax.swing.JButton avaliarButton;
+    public javax.swing.JButton cancelarReservaButton;
+    public javax.swing.JTextField dataEntradaField;
     private javax.swing.JLabel dataEntradaLabel;
-    private javax.swing.JTextField dataSaidaField;
+    public javax.swing.JTextField dataSaidaField;
     private javax.swing.JLabel dataSaidaLabel;
-    private javax.swing.JTextField enderecoField;
+    public javax.swing.JTextField enderecoField;
     private javax.swing.JLabel enderecoLabel;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel minhasFavoritasTituloLabel;
-    private javax.swing.JTextField precoDiariaField;
+    public javax.swing.JFormattedTextField precoDiariaField;
     private javax.swing.JLabel precoDiariaLabel;
-    private javax.swing.JTextField quantidadeDiasField;
+    public javax.swing.JTextField quantidadeDiasField;
     private javax.swing.JLabel quantidadeDiasLabel;
-    private javax.swing.JTextField quantidadeHospedeField;
+    public javax.swing.JTextField quantidadeHospedeField;
     private javax.swing.JLabel quantidadeHospedeLabel;
-    private javax.swing.JTextField statusField;
+    public javax.swing.JTextField statusField;
     private javax.swing.JLabel statusLabel;
-    private javax.swing.JTextField tituloField;
+    public javax.swing.JTextField tituloField;
     private javax.swing.JLabel tituloHospedagemLabel;
     private com.mycompany.easytrip.telas.componentes.VoltarButton voltarButton1;
     // End of variables declaration//GEN-END:variables

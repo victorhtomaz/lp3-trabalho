@@ -1,11 +1,33 @@
 package com.mycompany.easytrip.telas.reservas;
 
-public class TelaReservasPendentes extends javax.swing.JPanel {
+import com.mycompany.easytrip.controllers.ReservasPendentesController;
+import com.mycompany.easytrip.telas.TelaPrincipal;
+import javax.swing.SwingUtilities;
 
+public class TelaReservasPendentes extends javax.swing.JPanel {
+    private ReservasPendentesController controller;
+    
     public TelaReservasPendentes() {
         initComponents();
     }
 
+    public TelaReservasPendentes(int usuarioId){
+        initComponents();
+        this.controller = new ReservasPendentesController(this);
+        
+        controller.carregarReservasPendentes(usuarioId);
+    }
+    
+    public int receberReservaSelecionada(){
+        int linha = reservaTable.getSelectedRow();
+        int reservaId = 0;
+        
+        if (linha != -1)
+            reservaId = (Integer) reservaTable.getValueAt(linha, 0);
+        
+        return reservaId;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -18,18 +40,10 @@ public class TelaReservasPendentes extends javax.swing.JPanel {
 
         hospedagensTituloLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        reservasListaPendentesPanel2 = new com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel();
-        reservasListaPendentesPanel3 = new com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel();
-        reservasListaPendentesPanel4 = new com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel();
-        reservasListaPendentesPanel6 = new com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel();
-        jPanel1 = new javax.swing.JPanel();
-        tituloLabel = new javax.swing.JLabel();
-        qHospedesLabel = new javax.swing.JLabel();
-        totalAReceberLabel = new javax.swing.JLabel();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
-        anteriorButton1 = new com.mycompany.easytrip.telas.componentes.AnteriorButton();
-        proximoButton1 = new com.mycompany.easytrip.telas.componentes.ProximoButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        reservaTable = new javax.swing.JTable();
+        detalhesReservaButton = new com.mycompany.easytrip.telas.componentes.DetalhesReservaButton();
+        confirmarReservaButton1 = new com.mycompany.easytrip.telas.componentes.ConfirmarReservaButton();
 
         setBackground(new java.awt.Color(163, 187, 229));
         setLayout(new java.awt.GridBagLayout());
@@ -50,105 +64,94 @@ public class TelaReservasPendentes extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         gridBagConstraints.weightx = 1.0;
         add(jSeparator1, gridBagConstraints);
+
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(300, 80));
+
+        reservaTable.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        reservaTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id", "Título Hospedagem", "Capacidade", "Quantidade de hospedes", "Data de entrada", "Valor a receber"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        reservaTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        reservaTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        reservaTable.setShowGrid(false);
+        jScrollPane1.setViewportView(reservaTable);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 150.0;
+        gridBagConstraints.weighty = 150.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        add(reservasListaPendentesPanel2, gridBagConstraints);
+        add(jScrollPane1, gridBagConstraints);
+
+        detalhesReservaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                detalhesReservaButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        add(reservasListaPendentesPanel3, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        add(reservasListaPendentesPanel4, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        add(reservasListaPendentesPanel6, gridBagConstraints);
-
-        jPanel1.setBackground(new java.awt.Color(163, 187, 229));
-        jPanel1.setLayout(new java.awt.GridLayout(1, 5));
-
-        tituloLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 14)); // NOI18N
-        tituloLabel.setText("Titulo");
-        jPanel1.add(tituloLabel);
-
-        qHospedesLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 14)); // NOI18N
-        qHospedesLabel.setText("Q. hóspedes");
-        jPanel1.add(qHospedesLabel);
-
-        totalAReceberLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 14)); // NOI18N
-        totalAReceberLabel.setText("Total a receber");
-        jPanel1.add(totalAReceberLabel);
-        jPanel1.add(filler1);
-        jPanel1.add(filler2);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        add(jPanel1, gridBagConstraints);
-
-        anteriorButton1.setEnabled(false);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
-        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 5, 10);
-        add(anteriorButton1, gridBagConstraints);
+        add(detalhesReservaButton, gridBagConstraints);
 
-        proximoButton1.setEnabled(false);
+        confirmarReservaButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmarReservaButton1ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 50;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 5, 10);
-        add(proximoButton1, gridBagConstraints);
+        add(confirmarReservaButton1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void detalhesReservaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detalhesReservaButtonActionPerformed
+        // TODO add your handling code here:
+        controller.mudarParaTelaDetalhesReserva();
+    }//GEN-LAST:event_detalhesReservaButtonActionPerformed
+
+    private void confirmarReservaButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarReservaButton1ActionPerformed
+        // TODO add your handling code here:
+        controller.confirmarReservaPendente();
+    }//GEN-LAST:event_confirmarReservaButton1ActionPerformed
+
+    public int getUsuarioLogadoId(){
+        TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
+        return telaPrincipal.getUsuarioLogado();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.mycompany.easytrip.telas.componentes.AnteriorButton anteriorButton1;
-    private javax.swing.Box.Filler filler1;
-    private javax.swing.Box.Filler filler2;
+    private com.mycompany.easytrip.telas.componentes.ConfirmarReservaButton confirmarReservaButton1;
+    public com.mycompany.easytrip.telas.componentes.DetalhesReservaButton detalhesReservaButton;
     private javax.swing.JLabel hospedagensTituloLabel;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private com.mycompany.easytrip.telas.componentes.ProximoButton proximoButton1;
-    private javax.swing.JLabel qHospedesLabel;
-    private com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel reservasListaPendentesPanel2;
-    private com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel reservasListaPendentesPanel3;
-    private com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel reservasListaPendentesPanel4;
-    private com.mycompany.easytrip.telas.componentes.ReservasListaPendentesPanel reservasListaPendentesPanel6;
-    private javax.swing.JLabel tituloLabel;
-    private javax.swing.JLabel totalAReceberLabel;
+    public javax.swing.JTable reservaTable;
     // End of variables declaration//GEN-END:variables
 }

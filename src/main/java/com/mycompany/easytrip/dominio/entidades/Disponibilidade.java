@@ -24,7 +24,7 @@ public class Disponibilidade implements Validacao{
     @Column(name = "Status")
     private StatusDisponibilidade status;
     
-    private static final DateTimeFormatter DATA_FORMATADOR = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("pt-BR"));
+    public static final DateTimeFormatter DATA_FORMATADOR = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("pt-BR"));
     
     protected Disponibilidade(){}
     
@@ -57,6 +57,18 @@ public class Disponibilidade implements Validacao{
         return status;
     }
     
+    private void setStatus(StatusDisponibilidade status){
+        this.status = status;
+    }
+    
+    public void setStatusParaReservado(){
+        setStatus(StatusDisponibilidade.RESERVADO);
+    }
+    
+    public void setStatusParaDisponivel(){
+        setStatus(StatusDisponibilidade.DISPONIVEL);
+    }
+    
     @Override
     public String toString() {
         return data.format(DATA_FORMATADOR);
@@ -70,6 +82,10 @@ public class Disponibilidade implements Validacao{
         Disponibilidade that = (Disponibilidade) obj;
         
         return this.id == that.id || this.data.equals(that.data);
+    }
+    
+    public boolean equals(LocalDate data){
+        return this.data != null && this.data.equals(data);
     }
 
     @Override

@@ -66,4 +66,9 @@ public class HospedagemRepositorio {
         
         return query.getResultList();
     }    
+    
+    public List<Hospedagem> getHospedagensFavoritasUsuario(int usuarioId, int pagina, int quantidadePorPagina){
+        String consulta = "SELECT h FROM Hospedagem h WHERE h.usuarioId = :usuarioId";
+        return null;
+    }
 }

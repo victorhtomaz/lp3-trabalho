@@ -11,8 +11,8 @@ public class ReservasDaHospedagemButton extends javax.swing.JButton{
         this.setFont(new Font("JetBrainsMono NF", Font.PLAIN, 12));
     }
     
-    private void mudarParaTelaReservas(){
+    public void mudarParaTelaReservas(int hospedagemId){
         TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
-        telaPrincipal.mudarParaTelaReservasDaHospedagem();
+        telaPrincipal.mudarParaTelaReservasDaHospedagem(hospedagemId);
     }
 }

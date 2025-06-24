@@ -160,6 +160,7 @@ public class TelaHospedagensCadastradas extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 10, 10);
         add(gerenciarHospedagemButton1, gridBagConstraints);
 
+        deletarHospedagemButton1.setEnabled(false);
         deletarHospedagemButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deletarHospedagemButton1ActionPerformed(evt);
@@ -215,16 +216,6 @@ public class TelaHospedagensCadastradas extends javax.swing.JPanel {
         return hospedagemId;
     }
     
-    public void mudarParaTelaReservasHospedagem(int hospedagemId){
-        TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
-        telaPrincipal.mudarParaTelaReservasDaHospedagem();
-    }
-    
-    public void mudarParaTelaGerenciamentoHospedagem(int hospedagemId){
-        TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
-        telaPrincipal.mudarParaTelaGerenciamentoHospedagem(hospedagemId);
-    }
-    
     public void mudarParaTelaCriarHospedagem(){
         TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
         telaPrincipal.mudarParaTelaCriarHospedagem(usuarioId);
@@ -236,7 +227,7 @@ public class TelaHospedagensCadastradas extends javax.swing.JPanel {
     private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.Box.Filler filler3;
-    private com.mycompany.easytrip.telas.componentes.GerenciarHospedagemButton gerenciarHospedagemButton1;
+    public com.mycompany.easytrip.telas.componentes.GerenciarHospedagemButton gerenciarHospedagemButton1;
     public javax.swing.JTable hospedagemTable;
     private javax.swing.JLabel hospedagensTituloLabel;
     private javax.swing.JLabel jLabel1;
@@ -245,6 +236,6 @@ public class TelaHospedagensCadastradas extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private com.mycompany.easytrip.telas.componentes.ReservasDaHospedagemButton reservasDaHospedagemButton1;
+    public com.mycompany.easytrip.telas.componentes.ReservasDaHospedagemButton reservasDaHospedagemButton1;
     // End of variables declaration//GEN-END:variables
 }

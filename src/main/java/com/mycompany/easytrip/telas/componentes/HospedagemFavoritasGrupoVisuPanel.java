@@ -21,7 +21,7 @@ public class HospedagemFavoritasGrupoVisuPanel extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         estrelaLabel = new javax.swing.JLabel();
-        favoritarButton = new javax.swing.JButton();
+        favoritarButton1 = new javax.swing.JButton();
         imagemPanel = new javax.swing.JPanel();
         tituloLabel = new javax.swing.JLabel();
         enderecoLabel = new javax.swing.JLabel();
@@ -35,28 +35,36 @@ public class HospedagemFavoritasGrupoVisuPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(260, 260));
         setLayout(new java.awt.GridBagLayout());
 
-        estrelaLabel.setFont(new java.awt.Font("Segoe UI Emoji", 0, 12)); // NOI18N
+        estrelaLabel.setFont(new java.awt.Font("Segoe UI Symbol", 0, 24)); // NOI18N
+        estrelaLabel.setForeground(new java.awt.Color(255, 255, 0));
         estrelaLabel.setText("⭐");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 0);
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
         add(estrelaLabel, gridBagConstraints);
 
-        favoritarButton.setBorderPainted(false);
-        favoritarButton.setContentAreaFilled(false);
-        favoritarButton.setLabel("❤");
-        favoritarButton.addActionListener(new java.awt.event.ActionListener() {
+        favoritarButton1.setBackground(new java.awt.Color(242, 242, 242));
+        favoritarButton1.setFont(new java.awt.Font("Segoe UI Symbol", 0, 18)); // NOI18N
+        favoritarButton1.setForeground(new java.awt.Color(239, 0, 23));
+        favoritarButton1.setBorder(null);
+        favoritarButton1.setBorderPainted(false);
+        favoritarButton1.setContentAreaFilled(false);
+        favoritarButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        favoritarButton1.setLabel("❤"); // NOI18N
+        favoritarButton1.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        favoritarButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                favoritarButtonActionPerformed(evt);
+                favoritarButton1ActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
-        add(favoritarButton, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(4, 4, 4, 4);
+        add(favoritarButton1, gridBagConstraints);
 
         javax.swing.GroupLayout imagemPanelLayout = new javax.swing.GroupLayout(imagemPanel);
         imagemPanel.setLayout(imagemPanelLayout);
@@ -141,9 +149,9 @@ public class HospedagemFavoritasGrupoVisuPanel extends javax.swing.JPanel {
         mudarParaTelaDetalhesHospedagem();
     }//GEN-LAST:event_verMaisButtonActionPerformed
 
-    private void favoritarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_favoritarButtonActionPerformed
+    private void favoritarButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_favoritarButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_favoritarButtonActionPerformed
+    }//GEN-LAST:event_favoritarButton1ActionPerformed
 
     private void mudarParaTelaDetalhesHospedagem(){
         TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
@@ -154,7 +162,7 @@ public class HospedagemFavoritasGrupoVisuPanel extends javax.swing.JPanel {
     private javax.swing.JLabel avaliacaoButton;
     private javax.swing.JLabel enderecoLabel;
     private javax.swing.JLabel estrelaLabel;
-    private javax.swing.JButton favoritarButton;
+    private javax.swing.JButton favoritarButton1;
     private javax.swing.JPanel imagemPanel;
     private javax.swing.JLabel precoLabel;
     private javax.swing.JLabel tituloLabel;

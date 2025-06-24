@@ -6,6 +6,7 @@ import com.mycompany.easytrip.dominio.interfaces.Validacao;
 import com.mycompany.easytrip.dominio.objetosDeValor.Cpf;
 import com.mycompany.easytrip.dominio.objetosDeValor.Email;
 import com.mycompany.easytrip.dominio.objetosDeValor.Senha;
+import com.mycompany.easytrip.telas.componentes.HospedagemFavoritasGrupoVisuPanel;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -42,6 +43,14 @@ public class Usuario implements Validacao{
     @OneToMany(orphanRemoval = true)
     @JoinColumn(name = "Usuario_Id")
     private final List<Hospedagem> hospedagens = new ArrayList<>();
+    
+    @ManyToMany
+    @JoinTable(
+            name = "FavoritaHospede",
+            joinColumns = @JoinColumn(name = "Usuario_Id"),
+            inverseJoinColumns = @JoinColumn(name = "Hospedagem_Id")
+    )
+    private final List<Hospedagem> hospedagensFavoritas = new ArrayList<>();
     
     private static final DateTimeFormatter DATA_NASCIMENTO_FORMATADOR = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("pt-BR"));
     
@@ -102,6 +111,29 @@ public class Usuario implements Validacao{
     
     public List<Hospedagem> getHospedagens(){
         return hospedagens;
+    }
+    
+    public List<Hospedagem> getHospedagensFavoritas(){
+        return hospedagensFavoritas;
+    }
+    
+    public boolean aHospedagemEstaFavoritada(int hospedagemId){
+        for (Hospedagem hospedagem : hospedagensFavoritas)
+            if (hospedagem.getId() == hospedagemId)
+                return true;
+        
+        return false;
+    }
+    
+    public void adicionarHospedagemFavorita(Hospedagem hospedagem) throws UsuarioException{
+        if (hospedagensFavoritas.contains(hospedagem))
+            throw new UsuarioException("A hospedagem já está na lista");
+        
+        hospedagensFavoritas.add(hospedagem);
+    }
+    
+    public void removerHospedagemFavorita(Hospedagem hospedagem){
+        hospedagensFavoritas.remove(hospedagem);
     }
     
     public void adicionarHospedagem(Hospedagem hospedagem){

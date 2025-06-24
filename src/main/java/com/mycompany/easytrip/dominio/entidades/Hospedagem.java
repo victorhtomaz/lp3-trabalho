@@ -1,5 +1,6 @@
 package com.mycompany.easytrip.dominio.entidades;
 
+import com.mycompany.easytrip.dominio.enums.StatusReserva;
 import com.mycompany.easytrip.dominio.enums.TipoDeHospedagem;
 import com.mycompany.easytrip.dominio.excecoes.DominioException;
 import com.mycompany.easytrip.dominio.excecoes.HospedagemException;
@@ -9,6 +10,7 @@ import com.mycompany.easytrip.dominio.objetosDeValor.PrecoDiaria;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,9 @@ public class Hospedagem implements Validacao{
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "Hospedagem_Id", nullable = false)
     private final List<Imagem> imagens = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "hospedagem")
+    private final List<Reserva> reservas = new ArrayList<>();
     
     @Column(name = "Titulo")
     private String titulo;
@@ -110,6 +115,10 @@ public class Hospedagem implements Validacao{
         return id;
     }
     
+    public int getUsuarioId(){
+        return usuarioId;
+    }
+    
     public String getTitulo(){
         return titulo;
     }
@@ -170,6 +179,10 @@ public class Hospedagem implements Validacao{
         return avaliacaoMedia.getNota();
     }
     
+    public void setAvaliacao(float nota) throws DominioException{
+        avaliacaoMedia = new Avaliacao(nota);
+    }
+    
     public List<Imagem> getImagens(){
         return imagens;
     }
@@ -215,6 +228,28 @@ public class Hospedagem implements Validacao{
     
     public void removerDisponibilidade(Disponibilidade disponibilidade){
         disponibilidades.remove(disponibilidade);
+    }
+    
+    public List<Disponibilidade> getDisponibilidadesNoPeriodo(LocalDate dataInicial, LocalDate dataFinal){
+        LocalDate data = dataInicial;
+        List<Disponibilidade> lista = new ArrayList<>();
+        while(data.isBefore(dataFinal)){
+            for (Disponibilidade disponibilidade : disponibilidades){
+                if (disponibilidade.equals(data))
+                    lista.add(disponibilidade);
+            }
+            data = data.plusDays(1);
+        }
+        
+        return lista;
+    }
+    
+    public boolean existeReservaConfirmada(){
+        for(Reserva reserva : reservas)
+            if(reserva.getStatus() == StatusReserva.CONFIRMADA)
+                return true;
+        
+        return false;
     }
     
     @Override

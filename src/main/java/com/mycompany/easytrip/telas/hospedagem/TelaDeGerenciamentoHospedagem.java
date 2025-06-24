@@ -645,7 +645,8 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 300;
-        gridBagConstraints.ipady = 200;
+        gridBagConstraints.ipady = 300;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         imagemPanel.add(imagemPanel1, gridBagConstraints);
 

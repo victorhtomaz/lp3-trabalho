@@ -1,11 +1,56 @@
 package com.mycompany.easytrip.telas.hospedagem;
 
-public class TelaFavoritasHospede extends javax.swing.JPanel {
+import com.mycompany.easytrip.controllers.VisualizarFavoritasHospedeController;
 
+public class TelaFavoritasHospede extends javax.swing.JPanel {
+    private VisualizarFavoritasHospedeController controller;
+    private int pagina = 0;
+    public static final int QUANTIDADE_POR_PAGINA = 8;
+    private int usuarioId;
+    
     public TelaFavoritasHospede() {
         initComponents();
     }
+    
+    public TelaFavoritasHospede(int usuarioId) {
+        initComponents();
+        desligarBotaoAnterior();
+        this.usuarioId = usuarioId;
+        this.controller = new VisualizarFavoritasHospedeController(this);
+        
+        controller.carregarHospedagens(usuarioId);
+    }
+    
+    public int getPaginaAtual(){
+        return pagina;
+    }
 
+    public void desligarBotaoAnterior(){
+        this.anteriorButton.setVisible(false);
+        this.anteriorButton.setEnabled(false);
+    }
+    
+    public void ligarBotaoAnterior(){
+        this.anteriorButton.setVisible(true);
+        this.anteriorButton.setEnabled(true);
+    }
+    
+    public void atualizarPagina(){
+        this.revalidate();
+        this.repaint();
+    }
+    
+    public void incrementarPagina(){
+        pagina++;
+    }
+    
+    public void decrementarPagina(){
+        pagina--;
+    }
+    
+    public int getUsuarioLogadoId(){
+        return this.usuarioId;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -17,21 +62,19 @@ public class TelaFavoritasHospede extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel3 = new javax.swing.JPanel();
+        visualizaPanel = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         minhasFavoritasTituloLabel = new javax.swing.JLabel();
         anteriorButton = new javax.swing.JButton();
         proximoButton = new javax.swing.JButton();
-        hospedagemVisualizacaoPanel1 = new com.mycompany.easytrip.telas.componentes.HospedagemVisualizacaoPanel();
-        hospedagemVisualizacaoPanel2 = new com.mycompany.easytrip.telas.componentes.HospedagemVisualizacaoPanel();
 
         setBackground(new java.awt.Color(163, 187, 229));
         setLayout(new java.awt.GridLayout(1, 0));
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        jPanel3.setBackground(new java.awt.Color(163, 187, 229));
-        jPanel3.setLayout(new java.awt.GridBagLayout());
+        visualizaPanel.setBackground(new java.awt.Color(163, 187, 229));
+        visualizaPanel.setLayout(new java.awt.GridBagLayout());
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
@@ -41,11 +84,11 @@ public class TelaFavoritasHospede extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
-        jPanel3.add(jSeparator1, gridBagConstraints);
+        visualizaPanel.add(jSeparator1, gridBagConstraints);
 
         minhasFavoritasTituloLabel.setFont(new java.awt.Font("JetBrainsMono NF", 1, 18)); // NOI18N
         minhasFavoritasTituloLabel.setText("Minhas favoritas");
@@ -56,16 +99,17 @@ public class TelaFavoritasHospede extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(15, 10, 10, 10);
-        jPanel3.add(minhasFavoritasTituloLabel, gridBagConstraints);
+        visualizaPanel.add(minhasFavoritasTituloLabel, gridBagConstraints);
 
         anteriorButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         anteriorButton.setText("Anterior");
+        anteriorButton.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 5, 10);
-        jPanel3.add(anteriorButton, gridBagConstraints);
+        visualizaPanel.add(anteriorButton, gridBagConstraints);
 
         proximoButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         proximoButton.setText("Próximo");
@@ -74,21 +118,9 @@ public class TelaFavoritasHospede extends javax.swing.JPanel {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 5, 10);
-        jPanel3.add(proximoButton, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        jPanel3.add(hospedagemVisualizacaoPanel1, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        jPanel3.add(hospedagemVisualizacaoPanel2, gridBagConstraints);
+        visualizaPanel.add(proximoButton, gridBagConstraints);
 
-        jScrollPane1.setViewportView(jPanel3);
+        jScrollPane1.setViewportView(visualizaPanel);
 
         add(jScrollPane1);
     }// </editor-fold>//GEN-END:initComponents
@@ -96,12 +128,10 @@ public class TelaFavoritasHospede extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anteriorButton;
-    private com.mycompany.easytrip.telas.componentes.HospedagemVisualizacaoPanel hospedagemVisualizacaoPanel1;
-    private com.mycompany.easytrip.telas.componentes.HospedagemVisualizacaoPanel hospedagemVisualizacaoPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel minhasFavoritasTituloLabel;
     private javax.swing.JButton proximoButton;
+    public javax.swing.JPanel visualizaPanel;
     // End of variables declaration//GEN-END:variables
 }

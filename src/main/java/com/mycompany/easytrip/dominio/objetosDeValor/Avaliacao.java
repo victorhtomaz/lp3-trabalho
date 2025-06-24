@@ -7,8 +7,8 @@ import jakarta.persistence.*;
 
 @Embeddable
 public class Avaliacao implements Validacao{
-    private static final float NOTA_MINIMA = 0.0f;
-    private static final float NOTA_MAXIMA = 5.0f;
+    private static final float NOTA_MINIMA = 0.00f;
+    private static final float NOTA_MAXIMA = 5.00f;
     
     @Column(name = "Avaliacao")
     private float nota;

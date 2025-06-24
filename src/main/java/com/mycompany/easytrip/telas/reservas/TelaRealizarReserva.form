@@ -62,6 +62,11 @@
       </Layout>
       <SubComponents>
         <Component class="com.mycompany.easytrip.telas.componentes.DisponibilidadeParaReservarPanel" name="disponibilidadeParaReservarPanel1">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new DisponibilidadeParaReservarPanel(disponibilidades)"/>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="TelaRealizarReserva_disponibilidadeParaReservarPanel1"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="continuarButton">
           <Properties>
@@ -128,6 +133,9 @@
       </Layout>
       <SubComponents>
         <Component class="com.mycompany.easytrip.telas.componentes.ConfirmarReservaPanel" name="confirmarReservaPanel1">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JButton" name="cancelarButton2">
           <Properties>

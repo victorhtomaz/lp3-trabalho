@@ -1,13 +1,40 @@
 package com.mycompany.easytrip.telas.reservas;
 
+import com.mycompany.easytrip.controllers.RealizarReservaController;
+import com.mycompany.easytrip.dominio.entidades.Disponibilidade;
 import com.mycompany.easytrip.telas.TelaPrincipal;
+import com.mycompany.easytrip.telas.componentes.DisponibilidadeParaReservarPanel;
 import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.util.List;
 import javax.swing.SwingUtilities;
 
 public class TelaRealizarReserva extends javax.swing.JPanel {
-
+    private RealizarReservaController controller;
+    private int hospedagemId;
+    private List<Disponibilidade> disponibilidades;
     public TelaRealizarReserva() {
         initComponents();
+    }
+    
+    public TelaRealizarReserva(int hospedagemId){
+        this.hospedagemId = hospedagemId;
+        this.controller = new RealizarReservaController(this);
+        controller.carregarHospedagem(hospedagemId);
+
+        initComponents();
+        
+        this.confirmarReservaPanel1.realizarReservaButton.addActionListener((ActionEvent e) -> {
+            controller.finalizarReserva();
+        });
+    }
+    
+    public int getHospedagemId(){
+        return this.hospedagemId;
+    }
+    
+    public void setListaDisponibilidade(List<Disponibilidade> disponibilidades){
+        this.disponibilidades = disponibilidades;
     }
 
     /**
@@ -20,7 +47,7 @@ public class TelaRealizarReserva extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        disponibilidadeParaReservarPanel1 = new com.mycompany.easytrip.telas.componentes.DisponibilidadeParaReservarPanel();
+        disponibilidadeParaReservarPanel1 = new DisponibilidadeParaReservarPanel(disponibilidades);
         continuarButton = new javax.swing.JButton();
         cancelarButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -125,7 +152,7 @@ public class TelaRealizarReserva extends javax.swing.JPanel {
 
     private void continuarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continuarButtonActionPerformed
         // TODO add your handling code here:
-        proximoCardLayout();
+        controller.continuarReserva();
     }//GEN-LAST:event_continuarButtonActionPerformed
 
     private void anteriorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorButtonActionPerformed
@@ -140,10 +167,15 @@ public class TelaRealizarReserva extends javax.swing.JPanel {
 
     private void voltarParaDetalhesHospedagem(){
         TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
-        telaPrincipal.mudarParaTelaDetalhesHospedagem(1, false);
+        telaPrincipal.mudarParaTelaDetalhesHospedagem(hospedagemId, false);
     }
     
-    private void proximoCardLayout(){
+    public int getUsuarioLogadoId(){
+        TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
+        return telaPrincipal.getUsuarioLogado();
+    }
+    
+    public void proximoCardLayout(){
         CardLayout layout = (CardLayout) this.getLayout();
         layout.next(this);
     }
@@ -157,9 +189,9 @@ public class TelaRealizarReserva extends javax.swing.JPanel {
     private javax.swing.JButton anteriorButton;
     private javax.swing.JButton cancelarButton1;
     private javax.swing.JButton cancelarButton2;
-    private com.mycompany.easytrip.telas.componentes.ConfirmarReservaPanel confirmarReservaPanel1;
+    public com.mycompany.easytrip.telas.componentes.ConfirmarReservaPanel confirmarReservaPanel1;
     private javax.swing.JButton continuarButton;
-    private com.mycompany.easytrip.telas.componentes.DisponibilidadeParaReservarPanel disponibilidadeParaReservarPanel1;
+    public com.mycompany.easytrip.telas.componentes.DisponibilidadeParaReservarPanel disponibilidadeParaReservarPanel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
