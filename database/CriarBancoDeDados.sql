@@ -28,12 +28,12 @@ Usuario_Id INT NOT NULL,
 Endereco_Id INT NOT NULL,
 Titulo VARCHAR(200) NOT NULL,
 Descricao VARCHAR(1024),
-Tipo ENUM('Casa', 'Apartamento', 'Cabana', 'Chale', 'Sitio', 'Chacara') NOT NULL,
+Tipo ENUM('CASA', 'APARTAMENTO', 'CABANA', 'CHALE', 'SITIO', 'CHACARA') NOT NULL,
 CapacidadeMaxima SMALLINT NOT NULL,
 PrecoDiaria DECIMAL(8,2) NOT NULL,
 CheckIn TIME NOT NULL,
 CheckOut TIME NOT NULL,
-AvaliacaoMedia DECIMAL(3,1) NOT NULL,
+AvaliacaoMedia DECIMAL(3,2) NULL,
 FOREIGN KEY (Usuario_Id) REFERENCES Usuario(Id),
 FOREIGN KEY (Endereco_Id) REFERENCES Endereco(Id));
 
@@ -41,11 +41,11 @@ CREATE TABLE IF NOT EXISTS Disponibilidade(
 Id INT AUTO_INCREMENT PRIMARY KEY,
 Hospedagem_Id INT NOT NULL,
 Data DATE NOT NULL,
-Status ENUM('Disponivel', 'Reservado'),
+Status ENUM('DISPONIVEL', 'RESERVADO'),
 FOREIGN KEY (Hospedagem_Id) REFERENCES Hospedagem(Id));
 
 CREATE TABLE IF NOT EXISTS Imagem(
-Id INT NOT NULL PRIMARY KEY,
+Id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
 Hospedagem_Id INT NOT NULL,
 Url VARCHAR(1024),
 FOREIGN KEY (Hospedagem_Id) REFERENCES Hospedagem(Id));
@@ -66,8 +66,8 @@ DataEntrada DATE NOT NULL,
 DataSaida DATE NOT NULL,
 QuantidadeDeDias INT NOT NULL,
 PrecoDiaria DECIMAL(8,2) NOT NULL,
-Status ENUM('Pendente', 'Confirmada', 'Cancelada', 'Finalizada'),
-Avaliacao DECIMAL(3,1) NULL,
+Status ENUM('PENDENTE', 'CONFIRMADA', 'CANCELADA', 'FINALIZADA'),
+Avaliacao DECIMAL(3,2) NULL,
 FOREIGN KEY (Usuario_Id) REFERENCES Usuario(Id),
 FOREIGN KEY (Hospedagem_Id) REFERENCES Hospedagem(Id));
 
@@ -76,16 +76,16 @@ Id INT AUTO_INCREMENT PRIMARY KEY,
 Nome VARCHAR(100) NOT NULL);
 
 CREATE TABLE IF NOT EXISTS HospedeGrupo(
-Id INT NOT NULL PRIMARY KEY,
+Id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
 Usuario_Id INT NOT NULL,
 Grupo_Id INT NOT NULL,
-Funcao ENUM('Responsavel', 'Administrador', 'Membro'),
+Funcao ENUM('RESPONSAVEL', 'ADMINISTRADOR', 'MEMBRO'),
 QuantidadeAcompanhantes INT NOT NULL,
 FOREIGN KEY (Usuario_Id) REFERENCES Usuario(Id),
 FOREIGN KEY (Grupo_Id) REFERENCES Grupo(Id));
 
 CREATE TABLE IF NOT EXISTS FavoritaGrupo(
-Id INT NOT NULL PRIMARY KEY,
+Id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
 Grupo_Id INT NOT NULL,
 Hospedagem_Id INT NOT NULL,
 FOREIGN KEY (Grupo_Id) REFERENCES Grupo(Id),

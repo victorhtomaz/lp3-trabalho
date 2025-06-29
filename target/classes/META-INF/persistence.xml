@@ -10,6 +10,10 @@
     <class>com.mycompany.easytrip.dominio.entidades.Hospedagem</class>
     <class>com.mycompany.easytrip.dominio.entidades.Imagem</class>
     <class>com.mycompany.easytrip.dominio.entidades.Reserva</class>
+    <class>com.mycompany.easytrip.dominio.entidades.Grupo</class>
+    <class>com.mycompany.easytrip.dominio.entidades.HospedeGrupo</class>
+    <class>com.mycompany.easytrip.dominio.entidades.FavoritaGrupo</class>
+    <class>com.mycompany.easytrip.dominio.entidades.VotacaoFavoritas</class>
     <properties>
       <!-- Database connection settings -->
       <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/easytrip"/>

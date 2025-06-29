@@ -28,7 +28,7 @@ public class HospedagemServico {
     private final Transacao transacao;
     private final HospedagemRepositorio hospedagemRepositorio;
     
-    private static final String CAMINHO_PASTA_IMAGENS = "imagensSalvas/";
+    private static final String CAMINHO_PASTA_IMAGENS = "imagemHospedagens/";
     
     public HospedagemServico(EntityManager entityManager){
         this.transacao = new Transacao(entityManager);

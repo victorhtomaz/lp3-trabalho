@@ -1,11 +1,37 @@
 package com.mycompany.easytrip.telas.grupos;
 
-public class TelaGerenciarGrupo extends javax.swing.JPanel {
+import com.mycompany.easytrip.controllers.GerenciarGrupoController;
+import com.mycompany.easytrip.telas.TelaPrincipal;
+import javax.swing.SwingUtilities;
 
+public class TelaGerenciarGrupo extends javax.swing.JPanel {
+    private int usuarioId;
+    private int grupoId;
+    private GerenciarGrupoController controller;
+    
     public TelaGerenciarGrupo() {
         initComponents();
     }
+    
+    public TelaGerenciarGrupo(int usuarioId, int grupoId){
+        initComponents();
+        this.usuarioId = usuarioId;
+        this.grupoId = grupoId;
+        this.controller = new GerenciarGrupoController(this);
+        
+        controller.carregarGrupo(grupoId);
+    }
+    
+    public int receberParticipanteSelecionado(){
+        int linha = membroTable.getSelectedRow();
+        int participanteId = 0;
 
+        if(linha != -1)
+            participanteId = (Integer)membroTable.getValueAt(linha, 0);
+        
+        return participanteId;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -20,16 +46,16 @@ public class TelaGerenciarGrupo extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         nomeGrupoLabel = new javax.swing.JLabel();
         nomeGrupoField = new javax.swing.JTextField();
-        qAcompanhantesLabel = new javax.swing.JLabel();
-        qAcompanhantesField = new javax.swing.JTextField();
+        totalPessoasLabel = new javax.swing.JLabel();
+        totalPessoasField = new javax.swing.JTextField();
         membrosLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         membroTable = new javax.swing.JTable();
         voltarButton1 = new com.mycompany.easytrip.telas.componentes.VoltarButton();
         removerUsuarioButton = new javax.swing.JButton();
         alterarFuncaoButton = new javax.swing.JButton();
-        novoMrmbroButton = new javax.swing.JButton();
-        salvarButton = new javax.swing.JButton();
+        novoMembroButton = new javax.swing.JButton();
+        alterarQuantidadeAcompanhantesButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(163, 187, 229));
         setPreferredSize(new java.awt.Dimension(640, 480));
@@ -69,6 +95,7 @@ public class TelaGerenciarGrupo extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(nomeGrupoLabel, gridBagConstraints);
 
+        nomeGrupoField.setEnabled(false);
         nomeGrupoField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nomeGrupoFieldActionPerformed(evt);
@@ -83,15 +110,17 @@ public class TelaGerenciarGrupo extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(nomeGrupoField, gridBagConstraints);
 
-        qAcompanhantesLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        qAcompanhantesLabel.setLabelFor(qAcompanhantesField);
-        qAcompanhantesLabel.setText("Minha q. acompanhantes:");
+        totalPessoasLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        totalPessoasLabel.setLabelFor(totalPessoasField);
+        totalPessoasLabel.setText("Total de pessoas");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        add(qAcompanhantesLabel, gridBagConstraints);
+        add(totalPessoasLabel, gridBagConstraints);
+
+        totalPessoasField.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -99,7 +128,7 @@ public class TelaGerenciarGrupo extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 20;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        add(qAcompanhantesField, gridBagConstraints);
+        add(totalPessoasField, gridBagConstraints);
 
         membrosLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         membrosLabel.setLabelFor(membroTable);
@@ -118,11 +147,11 @@ public class TelaGerenciarGrupo extends javax.swing.JPanel {
         membroTable.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         membroTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Bruce Wayne", "Responsável", "2"},
-                {"Peter Parker", "Membro", "1"}
+                {"1", "Bruce Wayne", "Responsável", "2"},
+                {"2", "Peter Parker", "Membro", "1"}
             },
             new String [] {
-                "Nome", "Função", "Acompanhantes"
+                "Id", "Nome", "Função", "Acompanhantes"
             }
         ));
         jScrollPane1.setViewportView(membroTable);
@@ -132,9 +161,16 @@ public class TelaGerenciarGrupo extends javax.swing.JPanel {
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 150;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(jScrollPane1, gridBagConstraints);
+
+        voltarButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                voltarButton1ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 6;
@@ -144,60 +180,113 @@ public class TelaGerenciarGrupo extends javax.swing.JPanel {
 
         removerUsuarioButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         removerUsuarioButton.setText("Remover usuário");
+        removerUsuarioButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removerUsuarioButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(removerUsuarioButton, gridBagConstraints);
 
         alterarFuncaoButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         alterarFuncaoButton.setText("Alterar função");
+        alterarFuncaoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alterarFuncaoButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(alterarFuncaoButton, gridBagConstraints);
 
-        novoMrmbroButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        novoMrmbroButton.setText("Novo membro");
+        novoMembroButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        novoMembroButton.setText("Novo membro");
+        novoMembroButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                novoMembroButtonActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        add(novoMembroButton, gridBagConstraints);
+
+        alterarQuantidadeAcompanhantesButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        alterarQuantidadeAcompanhantesButton.setText("Alterar acompanhantes");
+        alterarQuantidadeAcompanhantesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alterarQuantidadeAcompanhantesButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        add(novoMrmbroButton, gridBagConstraints);
-
-        salvarButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        salvarButton.setText("Salvar");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        add(salvarButton, gridBagConstraints);
+        add(alterarQuantidadeAcompanhantesButton, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void nomeGrupoFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeGrupoFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nomeGrupoFieldActionPerformed
 
+    private void voltarButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarButton1ActionPerformed
+        // TODO add your handling code here:
+        voltarPagina();
+    }//GEN-LAST:event_voltarButton1ActionPerformed
+
+    private void alterarFuncaoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarFuncaoButtonActionPerformed
+        // TODO add your handling code here:
+        controller.alterarFuncao(grupoId);
+    }//GEN-LAST:event_alterarFuncaoButtonActionPerformed
+
+    private void removerUsuarioButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerUsuarioButtonActionPerformed
+        // TODO add your handling code here:
+        controller.removerUsuario(grupoId);
+    }//GEN-LAST:event_removerUsuarioButtonActionPerformed
+
+    private void novoMembroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoMembroButtonActionPerformed
+        // TODO add your handling code here:
+        controller.adicionarNovoMembro(grupoId);
+    }//GEN-LAST:event_novoMembroButtonActionPerformed
+
+    private void alterarQuantidadeAcompanhantesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alterarQuantidadeAcompanhantesButtonActionPerformed
+        // TODO add your handling code here:
+        controller.alterarQuantidadeDeAcompanhantes(grupoId);
+    }//GEN-LAST:event_alterarQuantidadeAcompanhantesButtonActionPerformed
+
+    private void voltarPagina(){
+        TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
+        telaPrincipal.mudarParaTelaVisualizarGrupos();
+    }
+    
+    public int getUsuarioLogadoId(){
+        return usuarioId;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton alterarFuncaoButton;
+    public javax.swing.JButton alterarFuncaoButton;
+    public javax.swing.JButton alterarQuantidadeAcompanhantesButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable membroTable;
+    public javax.swing.JTable membroTable;
     private javax.swing.JLabel membrosLabel;
     private javax.swing.JLabel minhasFavoritasTituloLabel;
-    private javax.swing.JTextField nomeGrupoField;
+    public javax.swing.JTextField nomeGrupoField;
     private javax.swing.JLabel nomeGrupoLabel;
-    private javax.swing.JButton novoMrmbroButton;
-    private javax.swing.JTextField qAcompanhantesField;
-    private javax.swing.JLabel qAcompanhantesLabel;
-    private javax.swing.JButton removerUsuarioButton;
-    private javax.swing.JButton salvarButton;
+    public javax.swing.JButton novoMembroButton;
+    public javax.swing.JButton removerUsuarioButton;
+    public javax.swing.JTextField totalPessoasField;
+    private javax.swing.JLabel totalPessoasLabel;
     private com.mycompany.easytrip.telas.componentes.VoltarButton voltarButton1;
     // End of variables declaration//GEN-END:variables
 }

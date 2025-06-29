@@ -6,7 +6,6 @@ import com.mycompany.easytrip.dominio.interfaces.Validacao;
 import com.mycompany.easytrip.dominio.objetosDeValor.Cpf;
 import com.mycompany.easytrip.dominio.objetosDeValor.Email;
 import com.mycompany.easytrip.dominio.objetosDeValor.Senha;
-import com.mycompany.easytrip.telas.componentes.HospedagemFavoritasGrupoVisuPanel;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -43,6 +42,9 @@ public class Usuario implements Validacao{
     @OneToMany(orphanRemoval = true)
     @JoinColumn(name = "Usuario_Id")
     private final List<Hospedagem> hospedagens = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "usuario")
+    private final List<HospedeGrupo> gruposDoHospede = new ArrayList<>();
     
     @ManyToMany
     @JoinTable(

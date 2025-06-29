@@ -31,6 +31,16 @@ public class UsuarioRepositorio {
         return em.find(Usuario.class, usuarioId);
     }
     
+    public Usuario getUsuarioPeloEmail(String email){
+        String consulta = "SELECT u FROM Usuario u WHERE u.email.endereco = :email";
+        
+        TypedQuery query = em.createQuery(consulta, Usuario.class);
+        query.setParameter("email", email);
+        
+        
+        return (Usuario) query.getSingleResultOrNull();
+    }
+    
     public boolean existeUmUsuarioComEmail(String email){
         
         String consulta = "SELECT COUNT(u) > 0 FROM Usuario u WHERE u.email.endereco = :email";

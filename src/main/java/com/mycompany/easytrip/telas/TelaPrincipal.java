@@ -306,22 +306,22 @@ public class TelaPrincipal extends javax.swing.JFrame{
     }
     
     public void mudarParaTelaVisualizarGrupos(){
-        TelaVisualizarGrupos tela = new TelaVisualizarGrupos();
+        TelaVisualizarGrupos tela = new TelaVisualizarGrupos(usuario);
         mudarTela(tela, true);
     }
     
-    public void mudarParaTelaGerenciarGrupo(){
-        TelaGerenciarGrupo tela = new TelaGerenciarGrupo();
+    public void mudarParaTelaGerenciarGrupo(int grupoId){
+        TelaGerenciarGrupo tela = new TelaGerenciarGrupo(usuario, grupoId);
         mudarTela(tela, true);
     }
     
     public void mudarParaTelaFavoritasGrupo(){
-        TelaFavoritasGrupo tela = new TelaFavoritasGrupo();
+        TelaFavoritasGrupo tela = new TelaFavoritasGrupo(usuario);
         mudarTela(tela, true);
     }
     
     public void mudarParaTelaRankingGrupo(){
-        TelaRankingGrupo tela = new TelaRankingGrupo();
+        TelaRankingGrupo tela = new TelaRankingGrupo(usuario);
         mudarTela(tela, true);
     }
     

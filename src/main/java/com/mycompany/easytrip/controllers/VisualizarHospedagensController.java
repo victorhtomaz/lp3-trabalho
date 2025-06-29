@@ -31,7 +31,6 @@ public class VisualizarHospedagensController {
         int paginaAtual = tela.getPaginaAtual();
         int quantidadePorPagina = TelaVisualizarHospedagens.QUANTIDADE_POR_PAGINA;
         
-        
         try (EntityManager entityManager = MinhaConexao.getEntityManager()){
             HospedagemServico servico = new HospedagemServico(entityManager);
             
@@ -56,6 +55,9 @@ public class VisualizarHospedagensController {
     
     public void adicionarFiltro(){
         String cidadeFiltro = JOptionPane.showInputDialog(tela, "Cidade: ", "Filtrar", JOptionPane.PLAIN_MESSAGE);
+        if (cidadeFiltro == null)
+            return;
+        
         if (cidadeFiltro.isBlank())
             this.cidade = null;
         else

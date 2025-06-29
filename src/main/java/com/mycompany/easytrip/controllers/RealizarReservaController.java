@@ -1,10 +1,13 @@
 package com.mycompany.easytrip.controllers;
 
+import com.mycompany.easytrip.controllers.servicos.GrupoServico;
 import com.mycompany.easytrip.controllers.servicos.HospedagemServico;
 import com.mycompany.easytrip.controllers.servicos.ReservaServico;
+import com.mycompany.easytrip.controllers.servicos.excecoes.GrupoServicoException;
 import com.mycompany.easytrip.controllers.servicos.excecoes.HospedagemServicoException;
 import com.mycompany.easytrip.controllers.servicos.excecoes.ReservaServicoException;
 import com.mycompany.easytrip.dominio.entidades.Disponibilidade;
+import com.mycompany.easytrip.dominio.entidades.Grupo;
 import com.mycompany.easytrip.dominio.entidades.Hospedagem;
 import com.mycompany.easytrip.repositorio.MinhaConexao;
 import com.mycompany.easytrip.telas.TelaPrincipal;
@@ -15,6 +18,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -58,10 +62,16 @@ public class RealizarReservaController {
         }
         
         try(EntityManager entityManager = MinhaConexao.getEntityManager()){
-            HospedagemServico servico = new HospedagemServico(entityManager);
+            HospedagemServico hospedagemServico = new HospedagemServico(entityManager);
+            GrupoServico grupoServico = new GrupoServico(entityManager);
             
-            servico.verificarDisponibilidades(tela.getHospedagemId(), dataEntrada, dataSaida);
-            Hospedagem hospedagem = servico.getHospedagem(tela.getHospedagemId());
+            String[] opcoes = {"Individual", "Grupo"};
+            int escolha = JOptionPane.showOptionDialog(null, "A reserva é", "Reserva", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, opcoes, opcoes[0]);
+            if(escolha == 1)
+                selecionarGrupo(grupoServico);
+            
+            hospedagemServico.verificarDisponibilidades(tela.getHospedagemId(), dataEntrada, dataSaida);
+            Hospedagem hospedagem = hospedagemServico.getHospedagem(tela.getHospedagemId());
             BigDecimal precoDiaria = hospedagem.getPrecoDiaria().getValor();
 
             this.dataEntradaSalva = dataEntrada;
@@ -83,6 +93,28 @@ public class RealizarReservaController {
         catch(Exception e){
             JOptionPane.showMessageDialog(tela, "Erro desconhecido", "Erro", JOptionPane.ERROR_MESSAGE);
         } 
+    }
+    
+    private void selecionarGrupo(GrupoServico grupoServico) throws GrupoServicoException{
+        int usuarioLogadoId = tela.getUsuarioLogadoId();
+        List<Grupo> grupos = grupoServico.listarGruposDoUsuario(usuarioLogadoId);
+        
+        JComboBox<Grupo> escolherGrupo = new JComboBox<>(grupos.toArray(Grupo[]::new));
+        int grupoEscolha = JOptionPane.showConfirmDialog(tela, escolherGrupo, "Grupos: ", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (grupoEscolha != JOptionPane.OK_OPTION)
+            return;
+        
+        Grupo grupoEscolhido = (Grupo) escolherGrupo.getSelectedItem();
+        
+        boolean eResponsavel = grupoServico.checaSeUsuarioEResponsavel(grupoEscolhido.getId(), usuarioLogadoId);
+        if (!eResponsavel){
+            JOptionPane.showMessageDialog(tela, "É necessário ser um responsavel para reservar para o grupo", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        int quantidadeHospedesGrupo = grupoEscolhido.getQuantidadeDeParticipantes();
+        
+        tela.confirmarReservaPanel1.quantidadeHospedeField.setText(String.valueOf(quantidadeHospedesGrupo));
     }
     
     public void finalizarReserva(){

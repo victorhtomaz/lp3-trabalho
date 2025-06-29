@@ -106,7 +106,7 @@ public class TelaFavoritasHospede extends javax.swing.JPanel {
         anteriorButton.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 5, 10);
         visualizaPanel.add(anteriorButton, gridBagConstraints);
@@ -115,7 +115,7 @@ public class TelaFavoritasHospede extends javax.swing.JPanel {
         proximoButton.setText("Próximo");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 5, 10);
         visualizaPanel.add(proximoButton, gridBagConstraints);

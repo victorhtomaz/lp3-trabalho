@@ -1,9 +1,22 @@
 package com.mycompany.easytrip.telas.grupos;
 
+import com.mycompany.easytrip.controllers.RankingGrupoController;
+
 public class TelaRankingGrupo extends javax.swing.JPanel {
+    public static final int QUANTIDADE_HOSPEDAGEM_RANKING = 10; 
+    private int usuarioId;
+    private RankingGrupoController controller;
 
     public TelaRankingGrupo() {
         initComponents();
+    }
+    
+    public TelaRankingGrupo(int usuarioId){
+        initComponents();
+        this.usuarioId = usuarioId;
+        this.controller = new RankingGrupoController(this);
+        
+        controller.carregarHospedagens(usuarioId);
     }
 
     /**
@@ -17,32 +30,29 @@ public class TelaRankingGrupo extends javax.swing.JPanel {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
-        hospedagensTituloLabel = new javax.swing.JLabel();
+        visualizacaoPanel = new javax.swing.JPanel();
+        rankingTituloLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        hospedagemFavoritasGrupoVisuPanel1 = new com.mycompany.easytrip.telas.componentes.HospedagemFavoritasGrupoVisuPanel();
-        posicaoRankingLabel1 = new javax.swing.JLabel();
-        posicaoRankingLabel2 = new javax.swing.JLabel();
-        hospedagemFavoritasGrupoVisuPanel2 = new com.mycompany.easytrip.telas.componentes.HospedagemFavoritasGrupoVisuPanel();
+        selecionarGrupoButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(163, 187, 229));
         setLayout(new java.awt.GridLayout(1, 0));
 
         jScrollPane1.setToolTipText("");
 
-        jPanel1.setBackground(new java.awt.Color(163, 187, 229));
-        jPanel1.setLayout(new java.awt.GridBagLayout());
+        visualizacaoPanel.setBackground(new java.awt.Color(163, 187, 229));
+        visualizacaoPanel.setLayout(new java.awt.GridBagLayout());
 
-        hospedagensTituloLabel.setFont(new java.awt.Font("JetBrainsMono NF", 1, 18)); // NOI18N
-        hospedagensTituloLabel.setText("Ranking");
-        hospedagensTituloLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        rankingTituloLabel.setFont(new java.awt.Font("JetBrainsMono NF", 1, 18)); // NOI18N
+        rankingTituloLabel.setText("Ranking");
+        rankingTituloLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        jPanel1.add(hospedagensTituloLabel, gridBagConstraints);
+        visualizacaoPanel.add(rankingTituloLabel, gridBagConstraints);
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
@@ -53,51 +63,40 @@ public class TelaRankingGrupo extends javax.swing.JPanel {
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        jPanel1.add(jSeparator1, gridBagConstraints);
+        visualizacaoPanel.add(jSeparator1, gridBagConstraints);
+
+        selecionarGrupoButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        selecionarGrupoButton.setText("Selecionar grupo");
+        selecionarGrupoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selecionarGrupoButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanel1.add(hospedagemFavoritasGrupoVisuPanel1, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(15, 10, 10, 10);
+        visualizacaoPanel.add(selecionarGrupoButton, gridBagConstraints);
 
-        posicaoRankingLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        posicaoRankingLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        posicaoRankingLabel1.setText("1-");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel1.add(posicaoRankingLabel1, gridBagConstraints);
-
-        posicaoRankingLabel2.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        posicaoRankingLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        posicaoRankingLabel2.setText("2-");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        jPanel1.add(posicaoRankingLabel2, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        jPanel1.add(hospedagemFavoritasGrupoVisuPanel2, gridBagConstraints);
-
-        jScrollPane1.setViewportView(jPanel1);
+        jScrollPane1.setViewportView(visualizacaoPanel);
 
         add(jScrollPane1);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void selecionarGrupoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selecionarGrupoButtonActionPerformed
+        // TODO add your handling code here:
+        controller.alterarGrupo(usuarioId);
+    }//GEN-LAST:event_selecionarGrupoButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.mycompany.easytrip.telas.componentes.HospedagemFavoritasGrupoVisuPanel hospedagemFavoritasGrupoVisuPanel1;
-    private com.mycompany.easytrip.telas.componentes.HospedagemFavoritasGrupoVisuPanel hospedagemFavoritasGrupoVisuPanel2;
-    private javax.swing.JLabel hospedagensTituloLabel;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel posicaoRankingLabel1;
-    private javax.swing.JLabel posicaoRankingLabel2;
+    public javax.swing.JLabel rankingTituloLabel;
+    private javax.swing.JButton selecionarGrupoButton;
+    public javax.swing.JPanel visualizacaoPanel;
     // End of variables declaration//GEN-END:variables
 }
