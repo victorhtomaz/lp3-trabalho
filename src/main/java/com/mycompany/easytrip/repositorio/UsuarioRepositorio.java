@@ -1,74 +1,68 @@
 package com.mycompany.easytrip.repositorio;
 
 import com.mycompany.easytrip.dominio.entidades.Usuario;
-import com.mycompany.easytrip.dominio.excecoes.DominioException;
-import com.mycompany.easytrip.dominio.objetosDeValor.Cpf;
-import com.mycompany.easytrip.dominio.objetosDeValor.Email;
-import com.mycompany.easytrip.dominio.objetosDeValor.Senha;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.PersistenceException;
+import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 
 public class UsuarioRepositorio {
-    public static void criarUsuario(Usuario usuario) throws SQLException, DominioException {
-        try(Connection conexao = MinhaConexao.obterConexao()){
-            String comando = "INSERT INTO Usuario(Nome, Email, Senha, DataNascimento, CPF)"
-                    + "VALUES (?, ?, ?, ?, ?)";
-
-            PreparedStatement stmt = conexao.prepareStatement(comando);
-            stmt.setString(1, usuario.getNome());
-            stmt.setString(2, usuario.getEnderecoEmail());
-            stmt.setString(3, usuario.getValorSenha());
-            stmt.setDate(4, Date.valueOf(usuario.getDataNascimento()));
-            stmt.setString(5, usuario.getValorCpf());
-
-            stmt.executeUpdate();
-        }
+    private final EntityManager em;
+    
+    public UsuarioRepositorio(EntityManager em){
+        this.em = em;
     }
     
-    public static int verificarLogin(Email email, Senha senha) throws SQLException{
-        try(Connection conexao = MinhaConexao.obterConexao()){
-            String comando = "SELECT Id FROM Usuario WHERE Email = ? AND Senha = ?";
-
-            PreparedStatement stmt = conexao.prepareStatement(comando);
-            stmt.setString(1, email.getEndereco());
-            stmt.setString(2, senha.getValor());
-
-            ResultSet result = stmt.executeQuery();
-            
-            return result.next() ? result.getInt("Id") : 0;
-        }
+    public void criarUsuario(Usuario usuario) throws PersistenceException{
+            em.persist(usuario);
     }
     
-    public static boolean existeUmUsuarioComEmail(Email email) throws SQLException{
-        try(Connection conexao = MinhaConexao.obterConexao()){
-            String comando = "SELECT EXISTS (SELECT 1 FROM Usuario WHERE Email = ?)";
-
-            PreparedStatement stmt = conexao.prepareStatement(comando);
-            stmt.setString(1, email.getEndereco());
-            
-            ResultSet result = stmt.executeQuery();
-            
-            result.next();
-            
-            return result.getBoolean(1);
-        }
+    public int verificarLogin(String email, String senha) throws NoResultException{
+        String consulta = "SELECT u.Id FROM Usuario u WHERE u.email.endereco = :email AND u.senha.valor = :senha";
+        TypedQuery<Integer> query = em.createQuery(consulta, Integer.class);
+        query.setParameter("email", email);
+        query.setParameter("senha", senha);
+        
+        return query.getSingleResult();
     }
     
-    public static boolean existeUmUsuarioComCpf(Cpf cpf) throws SQLException{
-        try(Connection conexao = MinhaConexao.obterConexao()){
-            String comando = "SELECT EXISTS (SELECT 1 FROM Usuario WHERE CPF = ?)";
-
-            PreparedStatement stmt = conexao.prepareStatement(comando);
-            stmt.setString(1, cpf.getValor());
-            
-            ResultSet result = stmt.executeQuery();
-            
-            result.next();
-            
-            return result.getBoolean(1);
-        }
+    public Usuario getUsuario(int usuarioId){
+        return em.find(Usuario.class, usuarioId);
+    }
+    
+    public Usuario getUsuarioPeloEmail(String email){
+        String consulta = "SELECT u FROM Usuario u WHERE u.email.endereco = :email";
+        
+        TypedQuery query = em.createQuery(consulta, Usuario.class);
+        query.setParameter("email", email);
+        
+        
+        return (Usuario) query.getSingleResultOrNull();
+    }
+    
+    public boolean existeUmUsuarioComEmail(String email){
+        
+        String consulta = "SELECT COUNT(u) > 0 FROM Usuario u WHERE u.email.endereco = :email";
+        Query query = em.createQuery(consulta, Boolean.class);
+        query.setParameter("email", email);
+        
+        boolean resultado = (boolean) query.getSingleResult();
+        
+        return resultado;
+    }
+    
+    public boolean existeUmUsuarioComCpf(String cpf){
+        String consulta = "SELECT COUNT(u) > 0 FROM Usuario u WHERE u.cpf.valor = :cpf";
+        Query query = em.createQuery(consulta, Boolean.class);
+        query.setParameter("cpf", cpf);
+        
+        boolean resultado = (boolean) query.getSingleResult();
+        
+        return resultado;
+    }
+    
+    public void atualizarUsuario(Usuario usuario) throws IllegalArgumentException{
+        em.merge(usuario);
     }
 }

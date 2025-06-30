@@ -1,22 +1,16 @@
 package com.mycompany.easytrip.telas;
 
-import com.mycompany.easytrip.dominio.entidades.Usuario;
-import com.mycompany.easytrip.dominio.excecoes.DominioException;
-import com.mycompany.easytrip.dominio.objetosDeValor.Cpf;
-import com.mycompany.easytrip.dominio.objetosDeValor.Email;
-import com.mycompany.easytrip.dominio.objetosDeValor.Senha;
-import com.mycompany.easytrip.repositorio.UsuarioRepositorio;
+import com.mycompany.easytrip.controllers.LoginController;
 import java.awt.*;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import javax.swing.JOptionPane;
+import java.util.Date;
 import javax.swing.SwingUtilities;
-
 public class TelaDeLogin extends javax.swing.JPanel {
 
+    private final LoginController controller;
+    
     public TelaDeLogin() {
         initComponents();
+        this.controller = new LoginController(this);
     }
     
     /**
@@ -91,12 +85,8 @@ public class TelaDeLogin extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         loginPanel.add(emailLabel1, gridBagConstraints);
 
+        emailTextField1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         emailTextField1.setMargin(new java.awt.Insets(2, 10, 2, 10));
-        emailTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailTextField1ActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -178,11 +168,6 @@ public class TelaDeLogin extends javax.swing.JPanel {
         registrarPanel.add(nomeLabel, gridBagConstraints);
 
         nomeField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        nomeField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nomeFieldActionPerformed(evt);
-            }
-        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -267,6 +252,9 @@ public class TelaDeLogin extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 80;
         gridBagConstraints.insets = new java.awt.Insets(10, 0, 10, 5);
         registrarPanel.add(concluirButton, gridBagConstraints);
+
+        dataNascimentoDateChosser.setDate(new Date());
+        dataNascimentoDateChosser.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 10;
@@ -289,141 +277,65 @@ public class TelaDeLogin extends javax.swing.JPanel {
         add(lateralPanel);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void emailTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_emailTextField1ActionPerformed
-
-    private void nomeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nomeFieldActionPerformed
-
     private void registrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarButtonActionPerformed
         // TODO add your handling code here:
-        CardLayout cardLayout = (CardLayout) lateralPanel.getLayout();
-        cardLayout.next(lateralPanel);
+        irParaRegistrar();
     }//GEN-LAST:event_registrarButtonActionPerformed
 
     private void concluirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_concluirButtonActionPerformed
         // TODO add your handling code here:
-        registrarUsuario();
+        controller.registrarUsuario();
     }//GEN-LAST:event_concluirButtonActionPerformed
 
     private void entrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrarButtonActionPerformed
         // TODO add your handling code here:
-        logarUsuario();
+        controller.logarUsuario();
     }//GEN-LAST:event_entrarButtonActionPerformed
 
-    private void logarUsuario(){
-        String enderecoEmail = emailTextField1.getText();
-        String valorSenha = new String(senhaField1.getPassword());
-        
-        try{
-           Email email = new Email(enderecoEmail);
-           Senha senha = new Senha(valorSenha);
-           
-           int usuarioId = UsuarioRepositorio.verificarLogin(email, senha);
-           
-           if (usuarioId == 0){
-               JOptionPane.showMessageDialog(null, "Usuário e/ou senha incorretas", "Aviso", JOptionPane.WARNING_MESSAGE);
-               return;
-           }
-           
-           TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
-           telaPrincipal.configurarEstadoMenu(true);
-           telaPrincipal.mudarParaTelaVisualizacaoHospedagens();
-        }
-        catch(DominioException e){
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-        catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Erro ao persistir dados", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Erro desconhecido", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+    private void irParaRegistrar(){
+        CardLayout cardLayout = (CardLayout) lateralPanel.getLayout();
+        cardLayout.next(lateralPanel);
     }
     
-    private void registrarUsuario(){
-        String nome = nomeField.getText();
-        String cpfValor = cpfField.getText();
-        String enderecoEmail = emailField2.getText();
-        String senhaValor = new String(senhaField2.getPassword());
-        LocalDate dataNascimento = dataNascimentoDateChosser.getDate().toInstant()
-                .atZone(ZoneId.systemDefault()).toLocalDate();
-        
-        try{
-            Email email = new Email(enderecoEmail);
-            Senha senha = new Senha(senhaValor);
-            Cpf cpf = new Cpf(cpfValor);
-            
-            boolean existeEmail = UsuarioRepositorio.existeUmUsuarioComEmail(email);
-            
-            if (existeEmail){
-                JOptionPane.showMessageDialog(null, "O email inserido já está cadastrado", "Aviso", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            boolean existeCpf = UsuarioRepositorio.existeUmUsuarioComCpf(cpf);
-            if (existeCpf){
-                JOptionPane.showMessageDialog(null, "O cpf inserido já está cadastrado", "Aviso", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            if (dataNascimento.isAfter(LocalDate.now()))
-            {
-                JOptionPane.showMessageDialog(null, "Data de nascimento inválida", "Aviso", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            Usuario usuario = new Usuario(nome, email, senha, cpf, dataNascimento);
-
-            UsuarioRepositorio.criarUsuario(usuario);
-            
-            CardLayout cardLayout = (CardLayout) lateralPanel.getLayout();
-            
-            JOptionPane.showMessageDialog(null, "Registrado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            
-            cardLayout.previous(lateralPanel);
-        
-            nomeField.setText("");
-            cpfField.setText("");
-            emailField2.setText("");
-            senhaField2.setText("");
-            dataNascimentoDateChosser.setDate(null);          
-        }
-        catch(DominioException e){
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-        catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Erro ao persistir dados", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Erro desconhecido", "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+    public void voltarParaLogin(){
+        CardLayout cardLayout = (CardLayout) lateralPanel.getLayout();
+        cardLayout.previous(lateralPanel);
+        nomeField.setText("");
+        cpfField.setText("");
+        emailField2.setText("");
+        senhaField2.setText("");
+        dataNascimentoDateChosser.setDate(null);
     }
-
+    
+    public void atualizarTelaPrincipal(int usuarioId){
+        TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
+        telaPrincipal.setUsuarioLogado(usuarioId);
+        telaPrincipal.configurarEstadoMenu(true);
+        telaPrincipal.mudarParaTelaVisualizacaoHospedagens();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton concluirButton;
-    private javax.swing.JTextField cpfField;
+    public javax.swing.JTextField cpfField;
     private javax.swing.JLabel cpfLabel;
-    private com.toedter.calendar.JDateChooser dataNascimentoDateChosser;
+    public com.toedter.calendar.JDateChooser dataNascimentoDateChosser;
     private javax.swing.JLabel dataNascimentoLabel;
-    private javax.swing.JTextField emailField2;
+    public javax.swing.JTextField emailField2;
     private javax.swing.JLabel emailLabel1;
     private javax.swing.JLabel emailLabel2;
-    private javax.swing.JTextField emailTextField1;
+    public javax.swing.JTextField emailTextField1;
     private javax.swing.JButton entrarButton;
-    private javax.swing.JPanel lateralPanel;
+    public javax.swing.JPanel lateralPanel;
     private javax.swing.JLabel loginLabel;
     private javax.swing.JPanel loginPanel;
     private javax.swing.JLabel logoLabel;
-    private javax.swing.JTextField nomeField;
+    public javax.swing.JTextField nomeField;
     private javax.swing.JLabel nomeLabel;
     private javax.swing.JButton registrarButton;
     private javax.swing.JLabel registrarLabel;
     private javax.swing.JPanel registrarPanel;
-    private javax.swing.JPasswordField senhaField1;
-    private javax.swing.JPasswordField senhaField2;
+    public javax.swing.JPasswordField senhaField1;
+    public javax.swing.JPasswordField senhaField2;
     private javax.swing.JLabel senhaLabel1;
     private javax.swing.JLabel senhaLabel2;
     // End of variables declaration//GEN-END:variables

@@ -1,12 +1,18 @@
 package com.mycompany.easytrip.telas.componentes;
 
+import com.mycompany.easytrip.dominio.entidades.Disponibilidade;
+import com.mycompany.easytrip.dominio.enums.StatusDisponibilidade;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class DisponibilidadeParaReservarPanel extends javax.swing.JPanel {
-
+    private final Map<String, Disponibilidade> disponibilidades = new HashMap<>();
     private LocalDate dataEntrada = LocalDate.MIN;
     private LocalDate dataSaida = LocalDate.MIN;
     private int dataEntradaLinha = -1;
@@ -14,10 +20,27 @@ public class DisponibilidadeParaReservarPanel extends javax.swing.JPanel {
     private final int COLUNA_DATA = 0;
     private final int COLUNA_ENTRADA = 2;
     private final int COLUNA_SAIDA = 3;
+    private final DateTimeFormatter formatador = Disponibilidade.DATA_FORMATADOR;
     
     public DisponibilidadeParaReservarPanel() {
         initComponents();
         adicionarNaTabelaDiasDoMes();
+    }
+    
+    public DisponibilidadeParaReservarPanel(List<Disponibilidade> disponibilidades) {
+        initComponents();
+        adicionarNaTabelaDiasDoMes();
+        disponibilidades.forEach( dsp -> {
+            this.disponibilidades.put(dsp.getDataFormatada(), dsp);
+        });
+    }
+    
+    public LocalDate getDataEntrada(){
+        return this.dataEntrada;
+    }
+    
+    public LocalDate getDataSaida(){
+        return this.dataSaida;
     }
 
     /**
@@ -172,24 +195,38 @@ public class DisponibilidadeParaReservarPanel extends javax.swing.JPanel {
             
             LocalDate data = mesAtual.atDay(i);
             
+            String dataFormatada = data.format(formatador);
+            StatusDisponibilidade status = StatusDisponibilidade.INDISPONIVEL;
+            
+            if (disponibilidades.containsKey(dataFormatada)){
+                Disponibilidade disponibilidade = disponibilidades.get(dataFormatada);
+                dataFormatada = disponibilidade.getDataFormatada();
+                status = disponibilidade.getStatus();
+            }
+            
             if (!dataEntrada.equals(LocalDate.MIN) && dataEntrada.equals(data))
-                modelo.addRow(new Object[]{data, "Status", true, false});
+                modelo.addRow(new Object[]{dataFormatada, status.name(), true, false});
             else if (!dataSaida.equals(LocalDate.MIN) && dataSaida.equals(data))
-                modelo.addRow(new Object[]{data, "Status", false, true});
+                modelo.addRow(new Object[]{dataFormatada, status.name(), false, true});
             else
-                modelo.addRow(new Object[]{data, "Status", false, false});
+                modelo.addRow(new Object[]{dataFormatada, status.name(), false, false});
         }
     }
     
     private void adicionarNaTabelaDiasDoMes(){
         YearMonth mesAtual = YearMonth.now();
         int quantidadeDias = mesAtual.lengthOfMonth();
-        
+        DefaultTableModel modelo = (DefaultTableModel)disponibilidadeTable.getModel();
         for(int i = 1; i <= quantidadeDias; i++){
             LocalDate data = mesAtual.atDay(i);
-            DefaultTableModel modelo = (DefaultTableModel)disponibilidadeTable.getModel();
+            String dataFormatada = data.format(formatador);
             
-            modelo.addRow(new Object[]{data, "Status", false, false});
+            if (disponibilidades.containsKey(dataFormatada)){
+                Disponibilidade disponibilidade = disponibilidades.get(dataFormatada);
+                modelo.addRow(new Object[]{disponibilidade.getDataFormatada(), disponibilidade.getStatus().name(), false, false});
+            }
+            else
+                modelo.addRow(new Object[]{data.format(formatador), StatusDisponibilidade.INDISPONIVEL.name(), false, false});
         }
     }
     
@@ -199,7 +236,9 @@ public class DisponibilidadeParaReservarPanel extends javax.swing.JPanel {
         
         if(linha != -1)
         {
-            LocalDate data = (LocalDate)modelo.getValueAt(linha, COLUNA_DATA);
+            String dataFormatada = (String)modelo.getValueAt(linha, COLUNA_DATA);
+            LocalDate data = LocalDate.parse(dataFormatada, formatador);
+            
             if (data.isBefore(dataSaida) || dataSaida.equals(LocalDate.MIN)){
                 
                 if(dataEntradaLinha != -1)
@@ -222,7 +261,8 @@ public class DisponibilidadeParaReservarPanel extends javax.swing.JPanel {
         
         if(linha != -1)
         {
-            LocalDate data = (LocalDate)modelo.getValueAt(linha, COLUNA_DATA);
+            String dataFormatada = (String)modelo.getValueAt(linha, COLUNA_DATA);
+            LocalDate data = LocalDate.parse(dataFormatada, formatador);
 
             if (data.isAfter(dataEntrada) || dataEntrada.equals(LocalDate.MIN)){
                 

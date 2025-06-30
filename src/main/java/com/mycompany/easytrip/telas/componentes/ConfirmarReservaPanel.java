@@ -5,6 +5,8 @@ public class ConfirmarReservaPanel extends javax.swing.JPanel {
     public ConfirmarReservaPanel() {
         initComponents();
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -24,7 +26,7 @@ public class ConfirmarReservaPanel extends javax.swing.JPanel {
         realizarReservaButton = new javax.swing.JButton();
         dataEntradaField = new javax.swing.JTextField();
         dataSaidaField = new javax.swing.JTextField();
-        precoDiariaField = new javax.swing.JTextField();
+        precoDiariaField = new javax.swing.JFormattedTextField();
         quantidadeDiasField = new javax.swing.JTextField();
         precoTotalField = new javax.swing.JTextField();
         quantidadeHospedeLabel = new javax.swing.JLabel();
@@ -129,14 +131,14 @@ public class ConfirmarReservaPanel extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(dataSaidaField, gridBagConstraints);
 
-        precoDiariaField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        precoDiariaField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         precoDiariaField.setEnabled(false);
+        precoDiariaField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         add(precoDiariaField, gridBagConstraints);
 
@@ -170,6 +172,7 @@ public class ConfirmarReservaPanel extends javax.swing.JPanel {
         add(quantidadeHospedeLabel, gridBagConstraints);
 
         quantidadeHospedeField.setFont(new java.awt.Font("JetBrainsMonoNL NF", 0, 12)); // NOI18N
+        quantidadeHospedeField.setText("0");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
@@ -181,18 +184,18 @@ public class ConfirmarReservaPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField dataEntradaField;
+    public javax.swing.JTextField dataEntradaField;
     private javax.swing.JLabel dataEntradaLabel;
-    private javax.swing.JTextField dataSaidaField;
+    public javax.swing.JTextField dataSaidaField;
     private javax.swing.JLabel dataSaidaLabel;
-    private javax.swing.JTextField precoDiariaField;
+    public javax.swing.JFormattedTextField precoDiariaField;
     private javax.swing.JLabel precoDiariaLabel;
-    private javax.swing.JTextField precoTotalField;
+    public javax.swing.JTextField precoTotalField;
     private javax.swing.JLabel precoTotalLabel;
     private javax.swing.JLabel quantidadeDeDiasLabel;
-    private javax.swing.JTextField quantidadeDiasField;
-    private javax.swing.JTextField quantidadeHospedeField;
+    public javax.swing.JTextField quantidadeDiasField;
+    public javax.swing.JTextField quantidadeHospedeField;
     private javax.swing.JLabel quantidadeHospedeLabel;
-    private javax.swing.JButton realizarReservaButton;
+    public javax.swing.JButton realizarReservaButton;
     // End of variables declaration//GEN-END:variables
 }

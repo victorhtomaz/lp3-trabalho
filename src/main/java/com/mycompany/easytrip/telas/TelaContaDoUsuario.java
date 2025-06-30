@@ -1,9 +1,24 @@
 package com.mycompany.easytrip.telas;
 
+import com.mycompany.easytrip.repositorio.MinhaConexao;
+import com.mycompany.easytrip.controllers.LoginController;
+
 public class TelaContaDoUsuario extends javax.swing.JPanel {
 
+    private int usuarioId;
+    
     public TelaContaDoUsuario() {
         initComponents();
+    }
+    
+    public TelaContaDoUsuario(int usuarioId){
+        initComponents();
+        this.usuarioId = usuarioId;
+        LoginController.obterDadosUsuario(this, MinhaConexao.getEntityManager());
+    }
+    
+    public int getUsuarioId(){
+        return usuarioId;
     }
 
     /**
@@ -24,8 +39,7 @@ public class TelaContaDoUsuario extends javax.swing.JPanel {
         dataDeNascimentoLabel = new javax.swing.JLabel();
         cpfLabel = new javax.swing.JLabel();
         cpfField = new javax.swing.JTextField();
-        alterarButton = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        dataNascimentoChooser = new com.toedter.calendar.JDateChooser();
         jSeparator1 = new javax.swing.JSeparator();
 
         setBackground(new java.awt.Color(163, 187, 229));
@@ -63,6 +77,7 @@ public class TelaContaDoUsuario extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 0);
         add(nomeField, gridBagConstraints);
 
         emailLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
@@ -83,10 +98,11 @@ public class TelaContaDoUsuario extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.ipadx = 250;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 0);
         add(emailField, gridBagConstraints);
 
         dataDeNascimentoLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        dataDeNascimentoLabel.setLabelFor(jDateChooser1);
+        dataDeNascimentoLabel.setLabelFor(dataNascimentoChooser);
         dataDeNascimentoLabel.setText("Data de Nascimento");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -111,25 +127,18 @@ public class TelaContaDoUsuario extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 0);
         add(cpfField, gridBagConstraints);
 
-        alterarButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        alterarButton.setText("Alterar");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 0);
-        add(alterarButton, gridBagConstraints);
-
-        jDateChooser1.setEnabled(false);
+        dataNascimentoChooser.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        add(jDateChooser1, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 0);
+        add(dataNascimentoChooser, gridBagConstraints);
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
@@ -140,7 +149,7 @@ public class TelaContaDoUsuario extends javax.swing.JPanel {
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 20, 0);
         add(jSeparator1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -150,16 +159,15 @@ public class TelaContaDoUsuario extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton alterarButton;
-    private javax.swing.JTextField cpfField;
+    public javax.swing.JTextField cpfField;
     private javax.swing.JLabel cpfLabel;
     private javax.swing.JLabel dataDeNascimentoLabel;
-    private javax.swing.JTextField emailField;
+    public com.toedter.calendar.JDateChooser dataNascimentoChooser;
+    public javax.swing.JTextField emailField;
     private javax.swing.JLabel emailLabel;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel minhaContaLabel;
-    private javax.swing.JTextField nomeField;
+    public javax.swing.JTextField nomeField;
     private javax.swing.JLabel nomeLabel;
     // End of variables declaration//GEN-END:variables
 }

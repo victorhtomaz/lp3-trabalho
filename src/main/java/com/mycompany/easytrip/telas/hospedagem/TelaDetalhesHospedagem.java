@@ -1,14 +1,34 @@
 package com.mycompany.easytrip.telas.hospedagem;
 
+import com.mycompany.easytrip.controllers.DetalhesHospedagemController;
+import com.mycompany.easytrip.controllers.FavoritarHospedagemController;
 import com.mycompany.easytrip.telas.TelaPrincipal;
 import javax.swing.SwingUtilities;
 
 public class TelaDetalhesHospedagem extends javax.swing.JPanel {
 
+    private int hospedagemId;
+    private DetalhesHospedagemController controller;
+    private FavoritarHospedagemController favoritarController;
+
+    
     public TelaDetalhesHospedagem() {
         initComponents();
     }
+    
+    public TelaDetalhesHospedagem(int hospedagemId){
+        initComponents();
+        this.hospedagemId = hospedagemId;
+        this.controller = new DetalhesHospedagemController(this);
+        this.favoritarController = new FavoritarHospedagemController();
+        
+        controller.carregarHospedagem(hospedagemId);
+    }
 
+    public void atualizarTela(){
+        this.revalidate();
+        this.repaint();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -25,9 +45,9 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
         tituloLabel = new javax.swing.JLabel();
         enderecoLabel = new javax.swing.JLabel();
         imagemPanel = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        imagemPanel1 = new com.mycompany.easytrip.telas.componentes.ImagemPanel();
+        anteriorImagemButton = new javax.swing.JButton();
+        proximaImagemButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         infosLateralPanel = new javax.swing.JPanel();
         tipoLabel = new javax.swing.JLabel();
@@ -70,16 +90,19 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 10);
         detalhesPanel.add(tituloLabel, gridBagConstraints);
 
         enderecoLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         enderecoLabel.setText("Rua da amizade, 135, ap 101, cabo frio, rj");
+        enderecoLabel.setAutoscrolls(true);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 20, 10, 10);
         detalhesPanel.add(enderecoLabel, gridBagConstraints);
@@ -88,27 +111,30 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
         imagemPanel.setMaximumSize(new java.awt.Dimension(205, 195));
         imagemPanel.setMinimumSize(new java.awt.Dimension(205, 195));
 
-        jPanel3.setBackground(new java.awt.Color(0, 0, 51));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout imagemPanel1Layout = new javax.swing.GroupLayout(imagemPanel1);
+        imagemPanel1.setLayout(imagemPanel1Layout);
+        imagemPanel1Layout.setHorizontalGroup(
+            imagemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 160, Short.MAX_VALUE)
+        imagemPanel1Layout.setVerticalGroup(
+            imagemPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 178, Short.MAX_VALUE)
         );
 
-        jButton1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        jButton1.setText("Anterior");
-
-        jButton2.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        jButton2.setText("Próximo");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        anteriorImagemButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        anteriorImagemButton.setText("<-");
+        anteriorImagemButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                anteriorImagemButtonActionPerformed(evt);
+            }
+        });
+
+        proximaImagemButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        proximaImagemButton.setText("->");
+        proximaImagemButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proximaImagemButtonActionPerformed(evt);
             }
         });
 
@@ -116,28 +142,29 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
         imagemPanel.setLayout(imagemPanelLayout);
         imagemPanelLayout.setHorizontalGroup(
             imagemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(imagemPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(anteriorImagemButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
+                .addComponent(proximaImagemButton)
                 .addContainerGap())
+            .addComponent(imagemPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         imagemPanelLayout.setVerticalGroup(
             imagemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(imagemPanelLayout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(imagemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap())
+                .addComponent(imagemPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(imagemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(anteriorImagemButton)
+                    .addComponent(proximaImagemButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 20, 0, 10);
         detalhesPanel.add(imagemPanel, gridBagConstraints);
@@ -156,7 +183,7 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
         detalhesPanel.add(jSeparator1, gridBagConstraints);
 
         infosLateralPanel.setBackground(new java.awt.Color(163, 187, 229));
-        infosLateralPanel.setPreferredSize(new java.awt.Dimension(150, 150));
+        infosLateralPanel.setPreferredSize(new java.awt.Dimension(170, 170));
         infosLateralPanel.setLayout(new java.awt.GridLayout(7, 0, 0, 4));
 
         tipoLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
@@ -181,6 +208,11 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
 
         favoritarButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         favoritarButton.setText("Favoritar");
+        favoritarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                favoritarButtonActionPerformed(evt);
+            }
+        });
         infosLateralPanel.add(favoritarButton);
 
         reservarButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
@@ -195,8 +227,8 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 0, 10);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.insets = new java.awt.Insets(5, 10, 0, 10);
         detalhesPanel.add(infosLateralPanel, gridBagConstraints);
 
         descricaoLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
@@ -219,6 +251,7 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
 
         descricaoTextArea.setColumns(20);
         descricaoTextArea.setRows(5);
+        descricaoTextArea.setEnabled(false);
         jScrollPane2.setViewportView(descricaoTextArea);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -228,6 +261,12 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(5, 20, 5, 10);
         detalhesPanel.add(jScrollPane2, gridBagConstraints);
+
+        voltarButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                voltarButton1ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 8;
@@ -240,43 +279,69 @@ public class TelaDetalhesHospedagem extends javax.swing.JPanel {
         add(jScrollPane1);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void proximaImagemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proximaImagemButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        controller.proximaImagem();
+    }//GEN-LAST:event_proximaImagemButtonActionPerformed
 
     private void reservarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reservarButtonActionPerformed
         // TODO add your handling code here:
         abrirTelaDeRealizarHospedagem();
     }//GEN-LAST:event_reservarButtonActionPerformed
 
+    private void anteriorImagemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorImagemButtonActionPerformed
+        // TODO add your handling code here:
+        controller.anteriorImagem();
+    }//GEN-LAST:event_anteriorImagemButtonActionPerformed
+
+    private void voltarButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarButton1ActionPerformed
+        // TODO add your handling code here:
+        voltarParaTelaVisualizacao();
+    }//GEN-LAST:event_voltarButton1ActionPerformed
+
+    private void favoritarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_favoritarButtonActionPerformed
+        // TODO add your handling code here:
+        favoritarController.favoritarHospedagem(getUsuarioLogadoId(), hospedagemId);
+    }//GEN-LAST:event_favoritarButtonActionPerformed
+
+    private int getUsuarioLogadoId(){
+        TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
+        return telaPrincipal.getUsuarioLogado();
+    }
+    
+    private void voltarParaTelaVisualizacao(){
+        TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
+        telaPrincipal.voltarPagina();
+    }
+    
     private void abrirTelaDeRealizarHospedagem(){
         TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
-        telaPrincipal.mudarParaTelaRealizarReserva();
+        telaPrincipal.mudarParaTelaRealizarReserva(this.hospedagemId);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel capacidadeMaximaLabel;
-    private javax.swing.JLabel checkInLabel;
-    private javax.swing.JLabel checkOutLabel;
+    private javax.swing.JButton anteriorImagemButton;
+    public javax.swing.JLabel capacidadeMaximaLabel;
+    public javax.swing.JLabel checkInLabel;
+    public javax.swing.JLabel checkOutLabel;
     private javax.swing.JLabel descricaoLabel;
-    private javax.swing.JTextArea descricaoTextArea;
+    public javax.swing.JTextArea descricaoTextArea;
     private javax.swing.JPanel detalhesPanel;
     private javax.swing.JLabel detalhesTituloLabel;
-    private javax.swing.JLabel enderecoLabel;
+    public javax.swing.JLabel enderecoLabel;
     private javax.swing.JButton favoritarButton;
     private javax.swing.JPanel imagemPanel;
+    public com.mycompany.easytrip.telas.componentes.ImagemPanel imagemPanel1;
     private javax.swing.JPanel infosLateralPanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JLabel precoLabel;
+    public javax.swing.JLabel precoLabel;
+    private javax.swing.JButton proximaImagemButton;
     private javax.swing.JButton reservarButton;
-    private javax.swing.JLabel tipoLabel;
-    private javax.swing.JLabel tituloLabel;
+    public javax.swing.JLabel tipoLabel;
+    public javax.swing.JLabel tituloLabel;
     private com.mycompany.easytrip.telas.componentes.VoltarButton voltarButton1;
     // End of variables declaration//GEN-END:variables
 }

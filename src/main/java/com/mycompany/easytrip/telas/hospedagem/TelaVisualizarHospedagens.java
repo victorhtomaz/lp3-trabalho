@@ -1,13 +1,43 @@
 package com.mycompany.easytrip.telas.hospedagem;
 
-import javax.swing.JOptionPane;
+import com.mycompany.easytrip.controllers.VisualizarHospedagensController;
 
 public class TelaVisualizarHospedagens extends javax.swing.JPanel {
 
+    private final VisualizarHospedagensController controller;
+    private int pagina = 0;
+    public static final int QUANTIDADE_POR_PAGINA = 8;
+    
     public TelaVisualizarHospedagens() {
         initComponents();
+        desligarBotaoAnterior();
+        this.controller = new VisualizarHospedagensController(this);
+        
+        controller.carregarHospedagens();
     }
 
+    public int getPaginaAtual(){
+        return pagina;
+    }
+    
+    public void setPaginaAtualParaZero(){
+        this.pagina = 0;
+    }
+    
+    public void desligarBotaoAnterior(){
+        this.anteriorButton.setVisible(false);
+        this.anteriorButton.setEnabled(false);
+    }
+    
+    public void ligarBotaoAnterior(){
+        this.anteriorButton.setVisible(true);
+        this.anteriorButton.setEnabled(true);
+    }
+    
+    public void atualizarPagina(){
+        this.revalidate();
+        this.repaint();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -20,26 +50,22 @@ public class TelaVisualizarHospedagens extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel3 = new javax.swing.JPanel();
+        panelVisualizar = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         hospedagensTituloLabel = new javax.swing.JLabel();
         filtroButton = new javax.swing.JButton();
         anteriorButton = new javax.swing.JButton();
         proximoButton = new javax.swing.JButton();
-        hospedagemVisualizacaoPanel2 = new com.mycompany.easytrip.telas.componentes.HospedagemVisualizacaoPanel();
-        hospedagemVisualizacaoPanel3 = new com.mycompany.easytrip.telas.componentes.HospedagemVisualizacaoPanel();
-        hospedagemVisualizacaoPanel4 = new com.mycompany.easytrip.telas.componentes.HospedagemVisualizacaoPanel();
-        hospedagemVisualizacaoPanel5 = new com.mycompany.easytrip.telas.componentes.HospedagemVisualizacaoPanel();
 
         jLabel1.setText("jLabel1");
 
         setBackground(new java.awt.Color(163, 187, 229));
         setLayout(new java.awt.GridLayout(1, 0));
 
-        jPanel3.setBackground(new java.awt.Color(163, 187, 229));
+        panelVisualizar.setBackground(new java.awt.Color(163, 187, 229));
         java.awt.GridBagLayout jPanel3Layout = new java.awt.GridBagLayout();
         jPanel3Layout.columnWidths = new int[] {0};
-        jPanel3.setLayout(jPanel3Layout);
+        panelVisualizar.setLayout(jPanel3Layout);
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
@@ -50,9 +76,10 @@ public class TelaVisualizarHospedagens extends javax.swing.JPanel {
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
-        jPanel3.add(jSeparator1, gridBagConstraints);
+        panelVisualizar.add(jSeparator1, gridBagConstraints);
 
         hospedagensTituloLabel.setFont(new java.awt.Font("JetBrainsMono NF", 1, 18)); // NOI18N
         hospedagensTituloLabel.setText("Hospedagens");
@@ -63,7 +90,7 @@ public class TelaVisualizarHospedagens extends javax.swing.JPanel {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.insets = new java.awt.Insets(15, 10, 10, 10);
-        jPanel3.add(hospedagensTituloLabel, gridBagConstraints);
+        panelVisualizar.add(hospedagensTituloLabel, gridBagConstraints);
 
         filtroButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         filtroButton.setText("Adicionar filtro");
@@ -78,72 +105,73 @@ public class TelaVisualizarHospedagens extends javax.swing.JPanel {
         gridBagConstraints.ipadx = 40;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        jPanel3.add(filtroButton, gridBagConstraints);
+        panelVisualizar.add(filtroButton, gridBagConstraints);
 
         anteriorButton.setText("Anterior");
+        anteriorButton.setEnabled(false);
+        anteriorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anteriorButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 5, 10);
-        jPanel3.add(anteriorButton, gridBagConstraints);
+        panelVisualizar.add(anteriorButton, gridBagConstraints);
 
         proximoButton.setText("Próximo");
+        proximoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                proximoButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 5, 10);
-        jPanel3.add(proximoButton, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        jPanel3.add(hospedagemVisualizacaoPanel2, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        jPanel3.add(hospedagemVisualizacaoPanel3, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        jPanel3.add(hospedagemVisualizacaoPanel4, gridBagConstraints);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        jPanel3.add(hospedagemVisualizacaoPanel5, gridBagConstraints);
+        panelVisualizar.add(proximoButton, gridBagConstraints);
 
-        jScrollPane1.setViewportView(jPanel3);
+        jScrollPane1.setViewportView(panelVisualizar);
 
         add(jScrollPane1);
     }// </editor-fold>//GEN-END:initComponents
 
     private void filtroButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filtroButtonActionPerformed
         // TODO add your handling code here:
-        String cidade = JOptionPane.showInputDialog("Cidade: ");
+        controller.adicionarFiltro();
     }//GEN-LAST:event_filtroButtonActionPerformed
 
+    private void proximoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proximoButtonActionPerformed
+        // TODO add your handling code here:
+        controller.paginaSeguinte();
+    }//GEN-LAST:event_proximoButtonActionPerformed
+
+    private void anteriorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorButtonActionPerformed
+        // TODO add your handling code here:
+        controller.paginaAnterior();
+    }//GEN-LAST:event_anteriorButtonActionPerformed
+
+    public void incrementarPagina(){
+        pagina++;
+    }
+    
+    public void decrementarPagina(){
+        pagina--;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anteriorButton;
     private javax.swing.JButton filtroButton;
-    private com.mycompany.easytrip.telas.componentes.HospedagemVisualizacaoPanel hospedagemVisualizacaoPanel2;
-    private com.mycompany.easytrip.telas.componentes.HospedagemVisualizacaoPanel hospedagemVisualizacaoPanel3;
-    private com.mycompany.easytrip.telas.componentes.HospedagemVisualizacaoPanel hospedagemVisualizacaoPanel4;
-    private com.mycompany.easytrip.telas.componentes.HospedagemVisualizacaoPanel hospedagemVisualizacaoPanel5;
     private javax.swing.JLabel hospedagensTituloLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    public javax.swing.JPanel panelVisualizar;
     private javax.swing.JButton proximoButton;
     // End of variables declaration//GEN-END:variables
 }

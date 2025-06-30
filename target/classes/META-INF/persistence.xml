@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="easyTrip">
+    <description>
+            Persistence unit for the Jakarta Persistence tutorial of the Hibernate Getting Started Guide
+        </description>
+    <class>org.hibernate.tutorial.em.Event</class>
+    <class>com.mycompany.easytrip.dominio.entidades.Disponibilidade</class>
+    <class>com.mycompany.easytrip.dominio.entidades.Endereco</class>
+    <class>com.mycompany.easytrip.dominio.entidades.Hospedagem</class>
+    <class>com.mycompany.easytrip.dominio.entidades.Imagem</class>
+    <class>com.mycompany.easytrip.dominio.entidades.Reserva</class>
+    <class>com.mycompany.easytrip.dominio.entidades.Grupo</class>
+    <class>com.mycompany.easytrip.dominio.entidades.HospedeGrupo</class>
+    <class>com.mycompany.easytrip.dominio.entidades.FavoritaGrupo</class>
+    <class>com.mycompany.easytrip.dominio.entidades.VotacaoFavoritas</class>
+    <properties>
+      <!-- Database connection settings -->
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/easytrip"/>
+      <property name="jakarta.persistence.jdbc.user" value="root"/>
+      <property name="jakarta.persistence.jdbc.password" value="Password123@@"/>
+      <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.highlight_sql" value="true"/>
+    </properties>
+    <class>com.mycompany.easytrip.dominio.entidades.Usuario</class>
+  </persistence-unit>
+</persistence>

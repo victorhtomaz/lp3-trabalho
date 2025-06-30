@@ -1,12 +1,17 @@
 package com.mycompany.easytrip.telas.hospedagem;
 
+import com.mycompany.easytrip.controllers.GerenciarHospedagemController;
+import com.mycompany.easytrip.dominio.enums.EstadoBrasil;
+import com.mycompany.easytrip.dominio.enums.TipoDeHospedagem;
 import com.mycompany.easytrip.telas.TelaPrincipal;
 import java.awt.CardLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.SwingUtilities;
 
 public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
 
     private int hospedagemId;
+    private GerenciarHospedagemController controller;
    
     public TelaDeGerenciamentoHospedagem() {
         initComponents();
@@ -15,8 +20,20 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
     public TelaDeGerenciamentoHospedagem(int hospedagemId){
         this();
         this.hospedagemId = hospedagemId;
+        this.controller = new GerenciarHospedagemController(this);
+        controller.carregarHospedagem(hospedagemId);
     }
-
+    
+    public int getMesSelecionado(){
+        return escolheMes.getMonth() + 1;
+    }
+    
+    public int getAnoSelecionado(){
+        return escolheAno.getYear();
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,15 +56,15 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         descricaoTextArea = new javax.swing.JTextArea();
         checkInLabel = new javax.swing.JLabel();
         checkOutLabel = new javax.swing.JLabel();
-        tipoField = new javax.swing.JTextField();
-        capacidadeMaximaField = new javax.swing.JTextField();
-        precoDiariaField = new javax.swing.JTextField();
         atualizarButton1 = new javax.swing.JButton();
         proximoButton1 = new javax.swing.JButton();
-        checkInField = new javax.swing.JTextField();
-        checkOutField = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         voltarButton5 = new com.mycompany.easytrip.telas.componentes.VoltarButton();
+        precoDiariaField1 = new javax.swing.JFormattedTextField();
+        checkOutField1 = new javax.swing.JFormattedTextField();
+        checkInField1 = new javax.swing.JFormattedTextField();
+        capacidadeMaximaField1 = new javax.swing.JFormattedTextField();
+        tipoHospedagemComboBox = new javax.swing.JComboBox<>();
         enderecoPanel = new javax.swing.JPanel();
         cepLabel = new javax.swing.JLabel();
         numeroLabel = new javax.swing.JLabel();
@@ -63,34 +80,32 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         bairroField = new javax.swing.JTextField();
         complementoField = new javax.swing.JTextField();
         cidadeField = new javax.swing.JTextField();
-        estadoField = new javax.swing.JTextField();
-        atualizarButton2 = new javax.swing.JButton();
         anteriorButton1 = new javax.swing.JButton();
         proximoButton2 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         voltarButton2 = new javax.swing.JButton();
+        estadoComboBox = new javax.swing.JComboBox<>();
         imagemPanel = new javax.swing.JPanel();
         imagemTituloLabel = new javax.swing.JLabel();
-        imagensPanel = new javax.swing.JPanel();
         removerImagemButton = new javax.swing.JButton();
         adicionarImagemButton = new javax.swing.JButton();
         anteriorButton2 = new javax.swing.JButton();
         proximoButton3 = new javax.swing.JButton();
         escolherImagemComboBox = new javax.swing.JComboBox<>();
-        atualizarButton3 = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         voltarButton3 = new javax.swing.JButton();
+        imagemPanel1 = new com.mycompany.easytrip.telas.componentes.ImagemPanel();
         disponibilidadePanel = new javax.swing.JPanel();
         disponibilidadeTituloLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        datasTable = new javax.swing.JTable();
-        disponibilidadeDateChooser = new com.toedter.calendar.JDateChooser();
+        disponibilidadesTable = new javax.swing.JTable();
         jButton3 = new javax.swing.JButton();
         anteriorButton3 = new javax.swing.JButton();
-        atualizarButton4 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JSeparator();
         voltarButton4 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        removerDisponibilidadeButton = new javax.swing.JButton();
+        escolheMes = new com.toedter.calendar.JMonthChooser();
+        escolheAno = new com.toedter.calendar.JYearChooser();
 
         setBackground(new java.awt.Color(163, 187, 229));
         setLayout(new java.awt.CardLayout());
@@ -141,7 +156,6 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         informacoesPanel.add(descricaoLabel, gridBagConstraints);
 
         tipoLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        tipoLabel.setLabelFor(tipoField);
         tipoLabel.setText("Tipo:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -150,7 +164,6 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         informacoesPanel.add(tipoLabel, gridBagConstraints);
 
         capacidadeMaximaLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        capacidadeMaximaLabel.setLabelFor(capacidadeMaximaField);
         capacidadeMaximaLabel.setText("Capacidade Máxima:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -159,7 +172,6 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         informacoesPanel.add(capacidadeMaximaLabel, gridBagConstraints);
 
         precoDiariaLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        precoDiariaLabel.setLabelFor(precoDiariaField);
         precoDiariaLabel.setText("Preço Diária:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -179,12 +191,13 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.ipady = 60;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 5);
         informacoesPanel.add(jScrollPane3, gridBagConstraints);
 
         checkInLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        checkInLabel.setLabelFor(checkInField);
         checkInLabel.setText("CheckIn:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -193,7 +206,6 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         informacoesPanel.add(checkInLabel, gridBagConstraints);
 
         checkOutLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        checkOutLabel.setLabelFor(checkOutField);
         checkOutLabel.setText("CheckOut:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -201,38 +213,13 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         informacoesPanel.add(checkOutLabel, gridBagConstraints);
 
-        tipoField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        informacoesPanel.add(tipoField, gridBagConstraints);
-
-        capacidadeMaximaField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        informacoesPanel.add(capacidadeMaximaField, gridBagConstraints);
-
-        precoDiariaField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        informacoesPanel.add(precoDiariaField, gridBagConstraints);
-
         atualizarButton1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         atualizarButton1.setText("Atualizar");
+        atualizarButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atualizarButton1ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 9;
@@ -251,30 +238,9 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 10;
         gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.gridheight = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         informacoesPanel.add(proximoButton1, gridBagConstraints);
-
-        checkInField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        informacoesPanel.add(checkInField, gridBagConstraints);
-
-        checkOutField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        informacoesPanel.add(checkOutField, gridBagConstraints);
 
         jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
@@ -287,12 +253,71 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
         informacoesPanel.add(jSeparator1, gridBagConstraints);
+
+        voltarButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                voltarButton5ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
+        gridBagConstraints.gridy = 11;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         informacoesPanel.add(voltarButton5, gridBagConstraints);
+
+        precoDiariaField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        precoDiariaField1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        informacoesPanel.add(precoDiariaField1, gridBagConstraints);
+
+        checkOutField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
+        checkOutField1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        informacoesPanel.add(checkOutField1, gridBagConstraints);
+
+        checkInField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
+        checkInField1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        informacoesPanel.add(checkInField1, gridBagConstraints);
+
+        capacidadeMaximaField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        capacidadeMaximaField1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        informacoesPanel.add(capacidadeMaximaField1, gridBagConstraints);
+
+        tipoHospedagemComboBox.setModel(new DefaultComboBoxModel<>(TipoDeHospedagem.values()));
+        tipoHospedagemComboBox.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        informacoesPanel.add(tipoHospedagemComboBox, gridBagConstraints);
 
         add(informacoesPanel, "card2");
 
@@ -350,7 +375,6 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         enderecoPanel.add(cidadeLabel, gridBagConstraints);
 
         estadoLabel.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        estadoLabel.setLabelFor(estadoField);
         estadoLabel.setText("Estado:");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -369,16 +393,19 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         enderecoPanel.add(enderecoTituloLabel, gridBagConstraints);
 
         cepField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        cepField.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 100;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         enderecoPanel.add(cepField, gridBagConstraints);
 
         numeroField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        numeroField.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -389,6 +416,7 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         enderecoPanel.add(numeroField, gridBagConstraints);
 
         ruaField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        ruaField.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
@@ -399,6 +427,7 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         enderecoPanel.add(ruaField, gridBagConstraints);
 
         bairroField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        bairroField.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 4;
@@ -409,6 +438,7 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         enderecoPanel.add(bairroField, gridBagConstraints);
 
         complementoField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        complementoField.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
@@ -419,6 +449,7 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         enderecoPanel.add(complementoField, gridBagConstraints);
 
         cidadeField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        cidadeField.setEnabled(false);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 6;
@@ -427,31 +458,6 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         enderecoPanel.add(cidadeField, gridBagConstraints);
-
-        estadoField.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        enderecoPanel.add(estadoField, gridBagConstraints);
-
-        atualizarButton2.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        atualizarButton2.setText("Atualizar");
-        atualizarButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                atualizarButton2ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        enderecoPanel.add(atualizarButton2, gridBagConstraints);
 
         anteriorButton1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         anteriorButton1.setText("Anterior");
@@ -463,6 +469,7 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         enderecoPanel.add(anteriorButton1, gridBagConstraints);
 
@@ -500,10 +507,22 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         enderecoPanel.add(voltarButton2, gridBagConstraints);
+
+        estadoComboBox.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        estadoComboBox.setModel(new DefaultComboBoxModel<>(EstadoBrasil.values()));
+        estadoComboBox.setEnabled(false);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        enderecoPanel.add(estadoComboBox, gridBagConstraints);
 
         add(enderecoPanel, "card5");
 
@@ -521,41 +540,27 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         imagemPanel.add(imagemTituloLabel, gridBagConstraints);
 
-        imagensPanel.setPreferredSize(new java.awt.Dimension(200, 200));
-
-        javax.swing.GroupLayout imagensPanelLayout = new javax.swing.GroupLayout(imagensPanel);
-        imagensPanel.setLayout(imagensPanelLayout);
-        imagensPanelLayout.setHorizontalGroup(
-            imagensPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        imagensPanelLayout.setVerticalGroup(
-            imagensPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 40;
-        gridBagConstraints.ipady = 50;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        imagemPanel.add(imagensPanel, gridBagConstraints);
-
         removerImagemButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         removerImagemButton.setText("Remover");
+        removerImagemButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removerImagemButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         imagemPanel.add(removerImagemButton, gridBagConstraints);
 
         adicionarImagemButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         adicionarImagemButton.setText("Adicionar");
+        adicionarImagemButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adicionarImagemButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -572,9 +577,8 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 10, 10);
         imagemPanel.add(anteriorButton2, gridBagConstraints);
 
         proximoButton3.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
@@ -585,13 +589,20 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 10, 10);
         imagemPanel.add(proximoButton3, gridBagConstraints);
 
         escolherImagemComboBox.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        escolherImagemComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        escolherImagemComboBox.setModel(new DefaultComboBoxModel<>());
+        escolherImagemComboBox.setEnabled(false);
+        escolherImagemComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                escolherImagemComboBoxItemStateChanged(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
@@ -599,29 +610,16 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         imagemPanel.add(escolherImagemComboBox, gridBagConstraints);
 
-        atualizarButton3.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        atualizarButton3.setLabel("Atualizar");
-        atualizarButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                atualizarButton3ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        imagemPanel.add(atualizarButton3, gridBagConstraints);
-
         jSeparator3.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator3.setForeground(new java.awt.Color(102, 102, 102));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
         imagemPanel.add(jSeparator3, gridBagConstraints);
 
@@ -634,10 +632,23 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 10, 10);
         imagemPanel.add(voltarButton3, gridBagConstraints);
+
+        imagemPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        imagemPanel1.setPreferredSize(new java.awt.Dimension(300, 200));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 300;
+        gridBagConstraints.ipady = 300;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        imagemPanel.add(imagemPanel1, gridBagConstraints);
 
         add(imagemPanel, "card5");
 
@@ -655,47 +666,44 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         disponibilidadePanel.add(disponibilidadeTituloLabel, gridBagConstraints);
 
-        datasTable.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        datasTable.setModel(new javax.swing.table.DefaultTableModel(
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+
+        disponibilidadesTable.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        disponibilidadesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"24/04/2025", "Disponivel"},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Data", "Status"
             }
         ));
-        datasTable.setMinimumSize(new java.awt.Dimension(50, 120));
-        datasTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane1.setViewportView(datasTable);
+        disponibilidadesTable.setMinimumSize(new java.awt.Dimension(50, 120));
+        disponibilidadesTable.setPreferredSize(new java.awt.Dimension(100, 300));
+        disponibilidadesTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        disponibilidadesTable.setShowGrid(false);
+        jScrollPane1.setViewportView(disponibilidadesTable);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 100;
-        gridBagConstraints.ipady = 100;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 150;
+        gridBagConstraints.ipady = 150;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         disponibilidadePanel.add(jScrollPane1, gridBagConstraints);
 
-        disponibilidadeDateChooser.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 50;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        disponibilidadePanel.add(disponibilidadeDateChooser, gridBagConstraints);
-
         jButton3.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
         jButton3.setText("Adicionar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -711,27 +719,18 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
         disponibilidadePanel.add(anteriorButton3, gridBagConstraints);
-
-        atualizarButton4.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        atualizarButton4.setText("Atualizar");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        disponibilidadePanel.add(atualizarButton4, gridBagConstraints);
 
         jSeparator4.setBackground(new java.awt.Color(0, 0, 0));
         jSeparator4.setForeground(new java.awt.Color(102, 102, 102));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = 4;
+        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHEAST;
@@ -747,25 +746,52 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
-        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 5, 10);
         disponibilidadePanel.add(voltarButton4, gridBagConstraints);
 
-        jButton1.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
-        jButton1.setText("Remover");
+        removerDisponibilidadeButton.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        removerDisponibilidadeButton.setText("Remover");
+        removerDisponibilidadeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removerDisponibilidadeButtonActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
-        disponibilidadePanel.add(jButton1, gridBagConstraints);
+        disponibilidadePanel.add(removerDisponibilidadeButton, gridBagConstraints);
+
+        escolheMes.setFont(new java.awt.Font("JetBrainsMono NF", 0, 12)); // NOI18N
+        escolheMes.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                escolheMesPropertyChange(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        disponibilidadePanel.add(escolheMes, gridBagConstraints);
+
+        escolheAno.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                escolheAnoPropertyChange(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.insets = new java.awt.Insets(15, 20, 0, 10);
+        disponibilidadePanel.add(escolheAno, gridBagConstraints);
 
         add(disponibilidadePanel, "card5");
     }// </editor-fold>//GEN-END:initComponents
-
-    private void atualizarButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_atualizarButton2ActionPerformed
 
     private void proximoButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_proximoButton1ActionPerformed
         // TODO add your handling code here:
@@ -792,10 +818,6 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         anteriorCardLayout();
     }//GEN-LAST:event_anteriorButton2ActionPerformed
 
-    private void atualizarButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_atualizarButton3ActionPerformed
-
     private void anteriorButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorButton3ActionPerformed
         // TODO add your handling code here:
         anteriorCardLayout();
@@ -816,9 +838,55 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
         voltarPagina();
     }//GEN-LAST:event_voltarButton4ActionPerformed
 
+    private void adicionarImagemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adicionarImagemButtonActionPerformed
+        // TODO add your handling code here:
+        controller.adicionarImagem();
+    }//GEN-LAST:event_adicionarImagemButtonActionPerformed
+
+    private void removerImagemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerImagemButtonActionPerformed
+        // TODO add your handling code here:
+        controller.removerImagem();
+    }//GEN-LAST:event_removerImagemButtonActionPerformed
+
+    private void escolherImagemComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_escolherImagemComboBoxItemStateChanged
+        // TODO add your handling code here:
+        controller.mudarImagemDaTela();
+    }//GEN-LAST:event_escolherImagemComboBoxItemStateChanged
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        controller.adicionarDisponibilidade();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void escolheMesPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_escolheMesPropertyChange
+        // TODO add your handling code here:
+        controller.preencherDisponibilidadeTable();
+    }//GEN-LAST:event_escolheMesPropertyChange
+
+    private void escolheAnoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_escolheAnoPropertyChange
+        // TODO add your handling code here:
+        controller.preencherDisponibilidadeTable();
+    }//GEN-LAST:event_escolheAnoPropertyChange
+
+    private void removerDisponibilidadeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerDisponibilidadeButtonActionPerformed
+        // TODO add your handling code here:
+        controller.removerDisponibilidade();
+    }//GEN-LAST:event_removerDisponibilidadeButtonActionPerformed
+
+    private void atualizarButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarButton1ActionPerformed
+        // TODO add your handling code here:
+        controller.atualizarInformacoes();
+    }//GEN-LAST:event_atualizarButton1ActionPerformed
+
+    private void voltarButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voltarButton5ActionPerformed
+        // TODO add your handling code here:
+        voltarPagina();
+    }//GEN-LAST:event_voltarButton5ActionPerformed
+
+    
     private void voltarPagina(){
         TelaPrincipal telaPrincipal = (TelaPrincipal)SwingUtilities.getWindowAncestor(this);
-        telaPrincipal.voltarPagina();
+        telaPrincipal.mudarParaTelaHospedagensCadastradas();
     }
 
     private void proximoCardLayout(){
@@ -837,40 +905,37 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
     private javax.swing.JButton anteriorButton2;
     private javax.swing.JButton anteriorButton3;
     private javax.swing.JButton atualizarButton1;
-    private javax.swing.JButton atualizarButton2;
-    private javax.swing.JButton atualizarButton3;
-    private javax.swing.JButton atualizarButton4;
-    private javax.swing.JTextField bairroField;
+    public javax.swing.JTextField bairroField;
     private javax.swing.JLabel bairroLabel;
-    private javax.swing.JTextField capacidadeMaximaField;
+    public javax.swing.JFormattedTextField capacidadeMaximaField1;
     private javax.swing.JLabel capacidadeMaximaLabel;
-    private javax.swing.JTextField cepField;
+    public javax.swing.JTextField cepField;
     private javax.swing.JLabel cepLabel;
-    private javax.swing.JTextField checkInField;
+    public javax.swing.JFormattedTextField checkInField1;
     private javax.swing.JLabel checkInLabel;
-    private javax.swing.JTextField checkOutField;
+    public javax.swing.JFormattedTextField checkOutField1;
     private javax.swing.JLabel checkOutLabel;
-    private javax.swing.JTextField cidadeField;
+    public javax.swing.JTextField cidadeField;
     private javax.swing.JLabel cidadeLabel;
-    private javax.swing.JTextField complementoField;
+    public javax.swing.JTextField complementoField;
     private javax.swing.JLabel complementoLabel;
-    private javax.swing.JTable datasTable;
     private javax.swing.JLabel descricaoLabel;
-    private javax.swing.JTextArea descricaoTextArea;
-    private com.toedter.calendar.JDateChooser disponibilidadeDateChooser;
-    private javax.swing.JPanel disponibilidadePanel;
+    public javax.swing.JTextArea descricaoTextArea;
+    public javax.swing.JPanel disponibilidadePanel;
     private javax.swing.JLabel disponibilidadeTituloLabel;
+    public javax.swing.JTable disponibilidadesTable;
     private javax.swing.JPanel enderecoPanel;
     private javax.swing.JLabel enderecoTituloLabel;
-    private javax.swing.JComboBox<String> escolherImagemComboBox;
-    private javax.swing.JTextField estadoField;
+    private com.toedter.calendar.JYearChooser escolheAno;
+    private com.toedter.calendar.JMonthChooser escolheMes;
+    public javax.swing.JComboBox<Integer> escolherImagemComboBox;
+    public javax.swing.JComboBox<EstadoBrasil> estadoComboBox;
     private javax.swing.JLabel estadoLabel;
     private javax.swing.JPanel imagemPanel;
+    public com.mycompany.easytrip.telas.componentes.ImagemPanel imagemPanel1;
     private javax.swing.JLabel imagemTituloLabel;
-    private javax.swing.JPanel imagensPanel;
     private javax.swing.JPanel informacoesPanel;
     private javax.swing.JLabel informacoesTituloLabel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
@@ -878,19 +943,20 @@ public class TelaDeGerenciamentoHospedagem extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JTextField numeroField;
+    public javax.swing.JTextField numeroField;
     private javax.swing.JLabel numeroLabel;
-    private javax.swing.JTextField precoDiariaField;
+    public javax.swing.JFormattedTextField precoDiariaField1;
     private javax.swing.JLabel precoDiariaLabel;
     private javax.swing.JButton proximoButton1;
     private javax.swing.JButton proximoButton2;
     private javax.swing.JButton proximoButton3;
+    private javax.swing.JButton removerDisponibilidadeButton;
     private javax.swing.JButton removerImagemButton;
-    private javax.swing.JTextField ruaField;
+    public javax.swing.JTextField ruaField;
     private javax.swing.JLabel ruaLabel;
-    private javax.swing.JTextField tipoField;
+    public javax.swing.JComboBox<TipoDeHospedagem> tipoHospedagemComboBox;
     private javax.swing.JLabel tipoLabel;
-    private javax.swing.JTextField tituloField;
+    public javax.swing.JTextField tituloField;
     private javax.swing.JLabel tituloLabel;
     private javax.swing.JButton voltarButton2;
     private javax.swing.JButton voltarButton3;
